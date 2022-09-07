@@ -1,9 +1,9 @@
 import { Box, Divider, Toolbar } from "@mui/material";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import React from "react";
 import SideList from "../commons/SideList";
-import { useSelector } from "react-redux";
+import React from "react";
 
 const drawerWidth = 240;
 

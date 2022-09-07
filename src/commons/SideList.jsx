@@ -1,5 +1,5 @@
+import { AddBusiness, ChevronLeft, ChevronRight, Home } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { AddBusiness, Home } from "@mui/icons-material";
 import {
     IconButton,
     List,
@@ -10,7 +10,6 @@ import {
     Stack,
 } from "@mui/material";
 import { setOpen } from "../store/reducers/drawerOpen.reducer";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -31,11 +30,15 @@ const SideList = () => {
                 <ListItem disablePadding>
                     <div className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root">
                         <IconButton>
-                            <ChevronLeftIcon
+                            {(open)?<ChevronLeft
                                 sx={{ color: "#FFFFFF" }}
                                 onClick={toggleDrawer}
                                 className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
-                            />
+                            />:<ChevronRight 
+                                sx={{ color: "#FFFFFF" }}
+                                onClick={toggleDrawer}
+                                className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
+                            />}
                         </IconButton>
                     </div>
                     <div className="MuiListItemText-root css-tlelie-MuiListItemText-root">

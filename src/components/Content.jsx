@@ -1,5 +1,6 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
+import SearchBar from "../commons/Search";
 import Users from "./Users";
 
 const Content = () => {
@@ -21,16 +22,19 @@ const Content = () => {
             <Paper
                 elevation={3}
                 sx={{
-                    pt: 2,
+                    p: 2,
                     display: { sm: "none" },
                     flexDirection: "column",
-                    borderRadius: "16px",
+                    borderTopLeftRadius: "16px",
+                    borderTopRightRadius: "16px",
                     position: "fixed",
                     bottom: 0,
                     left: 0,
                     right: 0,
                 }}
             >
+                <Typography variant="h6">Usuarios finales</Typography>
+                <SearchBar />
                 <Users />
             </Paper>
         </Box>

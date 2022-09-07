@@ -6,12 +6,12 @@ const UserSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-            unique: true,
+
         },
         surname: {
             type: String,
             required: true,
-            unique: true,
+
         },
         email: {
             type: String,
@@ -20,11 +20,12 @@ const UserSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: true,
+            //required: true,
         },
         salt: {
             type: String,
         },
+
         roles: {
             type: Array,
         },
@@ -34,8 +35,12 @@ const UserSchema = new mongoose.Schema(
         devices:{
             type: Array,
         },
-        isValidated:{
+        isActivated:{
             type: Boolean,
+            default: false,
+        },
+        activationCode:{
+            type: Number,
         }
 
     },
@@ -43,8 +48,10 @@ const UserSchema = new mongoose.Schema(
 )
 
 UserSchema.pre('save', async function () {
+    if (this.isActivated === true){
     this.salt = bcrypt.genSaltSync()
     return (this.password = await bcrypt.hash(this.password, this.salt))
+    }
 })
 
 module.exports = mongoose.model('User', UserSchema)

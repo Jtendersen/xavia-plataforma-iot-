@@ -1,11 +1,20 @@
 const Users = require("../models/Users");
 
 class UserService {
-  static async createUser(body) {
+  static async createUser({fullname, empresa, cuit, email,phone}) {
     try {
       const token = Math.floor(Math.random() * 99999);
-      const user = new Users(body);
-      user.activationCode = token;
+      const user = new Users(
+        {
+          fullname,
+          empresa,
+          cuit,
+          email,
+          phone,
+          roles: ["user"],
+          activationCode:token
+        }
+      );
       return await user.save();
     } catch (error) {
       console.error(error);
@@ -15,10 +24,10 @@ class UserService {
   static async signupToken({email, token}) {
     try {
       const user = await Users.findOne({ email: email, status: true });
-      if (!user) return "No user Found";
-      if (token === user.activationCode) {
+      if (!user) return;
+      if (token === user.activationCode && !user.isActivated) {
         return user;
-      } else return "Wrong token";
+      } else return 400;
     } catch (error) {
       console.error(error);
     }
@@ -54,6 +63,19 @@ class UserService {
     }
   }
 
+  static async findByName(search) {
+    try {
+        return await Users.find({
+            $or: [
+                { fullname: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } },
+            ],
+        }).exec()
+    } catch (error) {
+        console.log(error)
+    }
+}  
+
   static async userModify(body) {
     try {
       return await Users.updateOne({ _id: body.id }, { $set: body.mod });
@@ -68,6 +90,25 @@ class UserService {
       console.log(error);
     }
   }
+  static async createAdmin({fullname, email, password}) {
+    try {
+      const token = Math.floor(Math.random() * 99999);
+      const user = new Users(
+        {
+          fullname,
+          password,
+          email,
+          isActivated:true,
+          roles:["admin"]
+        }
+      );
+
+      return await user.save();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 }
 
 module.exports = UserService;

@@ -1,10 +1,12 @@
 import { Box, Paper } from "@mui/material";
+import Navbar from "./Navbar"
 import React from "react";
 import UsersMobile from "./UsersMobile";
 
 const ContentMobile = () => {
     return (
         <Box bgcolor="#3D3D3D" flex={8} p={2}>
+        <Navbar />
             <Paper
                 elevation={3}
                 sx={{

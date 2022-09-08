@@ -6,7 +6,6 @@ import {
     TablePagination,
     Typography,
 } from "@mui/material";
-import { users } from "../utils/usersSeed.js";
 import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -15,12 +14,17 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
-import * as React from "react";
+import {useEffect, useState} from "react";
 import SearchBar from "../commons/Search.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { adminDeleteUser, getAllUsers } from "../store/reducers/usersAll.reducer.js";
 
 const Users = () => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(3);
+    const [deleteAction, setDeleteAction] = useState(true);
+    const users = useSelector(state => state.users);
+    const dispatch = useDispatch()
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -35,9 +39,25 @@ const Users = () => {
         return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
     }
 
+    const deleteUser = (userId) => {
+        dispatch(adminDeleteUser(userId)).then(() => {
+            if (deleteAction) {
+                setDeleteAction(false);
+            } else {
+                setDeleteAction(true);
+            }
+        });
+    };
+
+    useEffect(() => {
+      dispatch(getAllUsers())
+    }, [deleteAction])
+    
+
     return (
         <>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <SearchBar />
                 <Table size="small">
                     <TableHead>
                         <TableRow>
@@ -51,16 +71,16 @@ const Users = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users ? (
+                        {users.length ? (
                             users.map((user) => {
                                 return (
-                                    <TableRow key={user.id}>
-                                        <TableCell>{user.empresa}</TableCell>
-                                        <TableCell>{user.fecha}</TableCell>
+                                    <TableRow key={user._id}>
+                                        <TableCell>{user.empresa[0]}</TableCell>
+                                        <TableCell>{user.createdAt}</TableCell>
                                         <TableCell>
-                                            {user.responsable}
+                                            {user.fullname}
                                         </TableCell>
-                                        <TableCell>{user.mail}</TableCell>
+                                        <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             <CreateIcon />
                                         </TableCell>
@@ -68,7 +88,7 @@ const Users = () => {
                                             <SearchIcon />
                                         </TableCell>
                                         <TableCell>
-                                            <IconButton>
+                                            <IconButton onClick={() => deleteUser(user._id)}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
@@ -83,6 +103,7 @@ const Users = () => {
             </Box>
 
             {/* Parte responsive de la vista users */}
+            {/* Considera modularizar esto */}
             <Box sx={{ display: { sm: "none" } }}>
                 <Stack justifyContent="space-between" direction="row" alignItems='center' >
                     <Typography variant="h6">Usuarios finales</Typography>
@@ -101,7 +122,7 @@ const Users = () => {
                 <SearchBar />
                 <Table>
                     <TableBody>
-                        {users ? (
+                        {users.length ? (
                             users
                                 .slice(
                                     page * rowsPerPage,
@@ -118,9 +139,9 @@ const Users = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <Stack>
-                                                    <div>{user.empresa}</div>
+                                                    <div>{user.empresa[0]}</div>
                                                     <div>
-                                                        {user.responsable}
+                                                        {user.fullname}
                                                     </div>
                                                 </Stack>
                                             </TableCell>

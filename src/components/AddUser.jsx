@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { CssBaseline, DialogContentText } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { CssBaseline, DialogContentText, Stack } from "@mui/material";
 // import { getAllUsers } from "../../store/reducers/adminUsersReducer";
 import { useInput } from "../hooks/useInput";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -15,6 +15,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Typography } from "antd";
+import { trackerAction } from "../store/reducers/usersTracker.reducer";
+import { getAllUsers } from "../store/reducers/usersAll.reducer";
 
 // Componente que se activa al obtener el código de validación
 // Se renderiza en AddUser
@@ -24,14 +26,17 @@ function ActivationCodeDialog(props) {
     return (
         <React.Fragment>
             <Dialog open={open} onClose={close}>
-                <DialogContentText>
-                    <CheckCircleIcon color="success" />
-                </DialogContentText>
                 <DialogContent>
-                    <DialogContentText>
-                        Código generado con éxito
-                    </DialogContentText>
-                    <DialogContentText>{code}</DialogContentText>
+                    <Stack
+                        direction="column"
+                        justifyContent="space-around"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <CheckCircleIcon color="success" size="large" />
+                        <h4>Código generado con éxito</h4>
+                        <h1>{code}</h1>
+                    </Stack>
                 </DialogContent>
             </Dialog>
         </React.Fragment>
@@ -54,6 +59,7 @@ export default function AddUser() {
     const [openCreate, setOpenCreate] = useState(false);
     const [activationCode, setActivationCode] = useState(false);
     const [openActivation, setOpenActivation] = useState(false);
+    const track = useSelector(state => state.tracker)
 
     // handles
     const createDialogClose = () => setOpenCreate(false);
@@ -72,6 +78,7 @@ export default function AddUser() {
             setActivationCode(data.activationCode);
             createDialogClose();
             setOpenActivation(true);
+            dispatch(trackerAction(!track))
         } else {
             console.log("no pasó nada");
         }
@@ -90,6 +97,10 @@ export default function AddUser() {
     // }, [open]);
 
     // crear un dialog con el activation code
+
+    React.useEffect (() => {
+        dispatch(getAllUsers())
+      }, [dispatch, track])
 
     return (
         <Box>

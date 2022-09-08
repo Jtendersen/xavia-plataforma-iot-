@@ -1,15 +1,15 @@
-import { Stack } from "@mui/material";
-import Content from "./components/Content";
-import Sidebar from "./components/Sidebar";
-
+import Login from "./components/Login";
+import PassCreate from "./commons/PassCreate";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-    return (
-        <Stack direction="row" sx={{height: "100vh"}}>
-            <Sidebar />
-            <Content />
-        </Stack>
-    );
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/passCreate" element={<PassCreate />} />
+      {/* <Route path="/profile" element={<Dashboard />} /> */}
+    </Routes>
+  );
 }
 
 export default App;

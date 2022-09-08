@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema(
         salt: {
             type: String,
         },
-
         roles: {
             type: Array,
         },
@@ -41,7 +40,10 @@ const UserSchema = new mongoose.Schema(
         },
         activationCode:{
             type: Number,
-        }
+        },
+        resetLink:{
+            type: String,
+        },
 
     },
     { timestamps: true }

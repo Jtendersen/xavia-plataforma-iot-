@@ -8,11 +8,11 @@ const EmpresasSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-            users: {
+        users: {
             type: Array,
         },
         cuit: {
-            type: Number,
+            type: String,
             required: true,
             unique: true,
         },

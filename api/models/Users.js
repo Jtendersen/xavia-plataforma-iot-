@@ -6,7 +6,6 @@ const UserSchema = new mongoose.Schema(
         fullname: {
             type: String,
             required: true,
-
         },
         cuit: {
             type: String

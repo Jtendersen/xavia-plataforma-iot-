@@ -1,15 +1,7 @@
-import { Stack } from "@mui/material";
-import Content from "./components/Content";
-import Sidebar from "./components/Sidebar";
-
+import Profile from "./views/Profile";
 
 function App() {
-    return (
-        <Stack direction="row" sx={{height: "100vh"}}>
-            <Sidebar />
-            <Content />
-        </Stack>
-    );
+    return <Profile />;
 }
 
 export default App;

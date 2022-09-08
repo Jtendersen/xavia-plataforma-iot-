@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CssBaseline, DialogContentText, Stack } from "@mui/material";
-// import { getAllUsers } from "../../store/reducers/adminUsersReducer";
+import { CssBaseline, Stack } from "@mui/material";
 import { useInput } from "../hooks/useInput";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import * as React from "react";
@@ -14,7 +13,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Typography } from "antd";
 import { trackerAction } from "../store/reducers/usersTracker.reducer";
 import { getAllUsers } from "../store/reducers/usersAll.reducer";
 
@@ -59,7 +57,7 @@ export default function AddUser() {
     const [openCreate, setOpenCreate] = useState(false);
     const [activationCode, setActivationCode] = useState(false);
     const [openActivation, setOpenActivation] = useState(false);
-    const track = useSelector(state => state.tracker)
+    const track = useSelector((state) => state.tracker);
 
     // handles
     const createDialogClose = () => setOpenCreate(false);
@@ -78,7 +76,7 @@ export default function AddUser() {
             setActivationCode(data.activationCode);
             createDialogClose();
             setOpenActivation(true);
-            dispatch(trackerAction(!track))
+            dispatch(trackerAction(!track));
         } else {
             console.log("no pasó nada");
         }
@@ -91,16 +89,9 @@ export default function AddUser() {
         close: activationDialogClose,
     };
 
-    // useEffect para traer a los usuarios
-    // useEffect(() => {
-    //     dispatch(getAllUsers());
-    // }, [open]);
-
-    // crear un dialog con el activation code
-
-    React.useEffect (() => {
-        dispatch(getAllUsers())
-      }, [dispatch, track])
+    React.useEffect(() => {
+        dispatch(getAllUsers());
+    }, [dispatch, track]);
 
     return (
         <Box>

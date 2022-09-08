@@ -1,10 +1,12 @@
 import { Box, Paper } from "@mui/material";
 import React from "react";
+import Header from "./Header";
 import Users from "./Users";
 
 const Content = () => {
     return (
         <Box bgcolor="#EAE1D8" flex={8} p={2}>
+            <Header />
             <Paper
                 elevation={3}
                 sx={{
@@ -18,6 +20,7 @@ const Content = () => {
             </Paper>
 
             {/* version mobile */}
+            {/* Considerar modularizar aparte */}
             <Paper
                 elevation={3}
                 sx={{

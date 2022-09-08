@@ -95,7 +95,7 @@ const UsersMobile = () => {
                                         </TableCell>
                                         <TableCell>
                                             <Stack>
-                                                <div>{user.empresa[0]}</div>
+                                                <div>{user.empresa}</div>
                                                 <div>{user.fullname}</div>
                                             </Stack>
                                         </TableCell>

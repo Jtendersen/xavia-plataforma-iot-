@@ -54,7 +54,7 @@ const UsersDesktop = () => {
                         users.map((user) => {
                             return (
                                 <TableRow key={user._id}>
-                                    <TableCell>{user.empresa[0]}</TableCell>
+                                    <TableCell>{user.empresa}</TableCell>
                                     <TableCell>{user.createdAt}</TableCell>
                                     <TableCell>{user.fullname}</TableCell>
                                     <TableCell>{user.email}</TableCell>

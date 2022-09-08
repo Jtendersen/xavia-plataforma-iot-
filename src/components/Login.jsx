@@ -80,7 +80,8 @@ export default function SignInSide() {
       accessKey: data.get("accessKey"),
     };
     dispatch(firstLoginRequest(userData)).then((response) => {
-      response.payload === "Wrong token"
+      console.log("soy response: ", response)
+      response.payload === "No Users Found"
         ? handleClickOpenWrong()
         : handleClickOpenSuccess();
     });

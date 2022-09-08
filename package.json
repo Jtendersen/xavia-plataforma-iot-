@@ -8,9 +8,11 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.4",
     "@reduxjs/toolkit": "^1.8.5",
+    "@sendgrid/mail": "^7.7.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.23.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.3.0",
@@ -33,6 +35,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "go": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "react-scripts start",
     "start": "react-scripts start",
     "server": "nodemon api/index.js",
     "build": "react-scripts build",

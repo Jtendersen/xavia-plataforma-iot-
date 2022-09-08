@@ -21,7 +21,7 @@ class UserController {
       console.log(error);
     }
   }
- 
+
   static async newPassword(req, res) {
     try {
       const user = await UserService.newPassword(req.body);

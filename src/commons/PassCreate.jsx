@@ -2,8 +2,6 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -16,7 +14,6 @@ import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
 import { useDispatch, useSelector } from "react-redux";
-import { firstLoginRequest } from "../store/reducers/user.reducer";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -26,6 +23,7 @@ import Slide from "@mui/material/Slide";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
+import { createPassRequest } from "../store/reducers/user.reducer";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -51,7 +49,7 @@ function Copyright(props) {
 
 export default function SignInSide() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const previousUserData = useSelector((state) => state.user);
   let navigate = useNavigate();
 
   const [openSuccess, setOpenSuccess] = React.useState(false);
@@ -61,7 +59,7 @@ export default function SignInSide() {
     setOpenSuccess(true);
   };
   const handleCloseSuccess = () => {
-    navigate("/passCreate", { replace: true });
+    navigate("/profile", { replace: true });
     setOpenSuccess(false);
   };
   const handleClickOpenWrong = () => {
@@ -73,17 +71,27 @@ export default function SignInSide() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log("ESTA ES LA PREVIOUS DATA DE USER", previousUserData);
     const data = new FormData(event.currentTarget);
-    const userData = {
-      email: data.get("email"),
-      accessKey: data.get("accessKey"),
+    const userPass = {
+      newPassword: data.get("newPassword"),
+      repeatNewPassword: data.get("repeatNewPassword"),
     };
-    dispatch(firstLoginRequest(userData)).then((response) => {
-      response.payload === "Wrong token"
-        ? handleClickOpenWrong()
-        : handleClickOpenSuccess();
-    });
+
+    if (userPass.newPassword === userPass.repeatNewPassword) {
+      const userData = {
+        email: previousUserData.email,
+        password: userPass.newPassword,
+        token: previousUserData.activationCode,
+      };
+      console.log("ESTE ES EL USER DATA QUE SE VA A DESPACHAR", userData);
+      dispatch(createPassRequest(userData)).then((response) => {
+        console.log("LA BENDITA RESPONSE", response.payload);
+        handleClickOpenSuccess();
+        // console.log("EL BENDITO USER", user);
+      });
+    }
+    handleClickOpenWrong();
   };
 
   return (
@@ -107,13 +115,13 @@ export default function SignInSide() {
           <DialogTitle>{"¡Bienvenido!"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Ya sos parte de XAVIA IOT
+              Contraseña creada con éxito
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
               <Button variant="contained" onClick={handleCloseSuccess}>
-                Crear contraseña
+                Ingresar a la plataforma
               </Button>
             </Grid>
           </DialogActions>
@@ -135,7 +143,7 @@ export default function SignInSide() {
           <DialogTitle>{"¡ERROR!"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Codigo de Acceso Inválido
+              Las contraseñas ingresadas no coinciden
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -203,40 +211,32 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
+                id="newPassword"
+                label="Nueva Contraseña"
+                type="password"
+                name="newPassword"
+                autoComplete="newPassword"
                 autoFocus
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="accessKey"
-                label="Clave de Acceso"
+                name="repeatNewPassword"
+                label="Repetir nueva contraseña"
                 type="password"
-                id="accessKey"
-                autoComplete="Clave de Acceso"
+                id="repeatNewPassword"
+                autoComplete="Repetir nueva contraseña"
               />
-              <Grid item xs>
-                <Link href="#" variant="body2" sx={{ color: "#3300B8" }}>
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </Grid>
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#3300B8" }}
               >
-                Ingresar
+                Enviar
               </Button>
-
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Recuerda mis datos"
-              />
 
               <Grid container></Grid>
               <Copyright sx={{ mt: 5 }} />

@@ -2,7 +2,7 @@ import { Box, Divider, Toolbar } from "@mui/material";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import SideList from "../commons/SideList";
+import SideList from "../../commons/SideList";
 import React from "react";
 
 const drawerWidth = 240;
@@ -39,7 +39,7 @@ const Sidebar = () => {
     const open = useSelector((state) => state.drawer);
 
     return (
-        <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+        <Box>
             <Drawer variant="permanent" open={open}>
                 <Toolbar
                     variant="dense"

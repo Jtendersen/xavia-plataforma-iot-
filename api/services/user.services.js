@@ -1,4 +1,5 @@
 const Users = require("../models/Users");
+const { sendAccesCode } = require("../utils/emails");
 
 class UserService {
   static async createUser({fullname, empresa, cuit, email,phone}) {
@@ -15,6 +16,7 @@ class UserService {
           activationCode:token
         }
       );
+      sendAccesCode(email,token)
       return await user.save();
     } catch (error) {
       console.error(error);
@@ -26,6 +28,7 @@ class UserService {
       const user = await Users.findOne({ email: email, status: true });
       if (!user) return;
       if (token === user.activationCode && !user.isActivated) {
+        
         return user;
       } else return 400;
     } catch (error) {

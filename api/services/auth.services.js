@@ -5,6 +5,7 @@ const { generateToken, validateToken } = require("../middlewares/auth");
 
 class AuthService {
   static async login(body) {
+    console.log("ESTE ES EL BODY", body);
     try {
       const user = await Users.findOne({ email: body.email });
 

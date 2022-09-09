@@ -24,7 +24,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
 import { createPassRequest } from "../store/reducers/user.reducer";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Container, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

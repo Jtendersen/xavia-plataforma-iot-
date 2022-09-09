@@ -1,6 +1,6 @@
 const Users = require("../models/Users");
 const bcrypt = require("bcrypt");
-const { SendResetPassEmail } = require("../utils/emails");
+const { sendResetPassEmail, sendAccesCode} = require("../utils/emails");
 const { generateToken, validateToken } = require("../middlewares/auth");
 
 class AuthService {
@@ -35,7 +35,8 @@ class AuthService {
         { _id: user._id },
         { $set: { resetLink: token } }
       );
-      //SendResetPassEmail(user.email, token);
+      
+      sendResetPassEmail(user.email, token);
 
       return "Se le ha enviado un email para recuperar su contrasena";
     } catch (error) {

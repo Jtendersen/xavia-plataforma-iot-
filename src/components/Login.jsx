@@ -52,23 +52,23 @@ function Copyright(props) {
 export default function SignInSide() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  console.log("ESTE ES EL USER", user);
   let navigate = useNavigate();
 
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openWrong, setOpenWrong] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+  const [userToShow, setUserToShow] = React.useState("");
 
-  const handleClickOpenSuccess = () => {
-    setOpenSuccess(true);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
-  const handleCloseSuccess = () => {
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCloseOk = () => {
     navigate("/passCreate", { replace: true });
-    setOpenSuccess(false);
-  };
-  const handleClickOpenWrong = () => {
-    setOpenWrong(true);
-  };
-  const handleCloseWrong = () => {
-    setOpenWrong(false);
+    setOpen(false);
   };
 
   const handleSubmit = (event) => {
@@ -77,75 +77,84 @@ export default function SignInSide() {
     const data = new FormData(event.currentTarget);
     const userData = {
       email: data.get("email"),
-      accessKey: data.get("accessKey"),
+      token: data.get("token"),
     };
     dispatch(firstLoginRequest(userData)).then((response) => {
-      console.log("soy response: ", response)
-      response.payload === "No Users Found"
-        ? handleClickOpenWrong()
-        : handleClickOpenSuccess();
+      console.log("soy response: ", response);
+      console.log("soy EL user: ", user);
+      typeof response.payload === "string"
+        ? setErrorMsg(response.payload)
+        : setUserToShow(response.payload.fullname);
+
+      handleClickOpen();
     });
   };
+
+  function DialogSuccess() {
+    return (
+      <>
+        <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+          <CheckCircleIcon fontSize="large" color="success" />
+        </Grid>
+
+        <DialogTitle>{"¡Bienvenido! "}</DialogTitle>
+        <DialogContentText id="alert-dialog-slide-description">
+          {userToShow}
+        </DialogContentText>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Ya sos parte de XAVIA IOT
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+            <Button variant="contained" onClick={handleCloseOk}>
+              Crear contraseña
+            </Button>
+          </Grid>
+        </DialogActions>
+      </>
+    );
+  }
+
+  function DialogError() {
+    return (
+      <>
+        <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+          <CancelIcon fontSize="large" color="error" />
+        </Grid>
+
+        <DialogTitle>{"¡ERROR!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            {errorMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+            <Button variant="contained" onClick={handleClose}>
+              Intenta de nuevo
+            </Button>
+          </Grid>
+        </DialogActions>
+      </>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
 
-        {/* Dialog in Success Case */}
         <Dialog
-          open={openSuccess}
+          open={open}
           TransitionComponent={Transition}
           keepMounted
-          onClose={handleCloseSuccess}
+          onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
           align="center"
         >
-          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-            <CheckCircleIcon fontSize="large" color="success" />
-          </Grid>
-
-          <DialogTitle>{"¡Bienvenido!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Ya sos parte de XAVIA IOT
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-              <Button variant="contained" onClick={handleCloseSuccess}>
-                Crear contraseña
-              </Button>
-            </Grid>
-          </DialogActions>
-        </Dialog>
-
-        {/* Dialog in Wrong Token Case */}
-        <Dialog
-          open={openWrong}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleCloseWrong}
-          aria-describedby="alert-dialog-slide-description"
-          align="center"
-        >
-          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-            <CancelIcon fontSize="large" color="error" />
-          </Grid>
-
-          <DialogTitle>{"¡ERROR!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Codigo de Acceso Inválido
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-              <Button variant="contained" onClick={handleCloseWrong}>
-                Intenta de nuevo
-              </Button>
-            </Grid>
-          </DialogActions>
+          {user.fullname ? <DialogSuccess /> : <DialogError />}
         </Dialog>
 
         <Grid
@@ -214,10 +223,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                name="accessKey"
+                name="token"
                 label="Clave de Acceso"
                 type="password"
-                id="accessKey"
+                id="token"
                 autoComplete="Clave de Acceso"
               />
               <Grid item xs>

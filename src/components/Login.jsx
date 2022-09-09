@@ -26,6 +26,8 @@ import Slide from "@mui/material/Slide";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
+import { Container, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -58,6 +60,21 @@ export default function SignInSide() {
   const [open, setOpen] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
   const [userToShow, setUserToShow] = React.useState("");
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -225,9 +242,27 @@ export default function SignInSide() {
                 fullWidth
                 name="token"
                 label="Clave de Acceso"
-                type="password"
+                type={values.showPassword ? "text" : "password"}
                 id="token"
                 autoComplete="Clave de Acceso"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <Grid item xs>
                 <Link href="#" variant="body2" sx={{ color: "#3300B8" }}>
@@ -251,24 +286,26 @@ export default function SignInSide() {
               <Grid container></Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
+            <Container md={2}>
+              <Image
+                sx={{ display: { xs: "none", md: "block" } }}
+                src={plus}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  margin: "auto",
+                  height: "auto",
+                  width: "12%",
+                  zIndex: 1900,
+                }}
+                alt="plus.png"
+              />
+            </Container>
           </Box>
         </Grid>
-        {/* <Image
-          sx={{ display: { xs: "none", md: "block" } }}
-          src={plus}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            margin: "auto",
-            height: "20rem",
-            width: "auto",
-            zIndex: 1,
-          }}
-          alt="plus.png"
-        /> */}
 
         <Grid
           item

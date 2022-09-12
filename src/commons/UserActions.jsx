@@ -1,12 +1,14 @@
+import { adminDeleteUser } from "../store/reducers/usersAll.reducer";
+import { useDispatch } from "react-redux";
 import { IconButton } from "@mui/material";
+import { Box } from "@mui/system";
 import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box } from "@mui/system";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { adminDeleteUser } from "../store/reducers/usersAll.reducer";
 
+// Botones del dashboard por usuario
+// recibe params de la fila y algunos estados
 const UserActions = ({ params, deleteAction, setDeleteAction }) => {
     const dispatch = useDispatch();
 

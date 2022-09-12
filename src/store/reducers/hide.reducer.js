@@ -4,6 +4,8 @@ export const setHide = createAction("SET_Hide");
 
 let initialState;
 
+// setea el initialState para evaluar el tamaño de la pantalla
+// hide y tableSize permiten ajustar valores de la tabla Users
 function getWindowSize() {
     const { innerWidth } = window;
     return innerWidth;

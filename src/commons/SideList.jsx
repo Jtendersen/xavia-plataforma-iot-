@@ -17,10 +17,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../assets/LogoXavia.png";
 import React from "react";
 
+// SideList es responsive. Se usa en ambas vistas.
 const SideList = () => {
     const dispatch = useDispatch();
     const open = useSelector((state) => state.drawer);
 
+    // toggleDrawer setea el estado en reducer cuando se abre o no el sidebar.
     const toggleDrawer = () => {
         dispatch(setOpen(!open));
     };

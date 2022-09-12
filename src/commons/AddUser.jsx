@@ -1,20 +1,20 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CssBaseline, Stack } from "@mui/material";
+import { trackerAction } from "../store/reducers/usersTracker.reducer";
+import { getAllUsers } from "../store/reducers/usersAll.reducer";
+import { useState } from "react";
 import { useInput } from "../hooks/useInput";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import axios from "axios";
-import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { trackerAction } from "../store/reducers/usersTracker.reducer";
-import { getAllUsers } from "../store/reducers/usersAll.reducer";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import * as React from "react";
+import axios from "axios";
 
 // Componente que se activa al obtener el código de validación
 // Se renderiza en AddUser

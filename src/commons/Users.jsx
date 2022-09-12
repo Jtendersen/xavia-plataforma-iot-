@@ -1,9 +1,8 @@
-import { Avatar, Box } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    getAllUsers,
-} from "../store/reducers/usersAll.reducer.js";
+import { Avatar, Box } from "@mui/material";
+import {getAllUsers} from "../store/reducers/usersAll.reducer.js";
+import { setHide } from "../store/reducers/hide.reducer.js";
 import {
     DataGrid,
     GridToolbarColumnsButton,
@@ -12,10 +11,10 @@ import {
     GridToolbarFilterButton,
     GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import moment from "moment";
-import { setHide } from "../store/reducers/hide.reducer.js";
 import UserActions from "./UserActions.jsx";
+import moment from "moment";
 
+// opciones de filtro en la vista Desktop
 function CustomToolbar() {
     return (
         <GridToolbarContainer>
@@ -34,18 +33,21 @@ function CustomToolbar() {
 }
 
 const UsersDesktop = () => {
-    const [deleteAction, setDeleteAction] = useState(true);
-    const users = useSelector((state) => state.users);
+    // hooks redux
     const {hide, tableSize} = useSelector((state) => state.hide);
+    const users = useSelector((state) => state.users);
     const dispatch = useDispatch();
 
+    // hooks state
+    const [deleteAction, setDeleteAction] = useState(true);
 
-
+    // función para obtener ancho de pantalla
     function getWindowSize() {
         const { innerWidth } = window;
         return innerWidth;
     }
 
+    // setea el comportamiento responsive de la tabla
     useEffect(() => {
         function handleWindowResize() {
             if (getWindowSize() < 600) {
@@ -54,17 +56,18 @@ const UsersDesktop = () => {
                 dispatch(setHide({hide: false, tableSize:10}));
             }
         }
-
         window.addEventListener("resize", handleWindowResize);
         return () => {
             window.removeEventListener("resize", handleWindowResize);
         };
     }, [dispatch]);
 
+    // actualiza la lista de usuarios
     useEffect(() => {
         dispatch(getAllUsers());
     }, [dispatch, deleteAction]);
 
+    // hook useMemo para creación y seguimiento de las columnas de datos
     const columns = useMemo(
         () => [
             {
@@ -117,6 +120,7 @@ const UsersDesktop = () => {
         [hide, deleteAction]
     );
 
+    // retorna DataGrid. La tabla se llena con el estado redux de users
     return (
         <Box
             sx={{

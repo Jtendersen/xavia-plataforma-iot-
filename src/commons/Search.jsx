@@ -1,3 +1,5 @@
+// NO TIENE USO. LO DEJO DE REFERENCIA
+
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";

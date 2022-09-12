@@ -1,14 +1,16 @@
 import { Box, Paper } from "@mui/material";
 import Navbar from "./Navbar";
 import React from "react";
-import UsersMobile from "./UsersMobile";
 import HeaderMobile from "./HeaderMobile";
+import Users from "../../commons/Users";
+import { useSelector } from "react-redux";
 
 const ContentMobile = () => {
+    const views = useSelector((state) => state.views);
     return (
         <Box bgcolor="#3D3D3D" flex={8} p={2}>
             <Navbar />
-            <HeaderMobile />
+            {views === "profile" ? <HeaderMobile /> : <></>}
             <Paper
                 elevation={3}
                 sx={{
@@ -22,7 +24,11 @@ const ContentMobile = () => {
                     right: 0,
                 }}
             >
-                <UsersMobile />
+                {views === "profile" || views === "usuariosFinales" ? (
+                    <Users />
+                ) : (
+                    <></>
+                )}
             </Paper>
         </Box>
     );

@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-require('dotenv').config()
+require("dotenv").config();
 
-const SECRET = process.env.SECRET
-const EXPIRES = process.env.TOKEN_EXPIRES
+const SECRET = process.env.SECRET;
+const EXPIRES = process.env.TOKEN_EXPIRES;
 
 // Genera un token al usuario que se logueo.
 const generateToken = (payload) => {
@@ -12,28 +12,23 @@ const generateToken = (payload) => {
 
 // Verifica el token y comprueba si el SECRET coincide.
 const validateToken = (token) => {
-  return jwt.verify(token, SECRET, (error, data)=> {
-    if (error) return null
-    console.log(data)
-    return data
-
+  return jwt.verify(token, SECRET, (error, data) => {
+    if (error) return null;
+    return data;
   });
 };
 
 // Valida que el token del usuario sea el correcto.
-const validateAuth = (req, res, next)=> {
-    const token = req.cookies.token;
-    if (!token) return res.sendStatus(401);
-  
-    const { user } = validateToken(token);
-    if (!user) return res.sendStatus(401);
-  
-  
-    req.user = user;
-  
-    next();
-  }
-  
+const validateAuth = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) return res.sendStatus(401);
 
+  const { user } = validateToken(token);
+  if (!user) return res.sendStatus(401);
 
-module.exports = { generateToken, validateToken, validateAuth};
+  req.user = user;
+
+  next();
+};
+
+module.exports = { generateToken, validateToken, validateAuth };

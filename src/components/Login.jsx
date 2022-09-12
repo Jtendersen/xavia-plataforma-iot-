@@ -15,8 +15,8 @@ import plus from "../assets/plus.png";
 import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
-import { useDispatch, useSelector } from "react-redux";
-import { firstLoginRequest } from "../store/reducers/user.reducer";
+import { useSelector } from "react-redux";
+// import { firstLoginRequest } from "../store/reducers/user.reducer";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,6 +25,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { Container, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -51,10 +52,26 @@ function Copyright(props) {
   );
 }
 
+function AwsCognito(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      <Link
+        color="inherit"
+        href="https://xavia-users-auth.auth.sa-east-1.amazoncognito.com/login?client_id=52bqus32h9n3va4s93nlsvgj0o&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/profile"
+      >
+        Cognito Login
+      </Link>{" "}
+    </Typography>
+  );
+}
+
 export default function SignInSide() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("ESTE ES EL USER", user);
   let navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -96,15 +113,6 @@ export default function SignInSide() {
       email: data.get("email"),
       token: data.get("token"),
     };
-    dispatch(firstLoginRequest(userData)).then((response) => {
-      console.log("soy response: ", response);
-      console.log("soy EL user: ", user);
-      typeof response.payload === "string"
-        ? setErrorMsg(response.payload)
-        : setUserToShow(response.payload.fullname);
-
-      handleClickOpen();
-    });
   };
 
   function DialogSuccess() {
@@ -114,7 +122,21 @@ export default function SignInSide() {
           <CheckCircleIcon fontSize="large" color="success" />
         </Grid>
 
-        <DialogTitle>{"¡Bienvenido! "}</DialogTitle>
+        <DialogTitle>
+          {"¡Bienvenido! "}
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContentText id="alert-dialog-slide-description">
           {userToShow}
         </DialogContentText>
@@ -141,7 +163,21 @@ export default function SignInSide() {
           <CancelIcon fontSize="large" color="error" />
         </Grid>
 
-        <DialogTitle>{"¡ERROR!"}</DialogTitle>
+        <DialogTitle>
+          {"¡ERROR!"}
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             {errorMsg}
@@ -277,13 +313,13 @@ export default function SignInSide() {
               >
                 Ingresar
               </Button>
-
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Recuerda mis datos"
               />
 
               <Grid container></Grid>
+              <AwsCognito sx={{ mt: 5 }} />
               <Copyright sx={{ mt: 5 }} />
             </Box>
             <Container md={2}>

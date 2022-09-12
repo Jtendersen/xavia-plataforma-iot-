@@ -8,7 +8,6 @@ export const firstLoginRequest = createAsyncThunk("FIRST_LOGIN", (userData) => {
       token: Number(userData.token),
     })
     .then((r) => {
-      console.log("sor r data: ", r);
       return r.data;
     })
     .catch((error) => error.response.data.message);
@@ -28,7 +27,6 @@ const userReducer = createReducer(
   {},
   {
     [firstLoginRequest.fulfilled]: (state, action) => action.payload,
-    // [firstLoginRequest.rejected]: (state, action) => console.log(action),
     [createPassRequest.fulfilled]: (state, action) => action.payload,
   }
 );

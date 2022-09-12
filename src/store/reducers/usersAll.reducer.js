@@ -13,7 +13,14 @@ export const adminDeleteUser = createAsyncThunk(
     }
 );
 
-const initialState = {}
+const initialState = [{
+  imgUrl: '-',
+  empresa: '-',
+  fullname: '-',
+  email: '-',
+  createdAt: '-',
+  _id: '1'
+}]
 
 const usersAll = createReducer(
   initialState,

@@ -65,7 +65,7 @@ const UsersMobile = () => {
                 <Typography variant="h6">Usuarios finales</Typography>
                 <TablePagination
                     component="div"
-                    rowsPerPageOptions={-1}
+                    rowsPerPageOptions={[3]}
                     count={users.length}
                     labelRowsPerPage=""
                     rowsPerPage={rowsPerPage}
@@ -86,11 +86,11 @@ const UsersMobile = () => {
                             )
                             .map((user) => {
                                 return (
-                                    <TableRow>
+                                    <TableRow key={user._id}>
                                         <TableCell>
                                             <Avatar
                                                 alt="Remy Sharp"
-                                                src="/static/images/avatar/1.jpg"
+                                                src={user.imgUrl}
                                             />
                                         </TableCell>
                                         <TableCell>

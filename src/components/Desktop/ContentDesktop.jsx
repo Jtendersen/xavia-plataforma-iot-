@@ -1,7 +1,7 @@
 import { Box, Paper } from "@mui/material";
 import React from "react";
 import Header from "../Header";
-import Users from "./UsersDesktop";
+import Users from "../../commons/Users";
 
 const ContentDesktop = () => {
     return (

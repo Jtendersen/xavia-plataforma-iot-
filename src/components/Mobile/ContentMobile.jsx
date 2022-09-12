@@ -1,8 +1,8 @@
 import { Box, Paper } from "@mui/material";
 import Navbar from "./Navbar";
 import React from "react";
-import UsersMobile from "./UsersMobile";
 import HeaderMobile from "./HeaderMobile";
+import Users from "../../commons/Users";
 
 const ContentMobile = () => {
     return (
@@ -22,7 +22,7 @@ const ContentMobile = () => {
                     right: 0,
                 }}
             >
-                <UsersMobile />
+                <Users />
             </Paper>
         </Box>
     );

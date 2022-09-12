@@ -1,17 +1,17 @@
 import axios from "axios";
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 
-export const firstLoginRequest = createAsyncThunk("FIRST_LOGIN", (userData) => {
-  return axios
-    .post("/api/users/signup", {
-      email: userData.email,
-      token: Number(userData.token),
-    })
-    .then((r) => {
-      return r.data;
-    })
-    .catch((error) => error.response.data.message);
-});
+// export const firstLoginRequest = createAsyncThunk("FIRST_LOGIN", (userData) => {
+//   return axios
+//     .post("/api/users/signup", {
+//       email: userData.email,
+//       token: Number(userData.token),
+//     })
+//     .then((r) => {
+//       return r.data;
+//     })
+//     .catch((error) => error.response.data.message);
+// });
 
 export const loginRequest = createAsyncThunk("USER_LOGIN", (userData) => {
   return axios
@@ -20,7 +20,6 @@ export const loginRequest = createAsyncThunk("USER_LOGIN", (userData) => {
       password: userData.password,
     })
     .then((r) => {
-      console.log("sor r data: ", r);
       return r.data;
     })
     .catch((error) => error.response.data.message);
@@ -36,12 +35,17 @@ export const createPassRequest = createAsyncThunk("CREATE_PASS", (userData) => {
     .then((r) => r.data);
 });
 
+export const setUser = createAsyncThunk("SET_USER", (user) => {
+  return user;
+});
+
 const userReducer = createReducer(
   {},
   {
-    [firstLoginRequest.fulfilled]: (state, action) => action.payload,
+    // [firstLoginRequest.fulfilled]: (state, action) => action.payload,
     [loginRequest.fulfilled]: (state, action) => action.payload,
     [createPassRequest.fulfilled]: (state, action) => action.payload,
+    [setUser.fulfilled]: (state, action) => action.payload,
   }
 );
 

@@ -15,8 +15,8 @@ import plus from "../assets/plus.png";
 import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
-import { useDispatch, useSelector } from "react-redux";
-import { firstLoginRequest } from "../store/reducers/user.reducer";
+import { useSelector } from "react-redux";
+// import { firstLoginRequest } from "../store/reducers/user.reducer";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -71,9 +71,7 @@ function AwsCognito(props) {
 }
 
 export default function SignInSide() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("ESTE ES EL USER", user);
   let navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -115,15 +113,6 @@ export default function SignInSide() {
       email: data.get("email"),
       token: data.get("token"),
     };
-    dispatch(firstLoginRequest(userData)).then((response) => {
-      console.log("soy response: ", response);
-      console.log("soy EL user: ", user);
-      typeof response.payload === "string"
-        ? setErrorMsg(response.payload)
-        : setUserToShow(response.payload.fullname);
-
-      handleClickOpen();
-    });
   };
 
   function DialogSuccess() {

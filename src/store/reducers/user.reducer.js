@@ -8,6 +8,18 @@ export const firstLoginRequest = createAsyncThunk("FIRST_LOGIN", (userData) => {
       token: Number(userData.token),
     })
     .then((r) => {
+      return r.data;
+    })
+    .catch((error) => error.response.data.message);
+});
+
+export const loginRequest = createAsyncThunk("USER_LOGIN", (userData) => {
+  return axios
+    .post("/api/auth/login", {
+      email: userData.email,
+      password: userData.password,
+    })
+    .then((r) => {
       console.log("sor r data: ", r);
       return r.data;
     })
@@ -28,7 +40,7 @@ const userReducer = createReducer(
   {},
   {
     [firstLoginRequest.fulfilled]: (state, action) => action.payload,
-    // [firstLoginRequest.rejected]: (state, action) => console.log(action),
+    [loginRequest.fulfilled]: (state, action) => action.payload,
     [createPassRequest.fulfilled]: (state, action) => action.payload,
   }
 );

@@ -1,6 +1,5 @@
 const { generateToken } = require("../middlewares/auth");
 const AuthService = require("../services/auth.services");
-const { generateToken, validateToken } = require("../middlewares/auth");
 const errorHandler = require("../utils/errorHandler.utils");
 
 class AuthController {
@@ -15,9 +14,9 @@ class AuthController {
   static async login(req, res) {
     try {
       const user = await AuthService.login(req.body);
-      if (user === 404)return res.status(404).send(errorHandler(0, user));
-      if (user === 401)return res.status(401).send(errorHandler(4));
-      if (user === 402)return res.status(401).send(errorHandler(3));
+      if (user === 404) return res.status(404).send(errorHandler(0, user));
+      if (user === 401) return res.status(401).send(errorHandler(4));
+      if (user === 402) return res.status(401).send(errorHandler(3));
       // Genera el token de autenticación
       if (user.isActivated) {
         const { fullname, email, isActivated, imgUrl } = user;

@@ -7,18 +7,15 @@ class AuthController {
       return console.log(error);
     }
   }
-
   static async login(req, res) {
     try {
       const user = await AuthService.login(req.body);
-
       // Genera el token de autenticación
       if (user.name) {
         const { name, surname, email } = user;
         const token = generateToken({ name, surname, email });
         res.cookie("token", token);
       }
-
       return res.status(201).send(user);
     } catch (error) {
       return console.log(error);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import SideList from "../../commons/SideList";
 
 const Navbar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -22,6 +22,7 @@ const Navbar = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
+                sx={{ color: "white" }}
             >
                 <MenuOpenIcon />
             </Button>
@@ -30,14 +31,11 @@ const Navbar = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    "aria-labelledby": "basic-button",
+                PaperProps={{
+                    style: { backgroundColor: "#3D3D3D", color: "white" },
                 }}
             >
-                <MenuItem onClick={handleClose}>Perfil</MenuItem>
-                <MenuItem onClick={handleClose}>Usuarios finales</MenuItem>
-                <MenuItem onClick={handleClose}>Aplicaciones</MenuItem>
-                <MenuItem onClick={handleClose}>Ubicaciones</MenuItem>
+                <SideList />
             </Menu>
         </div>
     );

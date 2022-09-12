@@ -2,7 +2,7 @@ const Users = require("../models/Users");
 const { sendAccesCode } = require("../utils/emails");
 
 class UserService {
-  static async createUser({fullname, empresa, cuit, email,phone}) {
+  static async createUser({fullname, empresa, cuit, email,phone, imgUrl}) {
     try {
       const token = Math.floor(Math.random() * 99999);
       const user = new Users(
@@ -13,7 +13,8 @@ class UserService {
           email,
           phone,
           roles: ["user"],
-          activationCode:token
+          activationCode:token,
+          imgUrl
         }
       );
       sendAccesCode(email,token)

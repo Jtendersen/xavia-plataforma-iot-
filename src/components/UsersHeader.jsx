@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import React from "react";
 import AddUser from "../commons/AddUser";
 
-const Header = () => {
+const UsersHeader = () => {
     return (
         <Stack
             direction="row"
@@ -17,4 +17,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default UsersHeader;

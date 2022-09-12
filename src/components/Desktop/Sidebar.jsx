@@ -16,6 +16,7 @@ const Drawer = styled(MuiDrawer, {
         backgroundColor: "#3D3D3D",
         color: "#FFFFFF",
         width: drawerWidth,
+        height: "100vh",
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,

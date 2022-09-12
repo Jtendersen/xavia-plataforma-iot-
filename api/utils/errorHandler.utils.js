@@ -1,19 +1,22 @@
 const errorHandler = (code, returnData) => {
   const errorCodes = [
     {
-      message: "No Users Found",
+      message: "No se encontraron usuarios",
       returnData,
     },
     {
-      message: "Wrong User ID",
+      message: "User ID incorrecto",
       returnData,
     },
     {
-      message: "Incorrect field, no modifications has been made",
+      message: "Campo incorrecto, no se realizaron modificaciones",
       returnData,
     },
     {
-      message: "Incorrect Token",
+      message: "Token Incorrecto",
+    },
+    {
+      message: "Contraseña Incorrecta",
     },
   ];
   return errorCodes[code];

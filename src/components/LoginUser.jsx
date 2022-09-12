@@ -16,7 +16,10 @@ import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
 import { useDispatch, useSelector } from "react-redux";
-import { firstLoginRequest } from "../store/reducers/user.reducer";
+import {
+  firstLoginRequest,
+  loginRequest,
+} from "../store/reducers/user.reducer";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -43,8 +46,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        https://www.xaviaiot.com/
+      <Link color="inherit" href="https://www.xaviaiot.com/">
+        www.xaviaiot.com
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -73,7 +76,6 @@ function AwsCognito(props) {
 export default function SignInSide() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("ESTE ES EL USER", user);
   let navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -103,7 +105,7 @@ export default function SignInSide() {
   };
 
   const handleCloseOk = () => {
-    navigate("/passCreate", { replace: true });
+    navigate("/profile", { replace: true });
     setOpen(false);
   };
 
@@ -113,9 +115,9 @@ export default function SignInSide() {
     const data = new FormData(event.currentTarget);
     const userData = {
       email: data.get("email"),
-      token: data.get("token"),
+      password: data.get("password"),
     };
-    dispatch(firstLoginRequest(userData)).then((response) => {
+    dispatch(loginRequest(userData)).then((response) => {
       console.log("soy response: ", response);
       console.log("soy EL user: ", user);
       typeof response.payload === "string"
@@ -134,7 +136,7 @@ export default function SignInSide() {
         </Grid>
 
         <DialogTitle>
-          {"¡Bienvenido! "}
+          {"¡Bienvenido de nuevo! "}
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -148,18 +150,19 @@ export default function SignInSide() {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
+
         <DialogContentText id="alert-dialog-slide-description">
           {userToShow}
         </DialogContentText>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Ya sos parte de XAVIA IOT
+            Tu ultimo ingreso fue:
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
             <Button variant="contained" onClick={handleCloseOk}>
-              Crear contraseña
+              Ingresar a la plataforma
             </Button>
           </Grid>
         </DialogActions>
@@ -287,11 +290,11 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                name="token"
-                label="Clave de Acceso"
+                name="password"
+                label="Contraseña"
                 type={values.showPassword ? "text" : "password"}
-                id="token"
-                autoComplete="Clave de Acceso"
+                id="password"
+                autoComplete="Contraseña"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -324,13 +327,15 @@ export default function SignInSide() {
               >
                 Ingresar
               </Button>
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Recuerda mis datos"
               />
-
               <Grid container></Grid>
+
               <AwsCognito sx={{ mt: 5 }} />
+
               <Copyright sx={{ mt: 5 }} />
             </Box>
             <Container md={2}>

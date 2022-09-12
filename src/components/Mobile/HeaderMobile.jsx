@@ -9,7 +9,7 @@ const CustomTypography = styled(Typography)`
 
 const HeaderMobile = () => {
     const user = useSelector((state) => state.user);
-    if(user.length) {
+    if(user._id) {
     return (
         <Stack
             direction="column"
@@ -20,9 +20,9 @@ const HeaderMobile = () => {
             <Avatar
                 alt="Usuario"
                 src={user.imgUrl}
-                sx={{ width: 150, height: 150 }}
+                sx={{ width: 100, height: 100, backgroundColor: 'white' }}
             />
-            <CustomTypography sx={{ fontSize: "2rem" }}>
+            <CustomTypography sx={{ fontSize: "1.5rem" }}>
                 {user.fullname}
             </CustomTypography>
             <Stack
@@ -37,10 +37,10 @@ const HeaderMobile = () => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <CustomTypography sx={{ fontSize: "1.2rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
                         xx
                     </CustomTypography>
-                    <CustomTypography sx={{ fontSize: "1.2rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
                         Apps
                     </CustomTypography>
                 </Stack>
@@ -55,10 +55,10 @@ const HeaderMobile = () => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <CustomTypography sx={{ fontSize: "1.2rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
                         {user.devices.length}
                     </CustomTypography>
-                    <CustomTypography sx={{ fontSize: "1.2rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
                         Dispositivos
                     </CustomTypography>
                 </Stack>

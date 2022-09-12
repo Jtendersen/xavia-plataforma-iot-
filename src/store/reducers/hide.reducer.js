@@ -18,7 +18,7 @@ if (getWindowSize() < 600) {
 } else {
     initialState = {
         hide: false,
-        tableSize: 10
+        tableSize: 9
     }
 }
 

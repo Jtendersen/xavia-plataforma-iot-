@@ -6,6 +6,7 @@ const cors = require("cors");
 require("dotenv").config();
 require("./config/db");
 
+
 app.use(
   cors({
     origin: "http://localhost:3000",

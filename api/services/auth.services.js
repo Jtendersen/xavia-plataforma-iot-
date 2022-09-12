@@ -4,19 +4,33 @@ const { sendResetPassEmail, sendAccesCode} = require("../utils/emails");
 const { generateToken, validateToken } = require("../middlewares/auth");
 
 class AuthService {
-  static async login(body) {
-    console.log("ESTE ES EL BODY", body);
+  static async login({email, password}) {
     try {
-      const user = await Users.findOne({ email: body.email });
-
-      // Verifica que exista un usuario con el mail.
-      if (!user) return "Usuario o contraseña incorrectos";
-
-      // Valida que la contraseña escrita por el usuario, sea la almacenada en la db
-      if (!bcrypt.compareSync(body.password, user.password)) {
-        return "Usuario o contraseña incorrectos";
+      const user = await Users.findOne({ email: email });
+      // validates user exists
+      if (!user) return 404;//user doesn't exist
+      if (user.isActivated) {// Validates password
+        if (!bcrypt.compareSync(String(password), user.password)) {
+          return 401;//incorrect pass
+         }
       }
-      return user;
+      if (!user.isActivated) {
+          if (password !== user.activationCode) {
+          return 402; //token incorrect, returns
+        } 
+      }
+      const userOk = {
+        fullname: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        cuit: user.cuit,
+        empresa: user.empresa,
+        roles: user.roles,
+        devices: user.devices,
+        isActivated: user.isActivated,
+        activationCode: user.activationCode
+       }
+        return userOk
     } catch (error) {
       console.error(error);
     }

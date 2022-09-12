@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setQrCode } from '../store/reducers/deviceQrCode.reducer';
 
 const QrScanner = (props) => {
-  const [data, setData] = useState('No result');
+  const [data, setData] = useState(false);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const QrScanner = (props) => {
         onResult={(result, error) => {
           if (!!result) {
             setData(result?.text);
+          
           }
 
           if (!!error) {

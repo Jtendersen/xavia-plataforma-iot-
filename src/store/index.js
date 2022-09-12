@@ -4,6 +4,7 @@ import drawerOpen from "./reducers/drawerOpen.reducer";
 import userReducer from "./reducers/user.reducer";
 import usersAll from "./reducers/usersAll.reducer";
 import usersTracker from "./reducers/usersTracker.reducer";
+import deviceQrCode from  "./reducers/deviceQrCode.reducer"
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -11,7 +12,9 @@ const store = configureStore({
     drawer: drawerOpen,
     user: userReducer,
     tracker: usersTracker,
-    users: usersAll
+    users: usersAll,
+    deviceCode: deviceQrCode
+
 
   },
 });

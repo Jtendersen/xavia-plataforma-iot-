@@ -1,9 +1,11 @@
+const { generateToken } = require("../middlewares/auth");
 const AuthService = require("../services/auth.services");
 const { generateToken, validateToken } = require("../middlewares/auth");
 const errorHandler = require("../utils/errorHandler.utils");
 
 class AuthController {
   static async me(req, res) {
+    console.log("ESTO ES LO QUE DEVUELVE", req.user);
     try {
       res.send(req.user);
     } catch (error) {

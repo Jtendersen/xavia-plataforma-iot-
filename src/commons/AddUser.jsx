@@ -47,6 +47,7 @@ export default function AddUser() {
     const dispatch = useDispatch();
 
     // variables formulario
+    const imgUrl = useInput("imgUrl");
     const empresa = useInput("empresa");
     const cuit = useInput("cuit");
     const fullname = useInput("fullname");
@@ -66,6 +67,7 @@ export default function AddUser() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { data } = await axios.post("/api/users/create", {
+            imgUrl: imgUrl.value,
             empresa: empresa.value,
             cuit: cuit.value,
             fullname: fullname.value,
@@ -111,6 +113,17 @@ export default function AddUser() {
                 <Box component="form" onSubmit={handleSubmit}>
                     <DialogTitle>Añadir nuevo usuario</DialogTitle>
                     <DialogContent>
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            label="Imagen (esto es temporal)"
+                            type="text"
+                            id="empresa"
+                            fullWidth
+                            variant="standard"
+                            {...imgUrl}
+                        />
                         <TextField
                             autoFocus
                             required

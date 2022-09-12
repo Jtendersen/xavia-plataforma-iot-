@@ -299,7 +299,7 @@ export default function SignInSide() {
                   margin: "auto",
                   height: "auto",
                   width: "12%",
-                  zIndex: 1900,
+                  zIndex: 1000,
                 }}
                 alt="plus.png"
               />

@@ -32,7 +32,7 @@ function CustomToolbar() {
     );
 }
 
-const UsersDesktop = () => {
+const Users= () => {
     // hooks redux
     const {hide, tableSize} = useSelector((state) => state.hide);
     const users = useSelector((state) => state.users);
@@ -135,7 +135,7 @@ const UsersDesktop = () => {
                 getRowId={(row) => row._id}
                 components={{ Toolbar: CustomToolbar }}
                 density="standard"
-                disableSelectionOnClick='true'
+                disableSelectionOnClick={true}
                 componentsProps={{
                     toolbar: {
                         showQuickFilter: true,
@@ -150,4 +150,4 @@ const UsersDesktop = () => {
     );
 };
 
-export default UsersDesktop;
+export default Users;

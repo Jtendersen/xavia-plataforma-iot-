@@ -16,10 +16,7 @@ import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  firstLoginRequest,
-  loginRequest,
-} from "../store/reducers/user.reducer";
+import { loginRequest } from "../store/reducers/user.reducer";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -109,6 +106,11 @@ export default function SignInSide() {
     setOpen(false);
   };
 
+  const handleCloseNotActivated = () => {
+    navigate("/passCreate", { replace: true });
+    setOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -118,8 +120,6 @@ export default function SignInSide() {
       password: data.get("password"),
     };
     dispatch(loginRequest(userData)).then((response) => {
-      console.log("soy response: ", response);
-      console.log("soy EL user: ", user);
       typeof response.payload === "string"
         ? setErrorMsg(response.payload)
         : setUserToShow(response.payload.fullname);
@@ -155,15 +155,21 @@ export default function SignInSide() {
           {userToShow}
         </DialogContentText>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          {/* <DialogContentText id="alert-dialog-slide-description">
             Tu ultimo ingreso fue:
-          </DialogContentText>
+          </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-            <Button variant="contained" onClick={handleCloseOk}>
-              Ingresar a la plataforma
-            </Button>
+            {user.isActivated ? (
+              <Button variant="contained" onClick={handleCloseOk}>
+                Ingresar a la plataforma
+              </Button>
+            ) : (
+              <Button variant="contained" onClick={handleCloseNotActivated}>
+                Crea tu clave
+              </Button>
+            )}
           </Grid>
         </DialogActions>
       </>

@@ -89,7 +89,7 @@ export default function SignInSide() {
     setOpenSuccess(true);
   };
   const handleCloseSuccess = () => {
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
     setOpenSuccess(false);
   };
   const handleClickOpenWrong = () => {

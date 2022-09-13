@@ -22,11 +22,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../assets/LogoXavia.png";
 import React from "react";
 import { setView } from "../store/reducers/views.reducer";
+import { logoutRequest } from "../store/reducers/user.reducer";
+import { useNavigate } from "react-router-dom";
 
 // SideList es responsive. Se usa en ambas vistas.
 const SideList = () => {
     const dispatch = useDispatch();
     const open = useSelector((state) => state.drawer);
+    const navigate = useNavigate();
 
     // toggleDrawer setea el estado en reducer cuando se abre o no el sidebar.
     const toggleDrawer = () => {
@@ -35,6 +38,12 @@ const SideList = () => {
 
     const toggleView = (selectedOption) => {
         dispatch(setView(selectedOption));
+    };
+
+    const logOut = () => {
+        dispatch(logoutRequest()).then(() => {
+            navigate("/");
+        });
     };
 
     return (
@@ -80,7 +89,10 @@ const SideList = () => {
                     </Box>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" onClick={()=>toggleView('profile')}>
+                    <ListItemButton
+                        component="a"
+                        onClick={() => toggleView("profile")}
+                    >
                         <ListItemIcon>
                             <Home sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -88,7 +100,10 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" onClick={()=>toggleView('usuariosFinales')}>
+                    <ListItemButton
+                        component="a"
+                        onClick={() => toggleView("usuariosFinales")}
+                    >
                         <ListItemIcon>
                             <AddBusiness sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -96,7 +111,10 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" onClick={()=>toggleView('aplicaciones')}>
+                    <ListItemButton
+                        component="a"
+                        onClick={() => toggleView("aplicaciones")}
+                    >
                         <ListItemIcon>
                             <RssFeedIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -104,7 +122,10 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" onClick={()=>toggleView('ubicaciones')}>
+                    <ListItemButton
+                        component="a"
+                        onClick={() => toggleView("ubicaciones")}
+                    >
                         <ListItemIcon>
                             <LocationOnIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -115,7 +136,7 @@ const SideList = () => {
 
             <List>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#home">
+                    <ListItemButton component="a" onClick={() => logOut()}>
                         <ListItemIcon>
                             <LogoutIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>

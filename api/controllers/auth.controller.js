@@ -18,8 +18,8 @@ class AuthController {
       if (user === 402) return res.status(401).send(errorHandler(3));
       // Genera el token de autenticación
       if (user.isActivated) {
-        const { fullname, email, isActivated, imgUrl } = user;
-        const token = generateToken({ fullname, email, isActivated, imgUrl });
+        const { fullname, email, isActivated, _id } = user;
+        const token = generateToken({ fullname, email, isActivated, _id });
         res.cookie("token", token);
       }
       return res.status(201).send(user);

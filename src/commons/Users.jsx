@@ -45,14 +45,17 @@ function CustomToolbar() {
 
 const Users = () => {
     // hooks redux
-    const { hide, tableSize } = useSelector((state) => state.hide);
+    const { hide, tableSize, marginHeader } = useSelector(
+        (state) => state.hide
+    );
     const users = useSelector((state) => state.users);
     const views = useSelector((state) => state.views);
     const dispatch = useDispatch();
 
     // hooks state
     const [deleteAction, setDeleteAction] = useState(true);
-    const [tableHeight, setTableHeight] = useState({ xs: "40vh", sm: "70vh" });
+    const [size, setSize] = useState(4);
+    const [tableHeight, setTableHeight] = useState({ xs: "30vh", sm: "70vh" });
 
     // función para obtener ancho de pantalla
     function getWindowSize() {
@@ -64,16 +67,30 @@ const Users = () => {
     useEffect(() => {
         function handleWindowResize() {
             if (getWindowSize() < 600) {
-                dispatch(setHide({ hide: true, tableSize: 4 }));
+                if (views === "profile") setSize(4);
+                if (views === "usuariosFinales") setSize(7)
+                dispatch(
+                    setHide({
+                        hide: true,
+                        tableSize: size,
+                        marginHeader: { marginTop: "0!important" },
+                    })
+                );
             } else {
-                dispatch(setHide({ hide: false, tableSize: 9 }));
+                dispatch(
+                    setHide({
+                        hide: false,
+                        tableSize: 9,
+                        marginHeader: { marginTop: "" },
+                    })
+                );
             }
         }
         window.addEventListener("resize", handleWindowResize);
         return () => {
             window.removeEventListener("resize", handleWindowResize);
         };
-    }, [dispatch]);
+    }, [dispatch, views, size]);
 
     // actualiza la lista de usuarios
     useEffect(() => {
@@ -83,7 +100,7 @@ const Users = () => {
     // cambia el tamaño de la tabla dependiendo de la vista
     useEffect(() => {
         if (views === "profile") {
-            setTableHeight({ xs: "40vh", sm: "70vh" });
+            setTableHeight({ xs: "30vh", sm: "70vh" });
         } else {
             setTableHeight({ xs: "80vh", sm: "80vh" });
         }
@@ -149,7 +166,7 @@ const Users = () => {
     return (
         <Box
             sx={{
-                minHeight: 400,
+                minHeight: 350,
                 width: "100%",
             }}
             height={{ xs: tableHeight.xs, sm: tableHeight.sm }}
@@ -169,7 +186,13 @@ const Users = () => {
                 }}
                 pageSize={tableSize}
                 rowsPerPageOptions={[tableSize]}
-                sx={{ border: "none" }}
+                sx={{
+                    border: "none",
+                    "& .MuiDataGrid-columnHeaders": {
+                        display: { xs: "none", sm: "flex" },
+                    },
+                    "& .MuiDataGrid-virtualScroller": marginHeader,
+                }}
             />
         </Box>
     );

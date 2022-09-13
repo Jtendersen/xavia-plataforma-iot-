@@ -19,7 +19,7 @@ function Profile() {
         <LoadingScreen />;
     } else {
         return (
-            <Stack direction="row" sx={{ height: "100vh" }}>
+            <Stack direction="row" >
                 <Box
                     sx={{ display: { xs: "none", sm: "flex" }, width: "100%" }}
                 >
@@ -27,7 +27,7 @@ function Profile() {
                     <ContentDesktop />
                 </Box>
                 <Box
-                    sx={{ display: { xs: "flex", sm: "none" }, width: "100%" }}
+                    sx={{ display: { xs: "flex", sm: "none" }, width: "100%" , height: "100vh"}}
                 >
                     <ContentMobile />
                 </Box>

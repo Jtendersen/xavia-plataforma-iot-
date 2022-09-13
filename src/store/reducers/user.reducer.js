@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 
 // export const firstLoginRequest = createAsyncThunk("FIRST_LOGIN", (userData) => {
 //   return axios
@@ -43,10 +43,7 @@ export const createPassRequest = createAsyncThunk("CREATE_PASS", (userData) => {
     })
     .then((r) => r.data);
 });
-
-export const setUser = createAsyncThunk("SET_USER", (user) => {
-  return user;
-});
+export const setUser = createAction("SET_USER")
 
 
 export const getUserRequest = createAsyncThunk("GET_USER", (userId) => {
@@ -61,7 +58,7 @@ const userReducer = createReducer(
     // [firstLoginRequest.fulfilled]: (state, action) => action.payload,
     [loginRequest.fulfilled]: (state, action) => action.payload,
     [createPassRequest.fulfilled]: (state, action) => action.payload,
-    [setUser.fulfilled]: (state, action) => action.payload,
+    [setUser]: (state, action) => action.payload,
     [logoutRequest.fulfilled]: (state, action) => action.payload,
     [getUserRequest.fulfilled]: (state, action) => action.payload
   }

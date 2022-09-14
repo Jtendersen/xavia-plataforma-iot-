@@ -101,7 +101,6 @@ export default function SignInSide() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("ESTA ES LA PREVIOUS DATA DE USER", previousUserData);
     const data = new FormData(event.currentTarget);
     const userPass = {
       newPassword: data.get("newPassword"),
@@ -114,11 +113,8 @@ export default function SignInSide() {
         password: userPass.newPassword,
         token: previousUserData.activationCode,
       };
-      console.log("ESTE ES EL USER DATA QUE SE VA A DESPACHAR", userData);
       dispatch(createPassRequest(userData)).then((response) => {
-        console.log("LA BENDITA RESPONSE", response.payload);
         handleClickOpenSuccess();
-        // console.log("EL BENDITO USER", user);
       });
     } else handleClickOpenWrong();
   };

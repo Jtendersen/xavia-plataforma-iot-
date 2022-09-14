@@ -155,9 +155,9 @@ export default function SignInSide() {
           {userToShow}
         </DialogContentText>
         <DialogContent>
-          {/* <DialogContentText id="alert-dialog-slide-description">
-            Tu ultimo ingreso fue:
-          </DialogContentText> */}
+          <DialogContentText id="alert-dialog-slide-description">
+            Ya sos parte de XAVIA IOT
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
@@ -321,7 +321,11 @@ export default function SignInSide() {
                 }}
               />
               <Grid item xs>
-                <Link href="#" variant="body2" sx={{ color: "#3300B8" }}>
+                <Link
+                  href="/passforgot"
+                  variant="body2"
+                  sx={{ color: "#3300B8" }}
+                >
                   ¿Olvidaste tu contraseña?
                 </Link>
               </Grid>

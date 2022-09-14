@@ -2,8 +2,6 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -15,8 +13,7 @@ import plus from "../assets/plus.png";
 import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
-import { useSelector } from "react-redux";
-// import { firstLoginRequest } from "../store/reducers/user.reducer";
+import { useDispatch } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,10 +22,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
+import { resetPassRequest } from "../store/reducers/user.reducer";
 import { Container, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -52,34 +50,20 @@ function Copyright(props) {
   );
 }
 
-function AwsCognito(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      <Link
-        color="inherit"
-        href="https://xavia-users-auth.auth.sa-east-1.amazoncognito.com/login?client_id=52bqus32h9n3va4s93nlsvgj0o&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/profile"
-      >
-        Cognito Login
-      </Link>{" "}
-    </Typography>
-  );
-}
-
-export default function SignInSide() {
-  const user = useSelector((state) => state.user);
+const ResetPassword = () => {
+  const { resetToken } = useParams();
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openWrong, setOpenWrong] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
   const [userToShow, setUserToShow] = React.useState("");
   const [values, setValues] = React.useState({
     password: "",
+    repeatedPassword: "",
     showPassword: false,
+    showRepeatedPassword: false,
   });
 
   const handleClickShowPassword = () => {
@@ -93,121 +77,121 @@ export default function SignInSide() {
     event.preventDefault();
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const handleClickShowRepeatedPassword = () => {
+    setValues({
+      ...values,
+      showRepeatedPassword: !values.showRepeatedPassword,
+    });
   };
 
-  const handleCloseOk = () => {
-    navigate("/passCreate", { replace: true });
-    setOpen(false);
+  const handleMouseDownRepeatedPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClickOpenSuccess = () => {
+    setOpenSuccess(true);
+  };
+  const handleCloseSuccess = () => {
+    navigate("/", { replace: true });
+    setOpenSuccess(false);
+  };
+  const handleClickOpenWrong = () => {
+    setOpenWrong(true);
+  };
+  const handleCloseWrong = () => {
+    setOpenWrong(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const data = new FormData(event.currentTarget);
-    const userData = {
-      email: data.get("email"),
-      token: data.get("token"),
+    const userPass = {
+      newPassword: data.get("newPassword"),
+      repeatNewPassword: data.get("repeatNewPassword"),
     };
+
+    if (userPass.newPassword === userPass.repeatNewPassword) {
+      const userData = {
+        password: userPass.newPassword,
+        token: resetToken,
+      };
+      dispatch(resetPassRequest(userData)).then((response) => {
+        if (typeof response.payload === "string") {
+          setErrorMsg(response.payload);
+          handleClickOpenWrong();
+        } else {
+          setUserToShow(response.payload.fullname);
+          handleClickOpenSuccess();
+        }
+      });
+    } else {
+      setErrorMsg("Las contraseñas ingresadas no coinciden");
+      handleClickOpenWrong();
+    }
   };
-
-  function DialogSuccess() {
-    return (
-      <>
-        <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-          <CheckCircleIcon fontSize="large" color="success" />
-        </Grid>
-
-        <DialogTitle>
-          {"¡Bienvenido! "}
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContentText id="alert-dialog-slide-description">
-          {userToShow}
-        </DialogContentText>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Ya sos parte de XAVIA IOT
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-            <Button variant="contained" onClick={handleCloseOk}>
-              Crear contraseña
-            </Button>
-          </Grid>
-        </DialogActions>
-      </>
-    );
-  }
-
-  function DialogError() {
-    return (
-      <>
-        <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-          <CancelIcon fontSize="large" color="error" />
-        </Grid>
-
-        <DialogTitle>
-          {"¡ERROR!"}
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {errorMsg}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
-            <Button variant="contained" onClick={handleClose}>
-              Intenta de nuevo
-            </Button>
-          </Grid>
-        </DialogActions>
-      </>
-    );
-  }
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
 
+        {/* Dialog in Success Case */}
         <Dialog
-          open={open}
+          open={openSuccess}
           TransitionComponent={Transition}
           keepMounted
-          onClose={handleClose}
+          onClose={handleCloseSuccess}
           aria-describedby="alert-dialog-slide-description"
           align="center"
         >
-          {user.fullname ? <DialogSuccess /> : <DialogError />}
+          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+            <CheckCircleIcon fontSize="large" color="success" />
+          </Grid>
+
+          <DialogTitle>{"¡Bienvenido!"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              {userToShow}
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-slide-description">
+              Contraseña cambiada con éxito
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+              <Button variant="contained" onClick={handleCloseSuccess}>
+                Ingresar con tu nueva clave
+              </Button>
+            </Grid>
+          </DialogActions>
+        </Dialog>
+
+        {/* Dialog in Wrong Token Case */}
+        <Dialog
+          open={openWrong}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseWrong}
+          aria-describedby="alert-dialog-slide-description"
+          align="center"
+        >
+          <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+            <CancelIcon fontSize="large" color="error" />
+          </Grid>
+
+          <DialogTitle>{"¡ERROR!"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              {errorMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
+              <Button variant="contained" onClick={handleCloseWrong}>
+                Intenta de nuevo
+              </Button>
+            </Grid>
+          </DialogActions>
         </Dialog>
 
         <Grid
@@ -266,21 +250,12 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="token"
-                label="Clave de Acceso"
+                id="newPassword"
+                label="Nueva Contraseña"
                 type={values.showPassword ? "text" : "password"}
-                id="token"
-                autoComplete="Clave de Acceso"
+                name="newPassword"
+                autoComplete="newPassword"
+                autoFocus
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -300,26 +275,45 @@ export default function SignInSide() {
                   ),
                 }}
               />
-              <Grid item xs>
-                <Link href="#" variant="body2" sx={{ color: "#3300B8" }}>
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </Grid>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="repeatNewPassword"
+                label="Repetir nueva contraseña"
+                type={values.showRepeatedPassword ? "text" : "password"}
+                id="repeatNewPassword"
+                autoComplete="Repetir nueva contraseña"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowRepeatedPassword}
+                        onMouseDown={handleMouseDownRepeatedPassword}
+                        edge="end"
+                      >
+                        {values.showRepeatedPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#3300B8" }}
               >
-                Ingresar
+                Enviar
               </Button>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Recuerda mis datos"
-              />
 
               <Grid container></Grid>
-              <AwsCognito sx={{ mt: 5 }} />
               <Copyright sx={{ mt: 5 }} />
             </Box>
             <Container md={2}>
@@ -363,4 +357,6 @@ export default function SignInSide() {
       </Grid>
     </ThemeProvider>
   );
-}
+};
+
+export default ResetPassword;

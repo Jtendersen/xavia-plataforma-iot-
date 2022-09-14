@@ -26,7 +26,9 @@ const UserActions = ({ params, deleteAction, setDeleteAction }) => {
     return (
         <Box>
             <IconButton>
+
                 <KeepMountedModal userParams={params.id}/>
+
             </IconButton>
 
             <IconButton>

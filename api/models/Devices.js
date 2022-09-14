@@ -1,23 +1,33 @@
 const mongoose = require("mongoose");
 
-const DevicesSchema = new mongoose.Schema(
+const DeviceSchema = new mongoose.Schema(
   {
     qrCode: {
       type: String,
-    },
-    name: {
-      type: String,
-      required: true,
+      required : true,
       unique: true,
     },
-    users: {
-      type: Array,
+    typeOfDevice: {
+      type: String,
     },
-    medidas: {
+    gatewayLora:{
+      type:String,
+    },
+    measuresAmount:{
+      type:String,
+    },
+    typeOfTracking:{
+      type:String,
+    },
+    users: {
+      type: String,
+      required : true,
+    },
+    measures: {
       type: Array,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Devices", DevicesSchema);
+module.exports = mongoose.model("Devices", DeviceSchema);

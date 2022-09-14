@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import ProfileHeader from "../ProfileHeader";
 import Aplicaciones from "../Aplicaciones";
 import Ubicaciones from "../Ubicaciones";
+import Historico from "../Historico";
+import UserProfile from "../UserProfile";
 
-
-const ContentDesktop = () => {
+const UserDesktop = () => {
     const views = useSelector((state) => state.views);
     return (
         <Box bgcolor="#EAE1D8" flex={8} p={2}>
@@ -24,16 +25,17 @@ const ContentDesktop = () => {
                 }}
             >
                 {views === "profile" || views === "usuariosFinales" ? (
-                    <Users />
+                    <UserProfile />
                 ) : (
                     <></>
                 )}
 
                 {views === "aplicaciones" ? <Aplicaciones /> : <></>}
                 {views === "ubicaciones" ? <Ubicaciones /> : <></>}
+                {views === "historico" ? <Historico /> : <></>}
             </Paper>
         </Box>
     );
 };
 
-export default ContentDesktop;
+export default UserDesktop;

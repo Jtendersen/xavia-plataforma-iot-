@@ -56,7 +56,7 @@ const HeaderMobile = () => {
                     spacing={1}
                 >
                     <CustomTypography sx={{ fontSize: "0.9rem" }}>
-                        {user.devices.length}
+                        {user.devices?.length}
                     </CustomTypography>
                     <CustomTypography sx={{ fontSize: "0.9rem" }}>
                         Dispositivos

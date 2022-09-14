@@ -13,7 +13,7 @@ import plus from "../assets/plus.png";
 import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -23,9 +23,10 @@ import Slide from "@mui/material/Slide";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
-import { createPassRequest } from "../store/reducers/user.reducer";
+import { resetPassRequest } from "../store/reducers/user.reducer";
 import { Container, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -49,13 +50,15 @@ function Copyright(props) {
   );
 }
 
-export default function SignInSide() {
+const ResetPassword = () => {
+  const { resetToken } = useParams();
   const dispatch = useDispatch();
-  const previousUserData = useSelector((state) => state.user);
   let navigate = useNavigate();
 
   const [openSuccess, setOpenSuccess] = React.useState(false);
   const [openWrong, setOpenWrong] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+  const [userToShow, setUserToShow] = React.useState("");
   const [values, setValues] = React.useState({
     password: "",
     repeatedPassword: "",
@@ -109,14 +112,22 @@ export default function SignInSide() {
 
     if (userPass.newPassword === userPass.repeatNewPassword) {
       const userData = {
-        email: previousUserData.email,
         password: userPass.newPassword,
-        token: previousUserData.activationCode,
+        token: resetToken,
       };
-      dispatch(createPassRequest(userData)).then((response) => {
-        handleClickOpenSuccess();
+      dispatch(resetPassRequest(userData)).then((response) => {
+        if (typeof response.payload === "string") {
+          setErrorMsg(response.payload);
+          handleClickOpenWrong();
+        } else {
+          setUserToShow(response.payload.fullname);
+          handleClickOpenSuccess();
+        }
       });
-    } else handleClickOpenWrong();
+    } else {
+      setErrorMsg("Las contraseñas ingresadas no coinciden");
+      handleClickOpenWrong();
+    }
   };
 
   return (
@@ -140,13 +151,16 @@ export default function SignInSide() {
           <DialogTitle>{"¡Bienvenido!"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Contraseña creada con éxito
+              {userToShow}
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-slide-description">
+              Contraseña cambiada con éxito
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Grid sx={{ padding: "10%" }} container justifyContent={"center"}>
               <Button variant="contained" onClick={handleCloseSuccess}>
-                Ingresar a la plataforma
+                Ingresar con tu nueva clave
               </Button>
             </Grid>
           </DialogActions>
@@ -168,7 +182,7 @@ export default function SignInSide() {
           <DialogTitle>{"¡ERROR!"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Las contraseñas ingresadas no coinciden
+              {errorMsg}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -343,4 +357,6 @@ export default function SignInSide() {
       </Grid>
     </ThemeProvider>
   );
-}
+};
+
+export default ResetPassword;

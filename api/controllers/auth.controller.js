@@ -46,6 +46,8 @@ class AuthController {
   }
 
   static async resetPassword(req, res) {
+    console.log("este es el body que llega", req.body);
+
     try {
       const message = await AuthService.resetPassword(req.body);
       return res.status(200).send(message);

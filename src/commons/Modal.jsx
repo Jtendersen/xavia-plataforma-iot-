@@ -13,8 +13,13 @@ import { LinearProgress } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import QrScanner from "./QrScanner";
-import qr from "../assets/exampleQR.png"
+import qr from "../assets/exampleQR.png";
 import Image from "mui-image";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { setQrCode } from "../store/reducers/deviceQrCode.reducer";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -60,13 +65,37 @@ const style = {
   p: 4,
 };
 
-export default function KeepMountedModal() {
+export default function KeepMountedModal({ userParams }) {
   const [geolocalizador, setGeolocalizador] = React.useState([]);
   const [gateway, setGateway] = React.useState([]);
+  const [mediciones, setMediciones] = React.useState([]);
+  const [trackeo, setTrackeo] = React.useState([]);
+  const [camOn, setCamOn] = useState(false);
+  const dispatch = useDispatch();
+
+  //MANEJADORES DE INPUTS
+  const handleGeolocalizador = (event) => {
+    setGeolocalizador(event.target.value);
+  };
+  const handleGateway = (event) => {
+    setGateway(event.target.value);
+  };
+  const handleMediciones = (event) => {
+    setMediciones(event.target.value);
+  };
+  const handleTrackeo = (event) => {
+    setTrackeo(event.target.value);
+  };
+
+  //ESTADO DE INFO STATE
+  const dataQr = useSelector((state) => state.deviceCode);
 
   /* MODAL 1 */
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    console.log("params", userParams);
+  };
   const handleClose = () => setOpen(false);
 
   /* MODAL 2 */
@@ -80,18 +109,45 @@ export default function KeepMountedModal() {
   /* MODAL 3 */
   const [openTres, setOpentres] = React.useState(false);
   const handleOpenTres = () => {
+    setCamOn(true);
     setOpentres(true);
     setOpenDos(false);
   };
   const handleCloseTres = () => setOpentres(false);
 
-  const handleGeolocalizador = (event) => {
-    setGeolocalizador(event.target.value);
+  /* MODAL 4 */
+  const [openFour, setOpenFour] = React.useState(false);
+  const handleOpenfour = () => {
+    setCamOn(false);
+    setOpentres(false);
+    setOpenFour(true);
   };
-  const handleGateway = (event) => {
-    setGateway(event.target.value);
+  const handleCloseFour = () => setOpenFour(false);
+
+  /* MODAL 5 */
+  const [openFive, setOpenFive] = React.useState(false);
+  const handleOpenFive = () => {
+    setCamOn(false);
+    setOpenFour(false);
+    setOpenFive(true);
   };
-  const dataQr = useSelector((state) => state.deviceCode);
+  const handleCloseFive = () => {
+    setOpenFive(false);
+    const devices = {
+      qrCode: dataQr /*  */,
+      typeOfDevice: geolocalizador,
+      gatewayLora: gateway,
+      measuresAmount: mediciones,
+      typeOfTrackin: trackeo,
+      users: userParams,
+    };
+
+    axios
+      .post("http://localhost:3001/api/device/register", devices)
+      .then((res) => console.log(res));
+
+    dispatch(setQrCode(null));
+  };
 
   return (
     <div>
@@ -99,7 +155,8 @@ export default function KeepMountedModal() {
         <AddSharpIcon color="success" fontSize="large" />
       </Button>
 
-      {/* Modal 1/3 */}
+      {/* Modal 1/3 ELEGIR GEOLOCALIZADOR Y GATEWAY*/}
+
       <Modal
         keepMounted
         open={open}
@@ -108,23 +165,24 @@ export default function KeepMountedModal() {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style}>
-          <Typography
-            id="keep-mounted-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ my: 5 }}
-          >
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
             Asignación de dispositivos
           </Typography>
-          <Box sx={{ flexGrow: 1, mb: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={2}>
-                <Typography variant="body2" align="center">
+
+          {/*BARRA DE ESTADO  */}
+          <Box sx={{ mr: 2 }}>
+            <Grid container>
+              <Grid sx={{ mr: 3 }}>
+                <Typography variant="caption" align="center">
                   1 de 3
                 </Typography>
               </Grid>
               <Grid item xs={10}>
-                <LinearProgress variant="determinate" value="33" />
+                <LinearProgress
+                  color="success"
+                  variant="determinate"
+                  value="33"
+                />
               </Grid>
             </Grid>
           </Box>
@@ -149,9 +207,12 @@ export default function KeepMountedModal() {
                 value={geolocalizador}
                 onChange={handleGeolocalizador}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={"Micro Tracker"}>Micro Tracker</MenuItem>
+                <MenuItem value={"Compact Tracker"}>Compact Tracker</MenuItem>
+                <MenuItem value={"Industrial Tracker"}>
+                  Industrial Tracker
+                </MenuItem>
+                <MenuItem value={"Smart Badge"}>Smart Badge</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -163,7 +224,7 @@ export default function KeepMountedModal() {
               component="h4"
               sx={{ my: 2 }}
             >
-              Gateway
+              Gateway LoRa
             </Typography>
             <FormControl fullWidth>
               <InputLabel id="gatewayLabel">Elegir Gateway</InputLabel>
@@ -173,29 +234,41 @@ export default function KeepMountedModal() {
                 value={gateway}
                 onChange={handleGateway}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={"Advantech"}>Advantech</MenuItem>
+                <MenuItem value={"Cisco"}>Cisco</MenuItem>
+                <MenuItem value={"Dragino"}>Dragino</MenuItem>
+                <MenuItem value={"Generic"}>Generic</MenuItem>
+                <MenuItem value={"Kerlink"}>Kerlink</MenuItem>
+                <MenuItem value={"Miromico"}>Miromico</MenuItem>
+                <MenuItem value={"Motorola Solutions"}>
+                  Motorola Solutions
+                </MenuItem>
+                <MenuItem value={"Option"}>Option</MenuItem>
+                <MenuItem value={"RAD"}>RAD</MenuItem>
               </Select>
             </FormControl>
           </div>
           {/* BUTTON SIGUIENTE */}
-          <Button
-            onClick={handleOpenDos}
-            variant="contained"
-            color="mobile"
-            sx={{
-              color: "white",
-              mt: 3,
-            }}
-            size="large"
-          >
-            Siguiente
-          </Button>
+          <Box textAlign={"center"}>
+            <Button
+              onClick={handleOpenDos}
+              variant="contained"
+              color="mobile"
+              sx={{
+                color: "white",
+                mt: 4,
+                px: 8,
+                py: 2,
+              }}
+              size="large"
+            >
+              Siguiente
+            </Button>
+          </Box>
         </Box>
       </Modal>
 
-      {/* Modal 2/3 */}
+      {/* Modal 2/3  ESCANEAR QR*/}
       <Modal
         keepMounted
         open={openDos}
@@ -204,108 +277,315 @@ export default function KeepMountedModal() {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style}>
-          <Typography
-            id="keep-mounted-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ my: 5 }}
-          >
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
             Asignación de dispositivos
           </Typography>
-          <Box sx={{ flexGrow: 1, mb: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={2}>
-                <Typography variant="body2" align="center">
+          {/*BARRA DE ESTADO  */}
+          <Box sx={{ mr: 2 }}>
+            <Grid container>
+              <Grid sx={{ mr: 3 }}>
+                <Typography variant="caption" align="center">
                   2 de 3
                 </Typography>
               </Grid>
               <Grid item xs={10}>
-                <LinearProgress variant="determinate" value="66" />
+                <LinearProgress
+                  color="success"
+                  variant="determinate"
+                  value="66"
+                />
               </Grid>
             </Grid>
           </Box>
-
           <Typography
             id="keep-mounted-modal-title"
-            variant="h6"
-            component="h2"
+            variant="body1"
             sx={{
-              p: 2,
-              flexDirection: "column",
-              borderRadius: "16px",
+              pt: 4,
             }}
           >
             Escanear Código QR que se encuentra en el dispositivo
           </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={6} md={2}></Grid>
-            <Grid item xs={6} md={8}>
-            <Image
-              sx={{ display: { xs: "none", md: "block" } }}
-              src={qr}
-              style={{
-                justifyContent: "center",
-                height: "80%",
-                width: "80%",
-                padding: "10%",
+          {/*IMAGE QR  */}
+          <Image
+            sx={{ display: { xs: "none", md: "block" } }}
+            src={qr}
+            style={{
+              justifyContent: "center",
+              height: "50%",
+              width: "50%",
+              padding: "5%",
+            }}
+            alt="XaviaWelcome.png"
+          />{" "}
+          {/*BOTON SCANEAR QR  */}
+          <Box textAlign={"center"}>
+            <Button
+              onClick={handleOpenTres}
+              variant="contained"
+              color="mobile"
+              sx={{
+                color: "white",
+                py: 2,
               }}
-              alt="XaviaWelcome.png"
-            />
-              <Button
-                onClick={handleOpenTres}
-                variant="contained"
-                color="mobile"
-                sx={{
-                  color: "white",
-                }}
-                size="large"
-              >
-                Escanear Código QR
-              </Button>
-            </Grid>
-            <Grid item xs={6} md={2}></Grid>
-          </Grid>
+              size="large"
+            >
+              Escanear Código QR
+            </Button>
+          </Box>
         </Box>
       </Modal>
 
-      {/* Modal 3/3 */}
-      <Modal keepMounted open={openTres} onClose={handleCloseTres}>
-        <Box sx={style}>
-          {dataQr ? (
-            <>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h2"
-                sx={{ my: 5 }}
-              >
-                Estás escaneando el dispositivo {dataQr}?
-              </Typography>
-              <Button
-                variant="contained"
-                color="mobile"
-                sx={{
-                  color: "white",
-                }}
-                size="large"
-              >
-                SI
-              </Button>
-              <Button
-                variant="outlined"
-                color="mobile"
-                sx={{
-                  color: "white",
-                }}
-                size="large"
-              >
-                NO
-              </Button>
-            </>
-          ) : (
+      {/* Modal 3/3  ENCIENDE CAMARA ESCANEO*/}
+      {
+        <Modal keepMounted open={openTres} onClose={handleCloseTres}>
+          <Box sx={style}>
+            {dataQr ? (
+              <>
+                <Box sx={{ p: 6 }}>
+                  <Typography
+                    textAlign={"center"}
+                    id="keep-mounted-modal-title"
+                    variant="body1"
+                    sx={{ pb: 4 }}
+                  >
+                    ¿Estás escaneando el dispositivo #{dataQr}?
+                  </Typography>
+                  <Box textAlign={"center"}>
+                    {/* BUTTON SI */}
+                    <Button
+                      onClick={handleOpenfour}
+                      variant="contained"
+                      color="mobile"
+                      sx={{
+                        color: "white",
+                        py: 2,
+                        px: 6,
+                      }}
+                      size="large"
+                    >
+                      SI
+                    </Button>
+                    {/* BUTTON SI */}
+                    <Button
+                      variant="outlined"
+                      color="mobile"
+                      sx={{
+                        ml: 1,
+                        py: 2,
+                        px: 6,
+                        color: "mobile",
+                      }}
+                      size="large"
+                    >
+                      NO
+                    </Button>
+                  </Box>
+                </Box>
+              </>
+            ) : camOn ? (
+              <>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  Asignación de dispositivos
+                </Typography>
+                {/*BARRA DE ESTADO  */}
+                <Box sx={{ mr: 2 }}>
+                  <Grid container>
+                    <Grid sx={{ mr: 3 }}>
+                      <Typography variant="caption" align="center">
+                        2 de 3
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={10}>
+                      <LinearProgress
+                        color="success"
+                        variant="determinate"
+                        value="66"
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="body1"
+                  sx={{
+                    pt: 4,
+                  }}
+                >
+                  Escanear Código QR que se encuentra en el dispositivo
+                </Typography>
+                <QrScanner />
+              </>
+            ) : (
+              <h1>df</h1>
+            )}
+          </Box>
+        </Modal>
+      }
 
-        <QrScanner/>
-          )}
+      {/* Modal 4/4 CANTIDAD DE MEDICIONES Y TRACKEO */}
+      <Modal
+        keepMounted
+        open={openFour}
+        onClose={handleClose}
+        aria-labelledby="kitleeep-mounted-modal-t"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+            Asignación de dispositivos
+          </Typography>
+          {/*BARRA DE ESTADO  */}
+          <Box sx={{ mr: 2 }}>
+            <Grid container>
+              <Grid sx={{ mr: 3 }}>
+                <Typography variant="caption" align="center">
+                  3 de 3
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <LinearProgress
+                  color="success"
+                  variant="determinate"
+                  value="100"
+                />
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/*MEDICIONES INPUT  */}
+          <div>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h7"
+              component="h4"
+              sx={{ mb: 2, mt: 2 }}
+            >
+              Cantidad de mediciones
+            </Typography>
+            <FormControl fullWidth>
+              <InputLabel id="medicionesLabel">
+                Elegir cant. de mediciones
+              </InputLabel>
+              <Select
+                labelId="medicionesLabel"
+                id="demo-simple-select"
+                value={mediciones}
+                onChange={handleMediciones}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          {/*TRACKEO INPUT  */}
+          <div>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h7"
+              component="h4"
+              sx={{ my: 2 }}
+            >
+              Trackeo
+            </Typography>
+            <FormControl fullWidth>
+              <InputLabel id="trackeoLabel">Elegir Trackeo</InputLabel>
+              <Select
+                labelId="trackeoLabel"
+                id="demo-simple-select"
+                value={trackeo}
+                onChange={handleTrackeo}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          {/* BUTTON SIGUIENTE */}
+          <Box textAlign={"center"}>
+            <Button
+              onClick={handleOpenFive}
+              variant="contained"
+              color="mobile"
+              sx={{
+                color: "white",
+                mt: 3,
+                py: 2,
+                px: 6,
+              }}
+              size="large"
+            >
+              Siguiente
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* Modal 5/5 RESUMEN DISPOSITIVO A AGREGAR */}
+      <Modal
+        keepMounted
+        open={openFive}
+        onClose={handleCloseFive}
+        aria-labelledby="kitleeep-mounted-modal-t"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+            Asignación de dispositivos
+          </Typography>
+          <Box sx={{ px: 3 }}>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h7"
+              component="h7"
+            >
+              Geolocalizador: {geolocalizador}
+            </Typography>
+            <Typography id="keep-mounted-modal-title" variant="h7">
+              Gateway LoRa: {gateway}
+            </Typography>
+            <Typography id="keep-mounted-modal-title" variant="h7">
+              Dispositivo: {dataQr}
+            </Typography>
+            <Typography id="keep-mounted-modal-title" variant="h7">
+              Cantidad de mediciones: {mediciones}
+            </Typography>
+            <Typography id="keep-mounted-modal-title" variant="h7">
+              Tipo de trackeo: {trackeo}
+            </Typography>
+          </Box>
+          <Box textAlign={"center"} sx={{ pt: 3 }}>
+            <Button
+              onClick={handleCloseFive}
+              variant="contained"
+              color="mobile"
+              sx={{
+                color: "white",
+              }}
+              size="large"
+            >
+              Aceptar
+            </Button>
+            {/* BUTTON SI */}
+            <Button
+              variant="outlined"
+              color="mobile"
+              sx={{
+                ml: 1,
+
+                color: "mobile",
+              }}
+              size="large"
+            >
+              Asignar nuevo dispositivo
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </div>

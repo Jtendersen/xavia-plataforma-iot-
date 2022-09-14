@@ -25,7 +25,7 @@ if (user.state === "loading") {
   return (
     <Stack direction="row" sx={{ height: "100vh" }}>
       <Box sx={{ display: { xs: "none", sm: "flex" }, width: "100%" }}>
-        {user.roles.some((a) => a == "admin") ? (
+        {user.roles?.some((a) => a == "admin") ? (
           <>
             <Sidebar />
             <ContentDesktop />
@@ -39,7 +39,7 @@ if (user.state === "loading") {
       </Box>
 
       <Box sx={{ display: { xs: "flex", sm: "none" }, width: "100%" }}>
-        {user.roles.some((a) => a == "admin") ? (
+        {user.roles?.some((a) => a == "admin") ? (
           <ContentMobile />
         ) : (
           <UserMobile />

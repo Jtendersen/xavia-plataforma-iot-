@@ -17,17 +17,20 @@ import {
 } from "@mui/material";
 import { setOpen } from "../store/reducers/drawerOpen.reducer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import TimelineIcon from '@mui/icons-material/Timeline';
+import TimelineIcon from "@mui/icons-material/Timeline";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../assets/LogoXavia.png";
 import React from "react";
 import { setView } from "../store/reducers/views.reducer";
+import { logoutRequest } from "../store/reducers/user.reducer";
+import { useNavigate } from "react-router-dom";
 
 // SideList es responsive. Se usa en ambas vistas.
 const UserSideList = () => {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.drawer);
+  const navigate = useNavigate();
 
   // toggleDrawer setea el estado en reducer cuando se abre o no el sidebar.
   const toggleDrawer = () => {
@@ -36,6 +39,11 @@ const UserSideList = () => {
 
   const toggleView = (selectedOption) => {
     dispatch(setView(selectedOption));
+  };
+  const logOut = () => {
+    dispatch(logoutRequest()).then(() => {
+      navigate("/");
+    });
   };
 
   return (
@@ -88,7 +96,8 @@ const UserSideList = () => {
         <ListItem disablePadding>
           <ListItemButton
             component="a"
-            onClick={() => toggleView("usuariosFinales")}>
+            onClick={() => toggleView("usuariosFinales")}
+          >
             <ListItemIcon>
               <RssFeedIcon sx={{ color: "#FFFFFF" }} />
             </ListItemIcon>
@@ -97,9 +106,7 @@ const UserSideList = () => {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton
-            component="a"
-            onClick={() => toggleView("historico")}>
+          <ListItemButton component="a" onClick={() => toggleView("historico")}>
             <ListItemIcon>
               <TimelineIcon sx={{ color: "#FFFFFF" }} />
             </ListItemIcon>
@@ -107,10 +114,10 @@ const UserSideList = () => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-            
           <ListItemButton
             component="a"
-            onClick={() => toggleView("ubicaciones")}>
+            onClick={() => toggleView("ubicaciones")}
+          >
             <ListItemIcon>
               <LocationOnIcon sx={{ color: "#FFFFFF" }} />
             </ListItemIcon>
@@ -121,7 +128,7 @@ const UserSideList = () => {
 
       <List>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#home">
+          <ListItemButton component="a" onClick={() => logOut()}>
             <ListItemIcon>
               <LogoutIcon sx={{ color: "#FFFFFF" }} />
             </ListItemIcon>

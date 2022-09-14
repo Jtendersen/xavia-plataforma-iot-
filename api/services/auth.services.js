@@ -61,7 +61,6 @@ class AuthService {
   }
 
   static async resetPassword({ resetLink, newPassword }) {
-    console.log("ESTO ES LO QUE LLEGA AL BACK", resetLink, newPassword);
     if (resetLink) {
       try {
         //valida que el token recibido sea correcto y que no haya expirado

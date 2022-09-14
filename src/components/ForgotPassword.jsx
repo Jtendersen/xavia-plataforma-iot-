@@ -14,11 +14,10 @@ import { Box } from "@mui/system";
 import { theme } from "../theme";
 import { Image } from "mui-image";
 import { useDispatch } from "react-redux";
-import { forgotPassRequest, setUser } from "../store/reducers/user.reducer";
+import { forgotPassRequest } from "../store/reducers/user.reducer";
 import { Container, InputAdornment } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -40,18 +39,9 @@ function Copyright(props) {
 
 export default function SignInSide() {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
   const [errorHandler, setErrorHandler] = React.useState(false);
   const [message, setMessage] = React.useState("");
-
-  console.log("ESTE ES EL MENSAJE", message);
-  // const [successMsg, setSuccessMsg] = React.useState("");
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const iconAdornment =
     message === "No existe un usuario con ese email"
@@ -90,10 +80,6 @@ export default function SignInSide() {
           "Revisá tu email. Te enviamos un link para recuperar tu contraseña"
         );
       }
-      console.log(
-        "Esta es Se ha enviado un mail / No existe un usuario con ese email",
-        response.payload
-      );
     });
   };
 

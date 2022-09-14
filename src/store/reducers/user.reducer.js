@@ -44,7 +44,6 @@ export const forgotPassRequest = createAsyncThunk("FORGOT_PASS", (userData) => {
 });
 
 export const resetPassRequest = createAsyncThunk("RESET_PASS", (userData) => {
-  console.log("ESTO ES LO QUE SE ENVIA AL AXIOS", userData);
   return axios
     .put("/api/auth/reset-password", {
       // email: userData.email,

@@ -1,0 +1,51 @@
+[
+  {
+    "id": 2215,
+    "locationId": "dangjinsupercharger",
+    "name": "Dangjin, South Korea",
+    "status": "OPEN",
+    "gps": { "latitude": -34.566783884265966, "longitude": -58.45073464855624 },
+    "dateOpened": "2019-12-20",
+    "stallCount": 6,
+    "counted": true,
+    "elevationMeters": 42,
+    "powerKilowatt": 120,
+    "solarCanopy": false,
+    "battery": false,
+    "statusDays": 0,
+    "urlDiscuss": false
+  },
+  {
+    "id": 2216,
+    "locationId": "seoulgangseosupercharger",
+    "name": "Seoul - Gangseo, South Korea",
+    "status": "OPEN",
+    "gps": { "latitude": -34.652439570431156, "longitude": -58.49473691557238 },
+    "dateOpened": "2019-12-20",
+    "stallCount": 4,
+    "counted": true,
+    "elevationMeters": 13,
+    "powerKilowatt": 120,
+    "solarCanopy": false,
+    "battery": false,
+    "statusDays": 0,
+    "urlDiscuss": false
+  },
+  {
+    "id": 2217,
+    "locationId": "seoulgangseosupercharger",
+    "name": "Seoul - Gangseo, South Korea",
+    "status": "OPEN",
+    "gps": { "latitude":-34.57881937017387, "longitude": -58.58419240581376 },
+    "dateOpened": "2019-12-20",
+    "stallCount": 4,
+    "counted": true,
+    "elevationMeters": 13,
+    "powerKilowatt": 120,
+    "solarCanopy": false,
+    "battery": false,
+    "statusDays": 0,
+    "urlDiscuss": false
+  }
+
+]

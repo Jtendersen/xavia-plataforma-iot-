@@ -27,6 +27,12 @@ export const logoutRequest = createAsyncThunk("USER_LOGOUT", () => {
     });
 });
 
+export const logoutRequest = createAsyncThunk("USER_LOGOUT", () => {
+  return axios
+  .post("/api/auth/logout")
+  .then(() => {return {state: 'rejected'}})
+})
+
 export const createPassRequest = createAsyncThunk("CREATE_PASS", (userData) => {
     return axios
         .post("/api/users/newpass", {
@@ -55,7 +61,7 @@ export const resetPassRequest = createAsyncThunk("RESET_PASS", (userData) => {
         })
         .then((r) => r.data);
 });
-
+export const setUser = createAction("SET_USER")
 export const getUserRequest = createAsyncThunk("GET_USER", (userId) => {
     return axios.get(`/api/users/${userId}`).then((r) => r.data);
 });
@@ -70,4 +76,5 @@ const userReducer = createReducer(initialState, {
     [getUserRequest.fulfilled]: (state, action) => action.payload,
 });
 
-export default userReducer;
+
+  export default userReducer;

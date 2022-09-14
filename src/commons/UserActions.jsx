@@ -25,9 +25,9 @@ const UserActions = ({ params, deleteAction, setDeleteAction }) => {
 
     return (
         <Box>
-            {/* <IconButton>
-                <KeepMountedModal />
-            </IconButton> */}
+            <IconButton>
+                {/* <KeepMountedModal /> */}
+            </IconButton>
 
             <IconButton>
                 <SearchIcon />

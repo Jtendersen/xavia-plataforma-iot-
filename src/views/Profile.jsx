@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserRequest } from "../store/reducers/user.reducer";
 import UserMobile from "../components/Mobile/UserMobile";
-//import LoadingScreen from "../commons/LoadingScreen";
+import LoadingScreen from "../commons/LoadingScreen";
 
 function Profile() {
   const user = useSelector((state) => state.user);
@@ -19,8 +19,7 @@ function Profile() {
 }, [dispatch, user._id]);
 
 if (user.state === "loading") {
-  //<LoadingScreen />;
-  <h1>loading</h1>
+  <LoadingScreen />;
 } else {
 
   return (
@@ -50,4 +49,5 @@ if (user.state === "loading") {
   );
 }
 }
+
 export default Profile;

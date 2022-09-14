@@ -15,14 +15,15 @@ const HeaderMobile = () => {
             direction="column"
             justifyContent="center"
             alignItems="center"
-            spacing={3}
+            spacing={1}
+            maxHeight="30vh"
         >
             <Avatar
                 alt="Usuario"
                 src={user.imgUrl}
-                sx={{ width: 100, height: 100, backgroundColor: 'white' }}
+                sx={{ width: 70, height: 70, backgroundColor: 'white' }}
             />
-            <CustomTypography sx={{ fontSize: "1.5rem" }}>
+            <CustomTypography sx={{ fontSize: "1rem" }}>
                 {user.fullname}
             </CustomTypography>
             <Stack
@@ -37,10 +38,10 @@ const HeaderMobile = () => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
                         xx
                     </CustomTypography>
-                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
                         Apps
                     </CustomTypography>
                 </Stack>
@@ -55,10 +56,10 @@ const HeaderMobile = () => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
                         {user.devices?.length}
                     </CustomTypography>
-                    <CustomTypography sx={{ fontSize: "0.9rem" }}>
+                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
                         Dispositivos
                     </CustomTypography>
                 </Stack>

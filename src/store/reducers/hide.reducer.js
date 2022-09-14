@@ -13,12 +13,14 @@ function getWindowSize() {
 if (getWindowSize() < 600) {
     initialState = {
         hide: true,
-        tableSize: 4
+        tableSize: 4,
+        marginHeader: { marginTop: "0!important" }
     }
 } else {
     initialState = {
         hide: false,
-        tableSize: 9
+        tableSize: 9,
+        marginHeader: { marginTop: "" }
     }
 }
 

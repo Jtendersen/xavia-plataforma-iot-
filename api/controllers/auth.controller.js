@@ -20,6 +20,7 @@ class AuthController {
       if (user.isActivated) {
         const { _id, fullname, email, isActivated, imgUrl } = user;
         const token = generateToken({ _id, fullname, email, isActivated, imgUrl });
+
         res.cookie("token", token);
       }
       return res.status(201).send(user);

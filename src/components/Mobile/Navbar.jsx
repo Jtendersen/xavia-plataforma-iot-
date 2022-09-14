@@ -30,6 +30,7 @@ const Navbar = () => {
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
+                onClick={handleClose}
                 onClose={handleClose}
                 PaperProps={{
                     style: { backgroundColor: "#3D3D3D", color: "white" },

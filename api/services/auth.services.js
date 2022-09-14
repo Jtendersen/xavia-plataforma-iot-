@@ -22,6 +22,8 @@ class AuthService {
         }
       }
       const userOk = {
+        _id: user._id,
+        imgUrl: user.imgUrl,
         fullname: user.fullname,
         email: user.email,
         phone: user.phone,

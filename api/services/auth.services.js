@@ -22,6 +22,7 @@ class AuthService {
         }
       }
       const userOk = {
+        _id: user._id,
         fullname: user.fullname,
         email: user.email,
         phone: user.phone,
@@ -31,6 +32,7 @@ class AuthService {
         devices: user.devices,
         isActivated: user.isActivated,
         activationCode: user.activationCode,
+        imgUrl: user.imgUrl
       };
       return userOk;
     } catch (error) {

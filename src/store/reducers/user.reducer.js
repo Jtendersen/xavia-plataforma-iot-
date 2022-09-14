@@ -22,12 +22,6 @@ export const loginRequest = createAsyncThunk("USER_LOGIN", (userData) => {
 });
 
 export const logoutRequest = createAsyncThunk("USER_LOGOUT", () => {
-    return axios.post("/api/auth/logout").then(() => {
-        return { state: "rejected" };
-    });
-});
-
-export const logoutRequest = createAsyncThunk("USER_LOGOUT", () => {
   return axios
   .post("/api/auth/logout")
   .then(() => {return {state: 'rejected'}})
@@ -42,7 +36,6 @@ export const createPassRequest = createAsyncThunk("CREATE_PASS", (userData) => {
         })
         .then((r) => r.data);
 });
-export const setUser = createAction("SET_USER");
 
 export const forgotPassRequest = createAsyncThunk("FORGOT_PASS", (userData) => {
     return axios

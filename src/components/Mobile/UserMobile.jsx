@@ -5,6 +5,9 @@ import HeaderMobile from "./HeaderMobile";
 import Users from "../../commons/Users";
 import { useSelector } from "react-redux";
 import UserProfile from "../UserProfile";
+import Aplicaciones from "../Aplicaciones";
+import Ubicaciones from "../Ubicaciones";
+import Historico from "../Historico";
 
 const UserMobile = () => {
     const views = useSelector((state) => state.views);
@@ -16,6 +19,8 @@ const UserMobile = () => {
                 elevation={3}
                 sx={{
                     p: 1.5,
+                    height: "65%",
+                    width: "95",
                     flexDirection: "column",
                     borderTopLeftRadius: "16px",
                     borderTopRightRadius: "16px",
@@ -25,11 +30,14 @@ const UserMobile = () => {
                     right: 0,
                 }}
             >
-                {views === "profile" || views === "usuariosFinales" ? (
+                {views === "profile" ? (
                    <UserProfile />
                 ) : (
                     <></>
                 )}
+                {views === "aplicaciones" ? <Aplicaciones /> : <></>}
+                {views === "ubicaciones" ? <Ubicaciones /> : <></>}
+                {views === "historico" ? <Historico /> : <></>}
             </Paper>
         </Box>
     );

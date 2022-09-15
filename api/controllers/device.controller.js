@@ -11,16 +11,22 @@ class DeviceController {
       console.log(error);
     }
   }
-
   
   static async getAllDevices(req, res) {
-    
     try {
-      const devices = await DeviceService.getAllDevices(req.body);
-     
+      const device = await DeviceService.getAllDevices();
+      if (!device) return res.status(404).send(errorHandler(0, device));
+      return res.status(200).send(device);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getByUserId(req, res) {
+    try {
+      const devices = await DeviceService.getByUserId(req.params.userid);
       if (devices.length==0) return res.status(404).send(errorHandler(0, devices));
       return res.status(200).send(devices);
-    } catch (error) {
+    }catch (error) {
       console.log(error);
     }
   }

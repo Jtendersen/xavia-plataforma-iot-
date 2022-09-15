@@ -1,6 +1,6 @@
 const ObjectId = require('mongodb').ObjectId
 const Device = require("../models/Devices");
-
+const Users = require("../models/Users");
 
 class DeviceService {
   static async registerDevice({
@@ -10,6 +10,7 @@ class DeviceService {
     measuresAmount,
     typeOfTracking,
     users,
+    userId,
     measures,
   }) {
     try {
@@ -17,7 +18,7 @@ class DeviceService {
 
       // Verifica que exista un dispositivo en la db con el mismo qr.
       if (isRegistered) return "Este dispositivo ya esta registrado"
-      
+           
       const device = new Device(
         {
           qrCode,
@@ -26,24 +27,44 @@ class DeviceService {
           measuresAmount,
           typeOfTracking,
           users,
+          userId,
           measures,
         }
       );
-      
-      return await device.save();
+      await device.save();
+     
+      const userPush = await Users.findOneAndUpdate(
+        { _id: userId },
+        {
+            $push: {
+                devices: device._id,
+            },
+        },
+        { new: true }
+    )
+    return
     } catch (error) {
       console.error(error);
     }
   }
 
-  static async getAllDevices({users}) {
+  static async getByUserId(id) {
+
     try {
+      return await Device.find({userId: id});
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+    
+/*     try {
         return await Device.find({users:users}).sort({ qrCode: 1 })
 
         } catch (error) {
       console.log(error);
-    }
-  }
+    } */
+  
 static async getDevice(id) {
     try {
       return await Device.findOne({ _id: id });

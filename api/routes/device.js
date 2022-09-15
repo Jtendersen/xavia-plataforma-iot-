@@ -4,9 +4,9 @@ const router = express.Router()
 
 
 router.post('/register/', DeviceController.registerDevice)
-// Encuentra todos los dispositivos de una empresa. {users: "Coarco"}
 router.get('/all/', DeviceController.getAllDevices)
 router.get('/:id', DeviceController.getDevice)
+router.get('/user/:userid', DeviceController.getByUserId)
 router.put('/modify/', DeviceController.editDevice)
 router.delete('/delete/:id', DeviceController.deleteDevice)
 router.put('/measures/push', DeviceController.pushMeasures)

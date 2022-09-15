@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 //import dataTest from "../assets/tesla.json"
 
-function Map({dataTest}) {
+function Map({dataTest, mapStyle}) {
   return (
 <Grid
       container
@@ -14,12 +14,7 @@ function Map({dataTest}) {
       style={{ minHeight: "30vh" }}
     >
       <MapContainer
-        style={{
-          justifyContent: "center",
-          height: "100%",
-          width: "70%",
-          padding: "15%",
-        }}
+        style={mapStyle}
         center={[-34.603, -58.381]}
         zoom={10}
         scrollWheelZoom={true}

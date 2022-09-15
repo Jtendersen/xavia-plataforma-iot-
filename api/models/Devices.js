@@ -23,6 +23,9 @@ const DeviceSchema = new mongoose.Schema(
       type: String,
       required : true,
     },
+    userId:{
+      type: String,
+    },
     measures: {
       type: Array,
     },

@@ -96,7 +96,7 @@ const UserSideList = () => {
         <ListItem disablePadding>
           <ListItemButton
             component="a"
-            onClick={() => toggleView("usuariosFinales")}
+            onClick={() => toggleView("aplicaciones")}
           >
             <ListItemIcon>
               <RssFeedIcon sx={{ color: "#FFFFFF" }} />

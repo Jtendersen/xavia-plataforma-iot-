@@ -13,7 +13,7 @@ const UserDesktop = () => {
     const views = useSelector((state) => state.views);
     return (
         <Box bgcolor="#EAE1D8" flex={8} p={2}>
-            {views === "usuariosFinales" ? <UsersHeader /> : <></>}
+            {views === "aplicaciones" ? <UsersHeader /> : <></>}
             {views === "profile" ? <ProfileHeader /> : <></>}
 
             <Paper
@@ -24,7 +24,7 @@ const UserDesktop = () => {
                     borderRadius: "16px",
                 }}
             >
-                {views === "profile" || views === "usuariosFinales" ? (
+                {views === "profile" || views === "aplicaciones " ? (
                     <UserProfile />
                 ) : (
                     <></>

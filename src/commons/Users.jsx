@@ -67,8 +67,8 @@ const Users = () => {
     useEffect(() => {
         function handleWindowResize() {
             if (getWindowSize() < 600) {
-                if (views === "profile") setSize(4);
                 if (views === "usuariosFinales") setSize(7)
+                if (views === "profile") setSize(4);
                 dispatch(
                     setHide({
                         hide: true,
@@ -86,6 +86,7 @@ const Users = () => {
                 );
             }
         }
+        handleWindowResize()
         window.addEventListener("resize", handleWindowResize);
         return () => {
             window.removeEventListener("resize", handleWindowResize);

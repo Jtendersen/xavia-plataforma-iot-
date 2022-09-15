@@ -1,17 +1,18 @@
 import { adminDeleteUser } from "../store/reducers/usersAll.reducer";
 import { useDispatch } from "react-redux";
-import { IconButton } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
+import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { Box } from "@mui/system";
-import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React from "react";
+import React, { useState } from "react";
 import KeepMountedModal from "./Modal";
 
 // Botones del dashboard por usuario
 // recibe params de la fila y algunos estados
 const UserActions = ({ params, deleteAction, setDeleteAction }) => {
     const dispatch = useDispatch();
+    const [show, setShow] = useState(false);
 
     const deleteUser = (userId) => {
         dispatch(adminDeleteUser(userId)).then(() => {
@@ -23,22 +24,39 @@ const UserActions = ({ params, deleteAction, setDeleteAction }) => {
         });
     };
 
+    // state intermedio para renderizar KeepMountedModal
+    const showModal = () => {
+        setShow(true);
+    };
+
     return (
-        <Box>
-            <IconButton>
+        <>
+            <Box>
+                <IconButton onClick={() => showModal()}>
+                    <AddSharpIcon />
+                </IconButton>
 
-                <KeepMountedModal userParams={params.id}/>
+                <IconButton>
+                    <SearchIcon />
+                </IconButton>
 
-            </IconButton>
+                <IconButton onClick={() => deleteUser(params.id)}>
+                    <DeleteIcon />
+                </IconButton>
+            </Box>
 
-            <IconButton>
-                <SearchIcon />
-            </IconButton>
-
-            <IconButton onClick={() => deleteUser(params.id)}>
-                <DeleteIcon />
-            </IconButton>
-        </Box>
+            {/* render condicional que se activa al clickear el ícono añadir */}
+            {show ? (
+                <Dialog open={show}>
+                    <KeepMountedModal
+                        userParams={params.id}
+                        {...{ show, setShow }}
+                    />
+                </Dialog>
+            ) : (
+                <></>
+            )}
+        </>
     );
 };
 

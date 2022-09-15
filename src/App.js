@@ -10,6 +10,7 @@ import { setUser } from "./store/reducers/user.reducer";
 import PrivateRoute from "./components/PrivateRoute";
 import LoadingScreen from "./commons/LoadingScreen";
 import ResetPassword from "./components/ResetPassword";
+import KeepMountedModal from "./commons/Modal";
 
 function App() {
     const dispatch = useDispatch();

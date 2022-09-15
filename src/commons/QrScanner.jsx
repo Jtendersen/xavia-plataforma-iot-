@@ -24,9 +24,9 @@ const QrScanner = (props) => {
               ReactDOM.unmountComponentAtNode(QrReader);
               setIsUnmounted(true);
             }
-            if (!!error) {
-              console.info(error);
-            }
+            // if (!!error) {
+            //   console.info(error);
+            // }
           }}
           style={{ width: "100%" }}
         />

@@ -32,7 +32,7 @@ class AuthService {
         devices: user.devices,
         isActivated: user.isActivated,
         activationCode: user.activationCode,
-        imgUrl: user.imgUrl
+        imgUrl: user.imgUrl,
       };
       return userOk;
     } catch (error) {

@@ -19,7 +19,13 @@ class AuthController {
       // Genera el token de autenticación
       if (user.isActivated) {
         const { _id, fullname, email, isActivated, imgUrl } = user;
-        const token = generateToken({ _id, fullname, email, isActivated, imgUrl });
+        const token = generateToken({
+          _id,
+          fullname,
+          email,
+          isActivated,
+          imgUrl,
+        });
 
         res.cookie("token", token);
       }

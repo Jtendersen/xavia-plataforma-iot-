@@ -114,6 +114,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
       measuresAmount: mediciones,
       typeOfTrackin: trackeo,
       users: userParams,
+    
     };
 
     axios

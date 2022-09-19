@@ -20,7 +20,7 @@ class UserService {
       sendAccesCode(email,token)
       return await user.save();
     } catch (error) {
-      console.error(error);
+      return error
     }
   }
 

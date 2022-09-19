@@ -27,14 +27,14 @@ class DeviceService {
           measuresAmount,
           typeOfTracking,
           users,
-          userId,
           measures,
         }
       );
       await device.save();
+      console.log("deviceeeeeeeeee", device._id, ",", device.users)
      
       const userPush = await Users.findOneAndUpdate(
-        { _id: userId },
+        { _id: users },
         {
             $push: {
                 devices: device._id,

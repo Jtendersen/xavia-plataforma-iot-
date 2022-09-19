@@ -10,7 +10,7 @@ const sendAccesCode = (email, token) => {
   const msg = {
     to: email,
     from: "empresa.test156@gmail.com", //no cambiar
-    templateId: "d-157b9c9e6ef74682b491a4fadedbb499",
+    templateId: "d-4a542b777536459f9216c23103fb7b7c",
     dynamic_template_data: {
       link: `${process.env.CLIENT_URL}`,
       codigo: token,

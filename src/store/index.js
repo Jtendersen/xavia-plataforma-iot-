@@ -7,6 +7,7 @@ import usersAll from "./reducers/usersAll.reducer";
 import usersTracker from "./reducers/usersTracker.reducer";
 import deviceQrCode from "./reducers/deviceQrCode.reducer";
 import drawerViews from "./reducers/views.reducer";
+import deviceMeasures from "./reducers/deviceMeasures.reducer";
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -18,6 +19,7 @@ const store = configureStore({
         users: usersAll,
         hide: hideColumns,
         deviceCode: deviceQrCode,
+        devices: deviceMeasures,
     },
 });
 

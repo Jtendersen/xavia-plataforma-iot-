@@ -51,7 +51,7 @@ class DeviceService {
   static async getByUserId(id) {
 
     try {
-      return await Device.find({userId: id});
+      return await Device.find({users: id});
     } catch (error) {
       console.log(error);
     }

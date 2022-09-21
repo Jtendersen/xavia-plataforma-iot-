@@ -3,7 +3,9 @@ import { Grid } from "@mui/material";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 //import dataTest from "../assets/tesla.json"
 
-function Map({ dataTest, mapStyle }) {
+
+function Map({ devices, mapStyle }) {
+
   return (
     <Grid
       container
@@ -24,10 +26,21 @@ function Map({ dataTest, mapStyle }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* reemplazar con user.devices, cuando sepamos exactamente donde estan las coords (lat/lng)*/}
-        {dataTest?.map((data) => (
+
+        {devices?.map((data) => (
+
           <Marker
-            key={data.id}
-            position={[data.gps.latitude, data.gps.longitude]}
+            key={data._id}
+            position={
+              data.measures.length
+                ? [
+                    data.measures[0][data.measures[0].length - 1].payload[0]
+                      .latitude,
+                    data.measures[0][data.measures[0].length - 1].payload[0]
+                      .longitude,
+                  ]
+                : [0, 0]
+            }
           ></Marker>
         ))}
       </MapContainer>

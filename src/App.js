@@ -10,6 +10,8 @@ import { setUser } from "./store/reducers/user.reducer";
 import PrivateRoute from "./components/PrivateRoute";
 import LoadingScreen from "./commons/LoadingScreen";
 import ResetPassword from "./components/ResetPassword";
+import SeedGenerator from "./utils/SeedGenerator";
+import SeedResults from "./utils/SeedResults";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +53,8 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/seedgenerator" element={<SeedGenerator />} />
+        {/* <Route path="/seedresults" element={<SeedResults />} /> */}
       </Routes>
     );
   }

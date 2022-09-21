@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 import { Grid } from "@mui/material";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 //import dataTest from "../assets/tesla.json"
 
-function Map({dataTest, mapStyle}) {
+function Map({ dataTest, mapStyle }) {
   return (
-<Grid
+    <Grid
       container
       spacing={0}
       direction="column"
@@ -23,7 +23,7 @@ function Map({dataTest, mapStyle}) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-    {/* reemplazar con user.devices, cuando sepamos exactamente donde estan las coords (lat/lng)*/}
+        {/* reemplazar con user.devices, cuando sepamos exactamente donde estan las coords (lat/lng)*/}
         {dataTest?.map((data) => (
           <Marker
             key={data.id}
@@ -33,6 +33,6 @@ function Map({dataTest, mapStyle}) {
       </MapContainer>
     </Grid>
   );
-};
+}
 
-export default Map
+export default Map;

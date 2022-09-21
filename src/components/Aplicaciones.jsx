@@ -1,9 +1,13 @@
-import React from 'react'
+import { Box } from "@mui/material";
+import React from "react";
+import DistancePerTimeChart from "./distancePerTimeChart";
 
 const Aplicaciones = () => {
-  return (
-    <div>Soy una lista de aplicaciones :o</div>
-  )
-}
+    return (
+        <Box>
+            <DistancePerTimeChart />
+        </Box>
+    );
+};
 
-export default Aplicaciones
+export default Aplicaciones;

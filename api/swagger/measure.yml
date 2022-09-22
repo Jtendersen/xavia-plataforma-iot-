@@ -1,0 +1,69 @@
+components:
+  schemas:
+    measures:
+      type: object
+      properties:
+
+        devEUI:
+          type: string
+        messageType:
+          type: string
+        trackingMode:
+          type: string
+        batteryVoltage:
+          type: string
+        ackToken:
+          type: number
+        firmwareVersion:
+          type: string
+        resetCause:
+          type: number
+        periodicPosition:
+          type: boolean
+        temperatureMeasure:
+          type: number
+        sosFlag:
+          type: number
+        appState:
+          type: number
+        dynamicMotionState:
+          type: string
+        onDemand:
+          type: boolean
+        payload:
+          type: array
+        deviceConfiguration:
+          type: object
+
+
+      example:
+        devEUI:
+        messageType:
+        trackingMode:
+        batteryVoltage:
+        ackToken:
+        firmwareVersion:
+        resetCause:
+        periodicPosition:
+        temperatureMeasure:
+        sosFlag:
+        appState:
+        dynamicMotionState:
+        onDemand:
+        payload:
+        deviceConfiguration:
+
+/api/measures/create:
+  post:
+    summary: create a new measures
+    tags: [Measures]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: "#/components/schemas/measures"
+    responses:
+      200:
+        description: new measure created!

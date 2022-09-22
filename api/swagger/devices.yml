@@ -1,0 +1,33 @@
+components:
+  schemas:
+    devices:
+      type: object
+      properties:
+        qrCode:
+          type: string
+        typeOfDevice:
+          type: string
+        gatewayLora:
+          type: string
+        measuresAmount:
+          type: string
+        typeOfTracking:
+          type: string
+        users:
+          type: string
+        userId:
+          type: string
+        measures:
+          type: array
+      required:
+        - users
+        - qrCode
+      example:
+        qrCode: 21323467
+        typeOfDevice: "Micro Tracker"
+        gatewayLora: "Advantech"
+        measuresAmount: 10
+        typeOfTracking: 13213
+        userId: "631b82c3bd7805298c4842f5"
+        measures: 10
+

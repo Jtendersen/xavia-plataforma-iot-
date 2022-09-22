@@ -1,0 +1,153 @@
+components:
+  schemas:
+    users:
+      type: object
+      properties:
+        fullname:
+          type: string
+        cuit:
+          type: string
+        email:
+          type: string
+        phone:
+          type: number
+        password:
+          type: string
+        roles:
+          type: array
+        empresa:
+          type: string
+        devices:
+          type: array
+        imgUrl:
+          type: string
+      required:
+        - fullname
+        - email
+      example:
+        fullname: Ubbe Lothbrok
+        cuit: 20-0837493-1
+        email: ubbe@mail.com
+        phone: +5491123264864
+        password: 12345
+        roles: ["user"]
+        empresa: Xavia IOT
+        devices:
+        imgUrl: https://www.lifeder.com/wp-content/uploads/2019/04/Ubbe.jpg
+
+/api/users/create:
+  post:
+    summary: create a new user
+    tags: [Users]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: "#/components/schemas/users"
+    responses:
+      200:
+        description: new user created!
+
+/api/users/all:
+  get:
+    summary: return all users
+    tags: [Users]
+    responses:
+      200:
+        description: all users
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/users"
+
+/api/users/{id}:
+  get:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: the user identifier, as userId 
+      schema:
+        type: string
+    summary: return a user
+    tags: [Users]
+    responses:
+      404:
+        description: user not found
+      200:
+        description:  user by id
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: "#/components/schemas/users"
+                
+/api/users/delete/{id}:
+  delete:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: the user identifier, as userId 
+      schema:
+        type: string
+    summary: delete a user
+    tags: [Users]
+    responses:
+      404:
+        description: user not found
+      200:
+        description:  user deleted
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: "#/components/schemas/users"
+
+/api/users/modify/:
+  put:
+    summary: update a user
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: "#/components/schemas/users"
+    tags: [Users]
+    responses:
+      404:
+        description: user not found
+      200:
+        description:  user updated
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: "#/components/schemas/users"
+
+
+
+
+/api/auth/login:
+  post:
+    summary: user login
+    tags: [Auth]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            value:
+              email: ds
+    responses:
+      200:
+        description: new user created!

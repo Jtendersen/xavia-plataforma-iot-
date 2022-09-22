@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 //import dataTest from "../assets/tesla.json"
 
 function Map({ devices, mapStyle }) {
+  
   return (
     <Grid
       container

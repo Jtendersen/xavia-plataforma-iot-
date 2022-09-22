@@ -1,6 +1,7 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Map from "../commons/Map";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDevices } from "../store/reducers/deviceMeasures.reducer";
@@ -29,7 +30,7 @@ const UserProfile = () => {
     { field: "lastmed", headerName: "Ultima Medición (fecha)", minWidth: 160, flex:1  },
     { field: "added", headerName: "Agregado el:", minWidth: 160, flex:1  },
   ];
-
+  console.log("this is devices", devices)
   const rows = Array.isArray(devices)
     ? devices?.map((e) => ({
         id: e.qrCode,

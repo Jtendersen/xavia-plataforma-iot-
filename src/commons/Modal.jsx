@@ -18,7 +18,6 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setQrCode } from "../store/reducers/deviceQrCode.reducer";
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -97,7 +96,6 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
     setOpenFour(true);
   };
 
-
   /* MODAL 5 */
   const [openFive, setOpenFive] = React.useState(false);
   const handleOpenFive = () => {
@@ -114,7 +112,6 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
       measuresAmount: mediciones,
       typeOfTrackin: trackeo,
       users: userParams,
-    
     };
 
     axios
@@ -123,6 +120,27 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
 
     clearData();
     setShow(false);
+  };
+
+  const addNewDevices = () => {
+    setOpenFive(false);
+    const devices = {
+      qrCode: dataQr /*  */,
+      typeOfDevice: geolocalizador,
+      gatewayLora: gateway,
+      measuresAmount: mediciones,
+      typeOfTrackin: trackeo,
+      users: userParams,
+    };
+
+    axios
+      .post("http://localhost:3001/api/device/register", devices)
+      .then((res) => console.log(res));
+
+    clearData();
+    setOpenDos(true)
+
+
   };
 
   return (
@@ -512,25 +530,28 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
           <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
             Asignación de dispositivos
           </Typography>
-          <Box sx={{ px: 3 }}>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h7"
-              component="h6"
-            >
-              Geolocalizador: {geolocalizador}
-            </Typography>
+          <Box sx={{ px: 4, py: 2 }}>
             <Typography id="keep-mounted-modal-title" variant="h7">
-              Gateway LoRa: {gateway}
+              <b> Geolocalizador: </b>
+              {geolocalizador}
             </Typography>
+            <br></br>
             <Typography id="keep-mounted-modal-title" variant="h7">
-              Dispositivo: {dataQr}
+              <b>Gateway LoRa: </b> {gateway}
             </Typography>
+            <br></br>
             <Typography id="keep-mounted-modal-title" variant="h7">
-              Cantidad de mediciones: {mediciones}
+            <b>  Dispositivo: </b>{dataQr}
             </Typography>
+            <br></br>
             <Typography id="keep-mounted-modal-title" variant="h7">
-              Tipo de trackeo: {trackeo}
+              <b> Cantidad de mediciones: </b>
+              {mediciones}
+            </Typography>
+            <br></br>
+            <Typography id="keep-mounted-modal-title" variant="h7">
+              <b> Tipo de trackeo: </b>
+              {trackeo}
             </Typography>
           </Box>
           <Box textAlign={"center"} sx={{ pt: 3 }}>
@@ -547,6 +568,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
             </Button>
             {/* BUTTON SI */}
             <Button
+            onClick={addNewDevices}
               variant="outlined"
               color="mobile"
               sx={{

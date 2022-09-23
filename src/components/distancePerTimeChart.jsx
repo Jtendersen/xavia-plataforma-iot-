@@ -9,7 +9,7 @@ import useMatches from "../hooks/useMatches.js";
 
 const DistancePerTimeChart = () => {
     // media query
-    const match = useMatches()
+    const match = useMatches();
 
     // redux store
     const measures = useSelector((state) => state.measures);
@@ -17,18 +17,14 @@ const DistancePerTimeChart = () => {
     // local states
     const [userData, setUserData] = useState(false);
     const [dataSet, setDataSet] = useState(false);
-
+    Chart.defaults.font.size = 10
     useEffect(() => {
         const newDataSet = measures ? distanceDataSet(measures) : [];
         setDataSet(newDataSet);
         setUserData({
-            labels: newDataSet.map((datos) => {
-                if (match) {
-                    return datos.time;
-                } else {
-                    return datos.time?.substring(10)
-                }
-            }),
+            labels: newDataSet.map((datos) =>
+                match ? datos.time : datos.time?.substring(10)
+            ),
             datasets: [
                 {
                     label: "Recorridos [m/min]",
@@ -50,12 +46,12 @@ const DistancePerTimeChart = () => {
             >
                 <Box
                     sx={{
-                        width: "90%",
+                        width: "90%"
                     }}
                 >
                     <Bar data={userData} />
                 </Box>
-                <Box>
+                <Box maxWidth={{xs:300, sm:150}}>
                     <ChartFilter {...dataSet} />
                 </Box>
             </Stack>

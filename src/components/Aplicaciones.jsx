@@ -4,7 +4,7 @@ import DistancePerTimeChart from "./distancePerTimeChart";
 
 const Aplicaciones = () => {
     return (
-        <Box>
+        <Box sx={{ maxWidth: "90%", maxHeight: "90%" }}>
             <DistancePerTimeChart />
         </Box>
     );

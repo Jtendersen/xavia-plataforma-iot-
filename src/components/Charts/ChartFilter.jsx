@@ -70,11 +70,11 @@ const ChartFilter = () => {
 
     return (
         <Stack
-            direction="column"
+            direction={{xs:'row', sm:'column'}}
             justifyContent="center"
             alignItems="center"
-            spacing={2}
-            sx={{ maxWidth: 400 }}
+            spacing={{xs:1, sm:2}}
+            sx={{ width: '100%', display: {xs: 'flex', sm: 'block'} }}
         >
             {loggedUser.roles[0] === "admin" ? (
                 <FormControl fullWidth>

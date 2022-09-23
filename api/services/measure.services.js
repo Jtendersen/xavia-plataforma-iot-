@@ -25,7 +25,8 @@ class MeasureService {
     static async getAllMeasures(devEUI, entries) {
         try {
             if (entries) {
-                return await Measure.find({devEUI}).sort({ $natural: -1 }).limit(entries)
+                const results = await Measure.find({devEUI}).sort({ $natural: -1 }).limit(entries)
+                return results.reverse()
             } else {
                 return await Measure.find({devEUI});
             }

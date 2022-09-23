@@ -59,10 +59,10 @@ const SeedResults = (data) => {
             payload: {
               latitude:
                 data.data.startLat +
-                (Math.round(Math.random()) * 2 - 1) * 0.0001,
+                ((Math.round(Math.random()) * 2 - 1) * (Math.random()*0.0001)),
               longitude:
                 data.data.startLong +
-                (Math.round(Math.random()) * 2 - 1) * 0.0001,
+                ((Math.round(Math.random()) * 2 - 1) * (Math.random()*0.0001)),
             },
             createdAt: new Date(startingDate + 60000 * i),
             updatedAt: new Date(startingDate + 60000 * i),

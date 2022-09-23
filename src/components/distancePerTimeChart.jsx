@@ -5,8 +5,11 @@ import { Box, Stack } from "@mui/material";
 import Chart from "chart.js/auto"; // no borrar
 import ChartFilter from "./Charts/ChartFilter.jsx";
 import { useSelector } from "react-redux";
+import useMatches from "../hooks/useMatches.js";
 
 const DistancePerTimeChart = () => {
+    // media query
+    const match = useMatches()
 
     // redux store
     const measures = useSelector((state) => state.measures);
@@ -19,7 +22,13 @@ const DistancePerTimeChart = () => {
         const newDataSet = measures ? distanceDataSet(measures) : [];
         setDataSet(newDataSet);
         setUserData({
-            labels: newDataSet.map((datos) => datos.time),
+            labels: newDataSet.map((datos) => {
+                if (match) {
+                    return datos.time;
+                } else {
+                    return datos.time?.substring(10)
+                }
+            }),
             datasets: [
                 {
                     label: "Recorridos [m/min]",
@@ -30,7 +39,7 @@ const DistancePerTimeChart = () => {
                 },
             ],
         });
-    }, [measures]);
+    }, [measures, match]);
     if (userData) {
         return (
             <Stack
@@ -39,7 +48,11 @@ const DistancePerTimeChart = () => {
                 alignItems="center"
                 spacing={{ xs: 1, sm: 2 }}
             >
-                <Box width={700}>
+                <Box
+                    sx={{
+                        width: "90%",
+                    }}
+                >
                     <Bar data={userData} />
                 </Box>
                 <Box>

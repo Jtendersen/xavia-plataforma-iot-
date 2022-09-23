@@ -9,6 +9,7 @@ import deviceQrCode from "./reducers/deviceQrCode.reducer";
 import drawerViews from "./reducers/views.reducer";
 import deviceMeasures from "./reducers/deviceMeasures.reducer";
 import mapMarker from "./reducers/mapMarker.reducer";
+import measuresChart from "./reducers/measuresChart.reducer";
 
 
 const store = configureStore({
@@ -23,6 +24,8 @@ const store = configureStore({
         deviceCode: deviceQrCode,
         devices: deviceMeasures,
         toMarker: mapMarker,
+        measures: measuresChart
+
     },
 });
 

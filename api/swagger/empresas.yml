@@ -1,0 +1,32 @@
+components:
+  schemas:
+    empresas:
+      type: object
+      properties:
+
+        name:
+          type: string
+        users:
+          type: array
+        cuit:
+          type: string
+        email:
+          type: string
+        phone:
+          type: number
+        imgUrl:
+          type: string
+      
+      required:
+        - name
+        - cuit
+        - email
+      example:
+        name: Xavia IOT
+        users: ["Ubbe","Ragnar"]
+        cuit: 20-34983434-324
+        email:  empresa@mail.com  
+        phone:  +18974329434  
+        imgUrl:
+
+

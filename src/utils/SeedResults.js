@@ -5,7 +5,6 @@ import { Box } from "@mui/system";
 
 const SeedResults = (data) => {
   let startingDate = Date.now() - 7776000000;
-  let sumoUnMinuto = startingDate + 60000;
 
   let result = [
     {
@@ -31,69 +30,107 @@ const SeedResults = (data) => {
     },
   ];
 
-  // console.log("ESTA ES LA FECHA ACTUAL DATE", new Date(startingDate));
-  // console.log("LE SUMO UN MINUTO", new Date(sumoUnMinuto));
+  console.log(
+    "ESTA ES LA FECHA ACTUAL DATE",
+    new Date(startingDate).getHours()
+  );
+
+  for (let i = 1; i < 60 * data.data.hours; i++) {
+    result.push({
+      devEUI: data.data.devEUI,
+      messageType: "HEARTBEAT",
+      trackingMode: "STAND_BY",
+      batteryVoltage: Math.random() * (24 - 20) + 20,
+      ackToken: 0,
+      firmwareVersion: "1.8.1",
+      resetCause: 64,
+      periodicPosition: true,
+      temperatureMeasure: Math.random() * (24 - 20) + 20,
+      sosFlag: 0,
+      appState: 0,
+      dynamicMotionState: "STATIC",
+      onDemand: false,
+
+      payload: {
+        latitude:
+          data.data.startLat +
+          (Math.round(Math.random()) * 2 - 1) * (Math.random() * 0.0001),
+        longitude:
+          data.data.startLong +
+          (Math.round(Math.random()) * 2 - 1) * (Math.random() * 0.0001),
+      },
+      createdAt: new Date(startingDate + 60000 * i),
+      updatedAt: new Date(startingDate + 60000 * i),
+    });
+  }
 
   if (data.data.mode === "normal") {
     for (let i = 1; i < 60 * data.data.hours; i++) {
-      {
-        if (
-          result[i - 1].createdAt.getHours() > 6 &&
-          result[i - 1].createdAt.getHours() < 18
-        ) {
-          result.push({
-            devEUI: data.data.devEUI,
-            messageType: "HEARTBEAT",
-            trackingMode: "STAND_BY",
-            batteryVoltage: Math.random() * (24 - 20) + 20,
-            ackToken: 0,
-            firmwareVersion: "1.8.1",
-            resetCause: 64,
-            periodicPosition: true,
-            temperatureMeasure: Math.random() * (24 - 20) + 20,
-            sosFlag: 0,
-            appState: 0,
-            dynamicMotionState: "STATIC",
-            onDemand: false,
-
-            payload: {
-              latitude:
-                data.data.startLat +
-                (Math.round(Math.random()) * 2 - 1) * 0.0001,
-              longitude:
-                data.data.startLong +
-                (Math.round(Math.random()) * 2 - 1) * 0.0001,
-            },
-            createdAt: new Date(startingDate + 60000 * i),
-            updatedAt: new Date(startingDate + 60000 * i),
-          });
-        } else {
-          result.push({
-            devEUI: data.data.devEUI,
-            messageType: "HEARTBEAT",
-            trackingMode: "STAND_BY",
-            batteryVoltage: Math.random() * (24 - 20) + 20,
-            ackToken: 0,
-            firmwareVersion: "1.8.1",
-            resetCause: 64,
-            periodicPosition: true,
-            temperatureMeasure: Math.random() * (20 - 15) + 15,
-            sosFlag: 0,
-            appState: 0,
-            dynamicMotionState: "STATIC",
-            onDemand: false,
-
-            payload: {
-              latitude: data.data.startLat,
-              longitude: data.data.startLong,
-            },
-            createdAt: new Date(startingDate + 60000 * i),
-            updatedAt: new Date(startingDate + 60000 * i),
-          });
-        }
+      if (
+        result[i].createdAt.getHours() < 6 ||
+        result[i].createdAt.getHours() > 18
+      ) {
+        result[i].payload.latitude = result[0].payload.latitude;
+        result[i].payload.longitude = result[0].payload.longitude;
       }
     }
   }
+
+  if (data.data.mode === "dangerTemp") {
+    //A una hora random dentro del periodo generado empieza a aumentar
+    //0.1 grados. Si llega a 50 se para la maquina. Si llega a 100 se prende fuego todo y la bateria se va a cero.
+    const breakingHour = Math.floor(Math.random() * (23 - 1) + 1);
+    console.log("Breaking Hour (dentro del periodo simulado)-->", breakingHour);
+    for (let i = 1; i < 60 * data.data.hours; i++) {
+      if (
+        result[i].createdAt.getHours() < 6 ||
+        result[i].createdAt.getHours() > 18
+      ) {
+        result[i].payload.latitude = result[0].payload.latitude;
+        result[i].payload.longitude = result[0].payload.longitude;
+      }
+      if (result[i].createdAt.getHours() >= breakingHour) {
+        result[i].temperatureMeasure = result[i - 1].temperatureMeasure + 0.1;
+      }
+      if (result[i].temperatureMeasure >= 50) {
+        result[i].payload.latitude = result[0].payload.latitude;
+        result[i].payload.longitude = result[0].payload.longitude;
+        result[i].sosFlag = 1;
+      }
+      if (result[i].temperatureMeasure >= 100) {
+        result[i].batteryVoltage = 0;
+      }
+    }
+  }
+
+  if (data.data.mode === "batteryLow") {
+    //A una hora random dentro del periodo generado empieza a disminuir
+    //la bateria.
+    const breakingHour = Math.floor(Math.random() * (23 - 1) + 1);
+    console.log("Breaking Hour (dentro del periodo simulado)-->", breakingHour);
+    for (let i = 1; i < 60 * data.data.hours; i++) {
+      if (
+        result[i].createdAt.getHours() < 6 ||
+        result[i].createdAt.getHours() > 18
+      ) {
+        result[i].payload.latitude = result[0].payload.latitude;
+        result[i].payload.longitude = result[0].payload.longitude;
+      }
+      if (result[i].createdAt.getHours() >= breakingHour) {
+        result[i].batteryVoltage = result[i - 1].batteryVoltage - 0.1;
+      }
+      if (result[i].batteryVoltage <= 0) {
+        result[i].batteryVoltage = 0;
+        result[i].payload.latitude = result[0].payload.latitude;
+        result[i].payload.longitude = result[0].payload.longitude;
+        result[i].temperatureMeasure = 0;
+        result[i].sosFlag = 1;
+      }
+    }
+  }
+
+  // console.log("EL RESULTADO", result);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
@@ -108,15 +145,11 @@ const SeedResults = (data) => {
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Button
           type="submit"
-          // onSubmit={handleSubmit}
-          // onClick={() => {
-          //   navigator.clipboard.writeText(JSON.stringify(result, null, 2));
-          // }}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Copy to clipboard
+          Send to DB
         </Button>
       </Box>
 

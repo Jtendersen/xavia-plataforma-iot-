@@ -1,10 +1,10 @@
 import { useRef, React } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import { MapContainer, TileLayer, useMap, Marker, Popup, Circle } from "react-leaflet";
 import L, { LatLng, latLngBounds, FeatureGroup } from "leaflet";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clickedMarker } from "./MarkerIcon";
+import {  CstMarkers } from "./MarkerIcon";
 function ChangeView({ centerM, zoomM }) {
   const map = useMap();
   map.setView(centerM, zoomM);
@@ -37,12 +37,26 @@ function Map({ devices, mapStyle }) {
       style={{ minHeight: "30vh" }}
     >
       {/* <button onClick={GetBounds}>Zoom</button> */}
+
       <MapContainer
         style={mapStyle}
         center={[-34.603, -58.381]}
         zoom={10}
         scrollWheelZoom={true}
-      >
+      >      {/* <Box
+      sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'right',
+          zIndex: 1000
+      }}
+  ><Typography display="block" sx={{backgroundColor: "blue"}}>Última Posición<br></br> </Typography>
+  <Typography display="block"  sx={{backgroundColor: "red"}}>Posición Seleccionada</Typography></Box> */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -51,6 +65,7 @@ function Map({ devices, mapStyle }) {
 
         {devices?.map((data) => (
           <Marker
+            icon= {CstMarkers('b')}
             key={data._id}
             position={
               data.measures.length
@@ -63,19 +78,18 @@ function Map({ devices, mapStyle }) {
                 : [0, 0]
             }
           >
-            <Popup>{data.qrCode}</Popup>
+            <Popup>Última Posición: <br /> {data.qrCode}</Popup>
             {}
           </Marker>
         ))}
         {toMarker ? (
-          <Marker key="click" position={toMarker}>
-            <Popup>{toMarker}</Popup>
+          <Marker icon= {CstMarkers('r')} key="click" position={toMarker}>
+            <Popup>Posición seleccionada:  <br />{toMarker}</Popup>
             <ChangeView centerM={toMarker} zoomM="15" />
           </Marker>
         ) : (
           <></>
         )}
-        <Circle center={[-34.603, -58.381]} radius={200} />
       </MapContainer>
     </Grid>
   );

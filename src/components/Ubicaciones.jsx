@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Map from "../commons/Map";
 
+
 const mapStyle = {
   justifyContent: "center",
   height: "38vh",
@@ -10,6 +11,7 @@ const mapStyle = {
   padding: "15%",
 };
 const Ubicaciones = () => {
+  
   const devices = useSelector((state) => state.devices);
   const user = useSelector((state) => state.user);
   return (

@@ -4,10 +4,19 @@ import Map from "../commons/Map";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import { Link } from "@mui/material";
+import { getToMarker } from "../store/reducers/mapMarker.reducer";
+
 
 const Historico = () => {
   const devices = useSelector((state) => state.devices);
   const user = useSelector((state) => state.user);
+  const toMarker = useSelector((state) => state.toMarker);
+  const dispatch = useDispatch();
+  const handleClickCoords = (coords) => {
+  dispatch(getToMarker(coords))
+  }
+  console.log("tomarker", toMarker)
+
 
   const mapStyle = {
     justifyContent: "center",
@@ -35,7 +44,7 @@ const Historico = () => {
           href="#"
           underline="hover"
           onClick={() => {
-            console.info("coods:", params.value.lat, params.value.long);
+            handleClickCoords([params.value.lat, params.value.long]);
           }}
         >
           <div>

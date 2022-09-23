@@ -8,6 +8,8 @@ import usersTracker from "./reducers/usersTracker.reducer";
 import deviceQrCode from "./reducers/deviceQrCode.reducer";
 import drawerViews from "./reducers/views.reducer";
 import deviceMeasures from "./reducers/deviceMeasures.reducer";
+import mapMarker from "./reducers/mapMarker.reducer";
+
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -20,6 +22,7 @@ const store = configureStore({
         hide: hideColumns,
         deviceCode: deviceQrCode,
         devices: deviceMeasures,
+        toMarker: mapMarker,
     },
 });
 

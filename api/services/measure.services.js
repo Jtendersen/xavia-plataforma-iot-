@@ -5,10 +5,7 @@ class MeasureService {
     static async seedDb(body) {
         try {
             const measure = await Measure.insertMany(body);
-            const device = await Device.updateOne(
-                { qrCode: measure[0].devEUI },
-                { $push: { measures: measure } }
-            );
+            const device = await Device.updateOne({ qrCode: measure[0].devEUI }, { $push: { measures: measure } });
             return measure;
         } catch (error) {
             console.error(error);
@@ -24,12 +21,10 @@ class MeasureService {
     }
     static async getAllMeasures(devEUI, entries) {
         try {
-            if (entries) {
-                const results = await Measure.find({devEUI}).sort({ $natural: -1 }).limit(entries)
-                return results.reverse()
-            } else {
-                return await Measure.find({devEUI});
-            }
+            const results = await Measure.find({ devEUI })
+                .sort({ $natural: -1 })
+                .limit(entries || 10);
+            return results.reverse();
         } catch (error) {
             console.error(error);
         }

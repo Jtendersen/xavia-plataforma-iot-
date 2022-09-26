@@ -6,23 +6,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDevices } from "../store/reducers/deviceMeasures.reducer";
 import { getToMarker } from "../store/reducers/mapMarker.reducer";
-import { Link } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import useMatches from "../hooks/useMatches";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
   const user = useSelector((state) => state.user);
   const toMarker = useSelector((state) => state.toMarker);
+  const match = useMatches()
   const handleClickCoords = (coords) => {
     dispatch(getToMarker(coords));
   };
+
   const mapStyle = {
     justifyContent: "center",
-    height: "100%",
-    width: "70%",
-    padding: "15%",
+    maxHeight: 250,
+    width: "100%",
   };
+
+  const stackStyle = {
+    direction:"column",
+    spacing: 1,
+    paddingBottom: 0,
+    marginBottom: 0,
+    height: "100%",
+    justifyContent: "space-between"
+  }
 
   useEffect(() => {
     dispatch(getDevices(user._id));
@@ -83,11 +94,11 @@ const UserProfile = () => {
     : [];
 
   return (
-    <>
+    <Stack sx={{stackStyle}}>
       {devices ? (
         <>
           {<Map devices={devices} mapStyle={mapStyle} />}
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ height: 250, width: "100%" }}>
             <DataGrid
               sx={{ fontSize: "0.7rem" }}
               autoPageSize
@@ -99,7 +110,7 @@ const UserProfile = () => {
       ) : (
         <></>
       )}
-    </>
+    </Stack>
   );
 };
 

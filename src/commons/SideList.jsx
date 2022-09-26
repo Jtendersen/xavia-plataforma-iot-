@@ -1,20 +1,6 @@
-import {
-    AddBusiness,
-    ChevronLeft,
-    ChevronRight,
-    Home,
-} from "@mui/icons-material";
+import { AddBusiness, ChevronLeft, ChevronRight, Home } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    Box,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Stack,
-} from "@mui/material";
+import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
 import { setOpen } from "../store/reducers/drawerOpen.reducer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
@@ -24,12 +10,14 @@ import React from "react";
 import { setView } from "../store/reducers/views.reducer";
 import { logoutRequest } from "../store/reducers/user.reducer";
 import { useNavigate } from "react-router-dom";
+import useMatches from "../hooks/useMatches";
 
 // SideList es responsive. Se usa en ambas vistas.
 const SideList = () => {
     const dispatch = useDispatch();
     const open = useSelector((state) => state.drawer);
     const navigate = useNavigate();
+    const match = useMatches();
 
     // toggleDrawer setea el estado en reducer cuando se abre o no el sidebar.
     const toggleDrawer = () => {
@@ -47,52 +35,40 @@ const SideList = () => {
     };
 
     return (
-        <Stack
-            justifyContent={{ xs: "flex-start", sm: "space-between" }}
-            sx={{ height: { sm: "100vh", xs: "40vh" } }}
-        >
+        <Stack justifyContent={{ xs: "flex-start", sm: "space-between" }} sx={{ height: { sm: "100vh", xs: "40vh" } }}>
             <List>
                 <ListItem disablePadding>
-                    <Box
-                        className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
-                        sx={{ display: { xs: "none", sm: "inline" } }}
-                    >
+                    <Box className="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root" sx={{ display: { xs: "none", sm: "inline" } }}>
                         <IconButton onClick={toggleDrawer}>
                             {open ? (
-                                <ChevronLeft
-                                    sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
-                                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
-                                />
+                                <>
+                                    {match && (
+                                        <ChevronLeft
+                                            sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
+                                            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
+                                        />
+                                    )}
+                                </>
                             ) : (
-                                <ChevronRight
-                                    sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
-                                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
-                                />
+                                <>
+                                    {match && (
+                                        <ChevronRight
+                                            sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
+                                            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
+                                        />
+                                    )}
+                                </>
                             )}
                         </IconButton>
                     </Box>
-                    <Box
-                        className="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                        sx={{ display: { xs: "none", sm: "inline" } }}
-                    >
+                    <Box className="MuiListItemText-root css-tlelie-MuiListItemText-root" sx={{ display: { xs: "none", sm: "inline" } }}>
                         <span className="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root">
-                            {open ? (
-                                <img
-                                    src={logo}
-                                    alt="logo"
-                                    style={{ maxWidth: "20%" }}
-                                />
-                            ) : (
-                                <></>
-                            )}
+                            {open ? <img src={logo} alt="logo" style={{ maxWidth: "20%" }} /> : <></>}
                         </span>
                     </Box>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton
-                        component="a"
-                        onClick={() => toggleView("profile")}
-                    >
+                    <ListItemButton component="a" onClick={() => toggleView("profile")}>
                         <ListItemIcon>
                             <Home sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -100,10 +76,7 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton
-                        component="a"
-                        onClick={() => toggleView("usuariosFinales")}
-                    >
+                    <ListItemButton component="a" onClick={() => toggleView("usuariosFinales")}>
                         <ListItemIcon>
                             <AddBusiness sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -111,10 +84,7 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton
-                        component="a"
-                        onClick={() => toggleView("aplicaciones")}
-                    >
+                    <ListItemButton component="a" onClick={() => toggleView("aplicaciones")}>
                         <ListItemIcon>
                             <RssFeedIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
@@ -122,10 +92,7 @@ const SideList = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton
-                        component="a"
-                        onClick={() => toggleView("ubicaciones")}
-                    >
+                    <ListItemButton component="a" onClick={() => toggleView("ubicaciones")}>
                         <ListItemIcon>
                             <LocationOnIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>

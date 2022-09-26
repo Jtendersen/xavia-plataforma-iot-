@@ -4,6 +4,7 @@ import BatteryUsageChart from "./BatteryUsageChart";
 import DistancePerTimeChart from "./distancePerTimeChart";
 
 const Aplicaciones = () => {
+
   return (
     <>
       <Box>
@@ -14,6 +15,7 @@ const Aplicaciones = () => {
       </Box>
     </>
   );
+
 };
 
 export default Aplicaciones;

@@ -1,5 +1,16 @@
 components:
   schemas:
+    login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      description: isn`t a model
+      example:
+        email: ramirezjulio.0789@gmail.com
+        password: 1234
     users:
       type: object
       properties:
@@ -89,6 +100,8 @@ components:
                 
 /api/users/delete/{id}:
   delete:
+    summary: delete a user
+    tags: [Users]
     parameters:
     - name: id
       in: path
@@ -96,8 +109,6 @@ components:
       description: the user identifier, as userId 
       schema:
         type: string
-    summary: delete a user
-    tags: [Users]
     responses:
       404:
         description: user not found
@@ -146,8 +157,7 @@ components:
         application/json:
           schema:
             type: object
-            value:
-              email: ds
+            $ref: "#/components/schemas/login"
     responses:
       200:
         description: new user created!

@@ -7,7 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { LinearProgress } from "@mui/material";
+import { LinearProgress, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import QrScanner from "./QrScanner";
@@ -54,6 +54,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
 
   const clearData = () => {
     dispatch(setQrCode(null));
+    handleCloseTres();
   };
   //ESTADO DE INFO STATE
   const dataQr = useSelector((state) => state.deviceCode);
@@ -86,6 +87,25 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
   const handleCloseTres = () => {
     setOpentres(false);
     setShow(false);
+  };
+
+  /* Digitar Codigo */
+  const [codeManual, setCodeManueal] = React.useState(false);
+  const handlecodeManual = () => {
+    setCodeManueal(true);
+    setOpenDos(false);
+  };
+  const closeCodeManual = () => {
+    setCodeManueal(false);
+    setShow(false);
+  };
+  const setCode = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const code = data.get("codeQr");
+    dispatch(setQrCode(code));
+    setCodeManueal(false);
+    setOpentres(true);
   };
 
   /* MODAL 4 */
@@ -138,9 +158,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
       .then((res) => console.log(res));
 
     clearData();
-    setOpenDos(true)
-
-
+    setOpenDos(true);
   };
 
   return (
@@ -323,6 +341,69 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
               Escanear Código QR
             </Button>
           </Box>
+          <Box textAlign={"center"}>
+            <Button
+              onClick={handlecodeManual}
+              variant="contained"
+              color="mobile"
+              sx={{
+                color: "white",
+                py: 2,
+                px: 5,
+                mt: 2,
+              }}
+              size="large"
+            >
+              Digitar Código
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* Modal 5/4 CODIGO MANUAL*/}
+      <Modal
+        keepMounted
+        open={codeManual}
+        onClose={closeCodeManual}
+        aria-labelledby="kitleeep-mounted-modal-t"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+            Asignación de dispositivos
+          </Typography>
+
+          {/*MEDICIONES INPUT  */}
+          <Box component="form" noValidate onSubmit={setCode}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="codeQr"
+              label="Código Dispositivo"
+              name="codeQr"
+              autoComplete="codeQr"
+              autoFocus
+            />
+
+            {/* BUTTON SIGUIENTE */}
+            <Box textAlign={"center"}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="mobile"
+                sx={{
+                  color: "white",
+                  mt: 3,
+                  py: 2,
+                  px: 6,
+                }}
+                size="large"
+              >
+                Siguiente
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Modal>
 
@@ -356,7 +437,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
                     >
                       SI
                     </Button>
-                    {/* BUTTON SI */}
+                    {/* BUTTON no */}
                     <Button
                       onClick={clearData}
                       variant="outlined"
@@ -412,7 +493,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
                 <QrScanner />
               </>
             ) : (
-              <h1>df</h1>
+              <></>
             )}
           </Box>
         </Modal>
@@ -541,7 +622,8 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
             </Typography>
             <br></br>
             <Typography id="keep-mounted-modal-title" variant="h7">
-            <b>  Dispositivo: </b>{dataQr}
+              <b> Dispositivo: </b>
+              {dataQr}
             </Typography>
             <br></br>
             <Typography id="keep-mounted-modal-title" variant="h7">
@@ -568,7 +650,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
             </Button>
             {/* BUTTON SI */}
             <Button
-            onClick={addNewDevices}
+              onClick={addNewDevices}
               variant="outlined"
               color="mobile"
               sx={{

@@ -4,6 +4,7 @@ import React from "react";
 import HeaderMobile from "./HeaderMobile";
 import Users from "../../commons/Users";
 import { useSelector } from "react-redux";
+import Aplicaciones from "../Aplicaciones";
 
 const ContentMobile = () => {
     const views = useSelector((state) => state.views);
@@ -17,26 +18,25 @@ const ContentMobile = () => {
                 marginBottom={0}
                 justifyContent="space-between"
             >
-                {views === "profile" ? <HeaderMobile /> : <></>}
+                {views === "profile" && <HeaderMobile />}
                 <Paper
                     elevation={3}
                     sx={{
                         flexDirection: "column",
                         borderTopLeftRadius: "16px",
                         borderTopRightRadius: "16px",
-                        position: 'fixed',
+                        position: "fixed",
                         bottom: 0,
                         left: 0,
                         right: 0,
                         paddingBottom: 0,
-                        marginBottom: 0
+                        marginBottom: 0,
                     }}
                 >
-                    {views === "profile" || views === "usuariosFinales" ? (
+                    {(views === "profile" || views === "usuariosFinales") && (
                         <Users />
-                    ) : (
-                        <></>
                     )}
+                    {views === "aplicaciones" && <Aplicaciones />}
                 </Paper>
             </Stack>
         </Box>

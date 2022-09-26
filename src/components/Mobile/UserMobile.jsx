@@ -14,7 +14,7 @@ const UserMobile = () => {
     return (
         <Box bgcolor="#3D3D3D" flex={8} p={2}>
             <Navbar />
-            {views === "profile" ? <HeaderMobile /> : <></>}
+            {views === "profile" && <HeaderMobile />}
             <Paper
                 elevation={3}
                 sx={{
@@ -30,14 +30,10 @@ const UserMobile = () => {
                     right: 0,
                 }}
             >
-                {views === "profile" ? (
-                   <UserProfile />
-                ) : (
-                    <></>
-                )}
-                {views === "aplicaciones" ? <Aplicaciones /> : <></>}
-                {views === "ubicaciones" ? <Ubicaciones /> : <></>}
-                {views === "historico" ? <Historico /> : <></>}
+                {views === "profile" && <UserProfile />}
+                {views === "aplicaciones" && <Aplicaciones />}
+                {views === "ubicaciones" && <Ubicaciones />}
+                {views === "historico" && <Historico />}
             </Paper>
         </Box>
     );

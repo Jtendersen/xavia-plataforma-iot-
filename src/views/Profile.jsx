@@ -21,7 +21,7 @@ function Profile() {
     }, [dispatch, user._id]);
 
     if (user.state === "loading") {
-        <LoadingScreen />;
+        return <LoadingScreen />;
     } else {
         return (
             <>

@@ -60,12 +60,12 @@ const UserSideList = () => {
             <IconButton onClick={toggleDrawer}>
               {open ? (
                 <ChevronLeft
-                  sx={{ color: "#FFFFFF" }}
+                  sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
                   className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
                 />
               ) : (
                 <ChevronRight
-                  sx={{ color: "#FFFFFF" }}
+                  sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
                   className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
                 />
               )}

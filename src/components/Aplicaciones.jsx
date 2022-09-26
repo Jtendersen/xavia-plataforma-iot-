@@ -1,13 +1,21 @@
 import { Box } from "@mui/material";
 import React from "react";
+import BatteryUsageChart from "./BatteryUsageChart";
 import DistancePerTimeChart from "./distancePerTimeChart";
 
 const Aplicaciones = () => {
-    return (
-        <Box sx={{ maxWidth: "90%", maxHeight: "90%" }}>
-            <DistancePerTimeChart />
-        </Box>
-    );
+
+  return (
+    <>
+      <Box>
+        <DistancePerTimeChart />
+      </Box>
+      <Box>
+        <BatteryUsageChart />
+      </Box>
+    </>
+  );
+
 };
 
 export default Aplicaciones;

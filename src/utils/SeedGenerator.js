@@ -67,7 +67,7 @@ export default function SeedGenerator() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
           sx={{
@@ -161,7 +161,7 @@ export default function SeedGenerator() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      <Container maxWidth="xs">
+      <Container maxWidth="md">
         <Box
           sx={{
             marginTop: 8,

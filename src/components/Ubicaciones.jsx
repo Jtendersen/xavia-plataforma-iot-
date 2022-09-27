@@ -6,6 +6,7 @@ import Map from "../commons/Map";
 const Ubicaciones = () => {
   
   const devices = useSelector((state) => state.devices);
+  const measures = useSelector((state) => state.measures);
   const user = useSelector((state) => state.user);
 
 
@@ -17,14 +18,14 @@ const Ubicaciones = () => {
 
   return (
     <>
-      {/* <Typography align="center" variant="h6">
+       <Typography align="center" variant="h6">
         Ubicaciones
-      </Typography> */}
+      </Typography> 
       <Typography align="center" variant="subtitle2">
       ({user.devices?.length} dispositivos)
       </Typography>
       {devices ? (
-        <>{<Map devices={devices} mapStyle={mapStyle} />}</>
+        <>{<Map measures={measures} mapStyle={mapStyle} />}</>
       ) : (
         <Typography align="center">No hay dispositivos registrados</Typography>
       )}

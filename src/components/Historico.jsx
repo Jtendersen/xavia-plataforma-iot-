@@ -9,6 +9,7 @@ import { getToMarker } from "../store/reducers/mapMarker.reducer";
 
 const Historico = () => {
   const devices = useSelector((state) => state.devices);
+  const measures = useSelector((state) => state.measures)
   const user = useSelector((state) => state.user);
   const toMarker = useSelector((state) => state.toMarker);
   const dispatch = useDispatch();
@@ -26,8 +27,7 @@ const Historico = () => {
   };
 
   const columns = [
-    { field: "qr", headerName: "Qr", minWidth: 150, flex: 1 },
-    { field: "name", headerName: "Nombre", minWidth: 140, flex: 1 },
+    { field: "qr", headerName: "DevEUI", minWidth: 150, flex: 1 },
     {
       field: "histodate",
       headerName: "Historico (Fecha)",
@@ -58,21 +58,24 @@ const Historico = () => {
         </Link>
       ),
     },
+    { field: "bat", headerName: "Batería", minWidth: 140, flex: 1 },
+    { field: "mode", headerName: "Modo", minWidth: 140, flex: 1 },
   ];
 
-  var rows = Array.isArray(devices)
+  var rows = Array.isArray(measures)
     ? [].concat.apply(
         [],
-        devices?.map((e) => {
-          return e.measures[0]?.map((m) => {
+        measures?.map((e) => {
+          return e?.map((m) => {
             return {
               id: m._id,
-              qr: e.qrCode,
-              name: e.typeOfDevice,
-              histodate: m.createdAt,
+              qr: m.DevEUI_uplink.DevEUI,
+              bat: m.DevEUI_uplink.payload.batteryVoltage,
+              mode: m.DevEUI_uplink.payload.deviceConfiguration.mode,
+              histodate: m.DevEUI_uplink.Time,
               histocoord: {
-                lat: m.payload[0].latitude,
-                long: m.payload[0].longitude,
+                lat: m.DevEUI_uplink.LrrLAT,
+                 long: m.DevEUI_uplink.LrrLON,
               },
             };
           });
@@ -87,14 +90,14 @@ const Historico = () => {
 
   return (
     <>
-      {devices ? (
+      {measures.length > 0 ? (
         <>
-          {/* <Typography align="center" variant="h6">
+          <Typography align="center" variant="h6">
             Historico
-          </Typography> */}
-          {devices[0].measures[0] ? (
+          </Typography> 
+          {measures[0][0] ? (
             <div>
-              <Map devices={devices} mapStyle={mapStyle} />
+               <Map devices={measures} mapStyle={mapStyle} /> 
 
               <div style={{ height: 300, width: "100%" }}>
                 <DataGrid

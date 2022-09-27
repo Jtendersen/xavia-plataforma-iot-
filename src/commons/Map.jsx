@@ -26,7 +26,7 @@ function Map({ devices, mapStyle }) {
     });
     map.fitBounds(group.getBounds());
   }
-
+console.log("devices param", devices)
   return (
     <Grid
       container
@@ -66,26 +66,27 @@ function Map({ devices, mapStyle }) {
         {devices?.map((data) => (
           <Marker
             icon= {CstMarkers('b')}
-            key={data._id}
+            key={data[0]._id}
             position={
-              data.measures.length
+              data.length
                 ? [
-                    data.measures[0][data.measures[0].length - 1].payload[0]
-                      .latitude,
-                    data.measures[0][data.measures[0].length - 1].payload[0]
-                      .longitude,
+                  //e[0].DevEUI_uplink.LrrLAT
+                    data[0].DevEUI_uplink.LrrLAT,
+                    data[0].DevEUI_uplink.LrrLON,
+                      
+                    // data.measures[0][data.measures[0].length - 1].payload[0].longitude,
                   ]
                 : [0, 0]
             }
           >
-            <Popup>Última Posición: <br /> {data.qrCode}</Popup>
+          {/*   <Popup>Última Posición: <br /> {data[0].DevEUI_uplink.DevEUI}</Popup> */}
             {}
           </Marker>
         ))}
         {toMarker ? (
           <Marker icon= {CstMarkers('r')} key="click" position={toMarker}>
             <Popup>Posición seleccionada:  <br />{toMarker}</Popup>
-            <ChangeView centerM={toMarker} zoomM="15" />
+            <ChangeView centerM={toMarker} zoomM="25" />
           </Marker>
         ) : (
           <></>

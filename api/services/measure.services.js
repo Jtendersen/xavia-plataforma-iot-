@@ -37,7 +37,6 @@ class MeasureService {
         } catch (error) {
             console.error(error);
         }
-    }
 }
 
 module.exports = MeasureService;

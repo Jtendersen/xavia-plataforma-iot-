@@ -14,13 +14,14 @@ class DeviceService {
         measures,
     }) {
         try {
-            const isRegistered = await Device.findOne({ qrCode: qrCode });
+            const noScores= qrCode.replace(/-/g, '');
+            const isRegistered = await Device.findOne({ qrCode: noScores});
 
             // Verifica que exista un dispositivo en la db con el mismo qr.
             if (isRegistered) return "Este dispositivo ya esta registrado";
-
+            
             const device = new Device({
-                qrCode,
+                qrCode: noScores,
                 typeOfDevice,
                 gatewayLora,
                 measuresAmount,
@@ -69,7 +70,8 @@ class DeviceService {
 
     static async getAllDevices() {
         try {
-          return await Device.find({}, {qrCode: 1, users: 1});
+          //    return await Device.find({}, {qrCode: 1, users: 1});
+          return await Device.find();
         } catch (error) {
             console.error(error);
         }

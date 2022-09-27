@@ -26,7 +26,7 @@ const Ubicaciones = () => {
       {devices ? (
         <>{<Map devices={devices} mapStyle={mapStyle} />}</>
       ) : (
-        <Typography align="center">"No hay dispositivos registrados"</Typography>
+        <Typography align="center">No hay dispositivos registrados</Typography>
       )}
     </>
   );

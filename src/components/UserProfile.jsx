@@ -108,7 +108,7 @@ const UserProfile = () => {
           </div>
         </>
       ) : (
-        <></>
+        <Typography align="center">No hay dispositivos registrados</Typography>
       )}
     </Stack>
   );

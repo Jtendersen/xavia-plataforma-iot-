@@ -5,41 +5,35 @@ import HeaderMobile from "./HeaderMobile";
 import Users from "../../commons/Users";
 import { useSelector } from "react-redux";
 import Aplicaciones from "../Aplicaciones";
+import AddUser from "../../commons/AddUser";
 
 const ContentMobile = () => {
     const views = useSelector((state) => state.views);
     return (
-        <Box bgcolor="#3D3D3D" flex={8} paddingBottom={0} marginBottom={0}>
+        <Stack bgcolor="#3D3D3D" flex={1} paddingBottom={0} marginBottom={0} height="100%">
             <Navbar />
-            <Stack
-                direction="column"
-                spacing={1}
-                paddingBottom={0}
-                marginBottom={0}
-                justifyContent="space-between"
-            >
-                {views === "profile" && <HeaderMobile />}
+            <Stack id="soyStack" direction="column" spacing={1} paddingBottom={0} marginBottom={0} height="95%" justifyContent="space-between">
+                {views === "profile" ? <HeaderMobile /> : <div></div>}
+
                 <Paper
                     elevation={3}
                     sx={{
                         flexDirection: "column",
                         borderTopLeftRadius: "16px",
                         borderTopRightRadius: "16px",
-                        position: "fixed",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        paddingBottom: 0,
-                        marginBottom: 0,
+                        minHeight: views === "profile" ? 200: "100%"
                     }}
                 >
-                    {(views === "profile" || views === "usuariosFinales") && (
-                        <Users />
+                    {views === "usuariosFinales" && (
+                        <Box sx={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}>
+                            <AddUser />
+                        </Box>
                     )}
+                    {(views === "profile" || views === "usuariosFinales") && <Users />}
                     {views === "aplicaciones" && <Aplicaciones />}
                 </Paper>
             </Stack>
-        </Box>
+        </Stack>
     );
 };
 

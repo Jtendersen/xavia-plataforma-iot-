@@ -89,9 +89,9 @@ const Historico = () => {
     <>
       {devices ? (
         <>
-          <Typography align="center" variant="h6">
+          {/* <Typography align="center" variant="h6">
             Historico
-          </Typography>
+          </Typography> */}
           {devices[0].measures[0] ? (
             <div>
               <Map devices={devices} mapStyle={mapStyle} />

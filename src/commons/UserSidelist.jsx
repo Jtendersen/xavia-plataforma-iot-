@@ -1,5 +1,4 @@
 import {
-  AddBusiness,
   ChevronLeft,
   ChevronRight,
   Home,
@@ -25,10 +24,12 @@ import React from "react";
 import { setView } from "../store/reducers/views.reducer";
 import { logoutRequest } from "../store/reducers/user.reducer";
 import { useNavigate } from "react-router-dom";
+import useMatches from "../hooks/useMatches";
 
 // SideList es responsive. Se usa en ambas vistas.
 const UserSideList = () => {
   const dispatch = useDispatch();
+  const match = useMatches()
   const open = useSelector((state) => state.drawer);
   const navigate = useNavigate();
 
@@ -58,17 +59,25 @@ const UserSideList = () => {
             sx={{ display: { xs: "none", sm: "inline" } }}
           >
             <IconButton onClick={toggleDrawer}>
-              {open ? (
-                <ChevronLeft
-                  sx={{ color: "#FFFFFF" }}
-                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
-                />
-              ) : (
-                <ChevronRight
-                  sx={{ color: "#FFFFFF" }}
-                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
-                />
-              )}
+            {open ? (
+                                <>
+                                    {match && (
+                                        <ChevronLeft
+                                            sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
+                                            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
+                                        />
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    {match && (
+                                        <ChevronRight
+                                            sx={{ color: "#FFFFFF", display: { xs: "none", sm: "inline" } }}
+                                            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pg8mhl-MuiSvgIcon-root"
+                                        />
+                                    )}
+                                </>
+                            )}
             </IconButton>
           </Box>
           <Box

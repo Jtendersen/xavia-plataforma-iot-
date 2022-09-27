@@ -8,22 +8,85 @@ const SeedResults = (data) => {
 
   let result = [
     {
-      devEUI: data.data.devEUI,
-      messageType: "HEARTBEAT",
-      trackingMode: "STAND_BY",
-      batteryVoltage: Math.random() * (24 - 20) + 20,
-      ackToken: 0,
-      firmwareVersion: "1.8.1",
-      resetCause: 64,
-      periodicPosition: true,
-      temperatureMeasure: Math.random() * (24 - 20) + 20,
-      sosFlag: 0,
-      appState: 0,
-      dynamicMotionState: "STATIC",
-      onDemand: false,
-      payload: {
-        latitude: data.data.startLat,
-        longitude: data.data.startLong,
+      DevEUI_uplink: {
+        Time: "2022-09-23T17:20:58.683+00:00",
+        DevEUI: data.data.devEUI,
+        FPort: 17,
+        FCntUp: 54414,
+        ADRbit: 1,
+        MType: 2,
+        FCntDn: 796,
+        payload_hex: "0500997c0040010801",
+        mic_hex: "4ed565ea",
+        Lrcid: "00000211",
+        LrrRSSI: -49,
+        LrrSNR: 9.5,
+        LrrESP: -49.461838,
+        SpFact: 7,
+        SubBand: "G0",
+        Channel: "LC7",
+        DevLrrCnt: 1,
+        Lrrid: "100009AB",
+        Late: 0,
+        LrrLAT: data.data.startLat,
+        LrrLON: data.data.startLong,
+        Lrrs: {
+          Lrr: [
+            {
+              Lrrid: "100009AB",
+              Chain: 0,
+              LrrRSSI: -49,
+              LrrSNR: 9.5,
+              LrrESP: -49.461838,
+            },
+          ],
+        },
+        CustomerID: "100041823",
+        CustomerData: {
+          alr: {
+            pro: "ABEE/APY",
+            ver: "1",
+          },
+        },
+        ModelCfg: "1:TPX_457352bd-f47c-4686-84fb-7c69be15284d",
+        DriverCfg: {
+          mod: {
+            pId: "abeeway",
+            mId: "indus-tracker",
+            ver: "2",
+          },
+          app: {
+            pId: "abeeway",
+            mId: "asset-tracker",
+            ver: "2",
+          },
+          id: "abeeway:asset-tracker:3",
+        },
+        InstantPER: 0,
+        MeanPER: 0,
+        DevAddr: "05346ADA",
+        TxPower: 2,
+        NbTrans: 1,
+        Frequency: 916.6,
+        DynamicClass: "A",
+        payload: {
+          messageType: "HEARTBEAT",
+          trackingMode: "STAND_BY",
+          batteryVoltage: 3.64,
+          ackToken: 0,
+          firmwareVersion: "1.8.1",
+          resetCause: 64,
+          periodicPosition: false,
+          temperatureMeasure: 18.7,
+          sosFlag: 0,
+          appState: 0,
+          dynamicMotionState: "STATIC",
+          onDemand: false,
+          payload: "0500997c0040010801",
+        },
+        deviceConfiguration: {
+          mode: "STAND_BY",
+        },
       },
       createdAt: new Date(startingDate),
       updatedAt: new Date(startingDate),
@@ -37,27 +100,89 @@ const SeedResults = (data) => {
 
   for (let i = 1; i < 60 * data.data.hours; i++) {
     result.push({
-      devEUI: data.data.devEUI,
-      messageType: "HEARTBEAT",
-      trackingMode: "STAND_BY",
-      batteryVoltage: Math.random() * (24 - 20) + 20,
-      ackToken: 0,
-      firmwareVersion: "1.8.1",
-      resetCause: 64,
-      periodicPosition: true,
-      temperatureMeasure: Math.random() * (24 - 20) + 20,
-      sosFlag: 0,
-      appState: 0,
-      dynamicMotionState: "STATIC",
-      onDemand: false,
-
-      payload: {
-        latitude:
+      DevEUI_uplink: {
+        Time: "2022-09-23T17:20:58.683+00:00",
+        DevEUI: data.data.devEUI,
+        FPort: 17,
+        FCntUp: 54414,
+        ADRbit: 1,
+        MType: 2,
+        FCntDn: 796,
+        payload_hex: "0500997c0040010801",
+        mic_hex: "4ed565ea",
+        Lrcid: "00000211",
+        LrrRSSI: -49,
+        LrrSNR: 9.5,
+        LrrESP: -49.461838,
+        SpFact: 7,
+        SubBand: "G0",
+        Channel: "LC7",
+        DevLrrCnt: 1,
+        Lrrid: "100009AB",
+        Late: 0,
+        LrrLAT:
           data.data.startLat +
           (Math.round(Math.random()) * 2 - 1) * (Math.random() * 0.0001),
-        longitude:
+        LrrLON:
           data.data.startLong +
           (Math.round(Math.random()) * 2 - 1) * (Math.random() * 0.0001),
+        Lrrs: {
+          Lrr: [
+            {
+              Lrrid: "100009AB",
+              Chain: 0,
+              LrrRSSI: -49,
+              LrrSNR: 9.5,
+              LrrESP: -49.461838,
+            },
+          ],
+        },
+        CustomerID: "100041823",
+        CustomerData: {
+          alr: {
+            pro: "ABEE/APY",
+            ver: "1",
+          },
+        },
+        ModelCfg: "1:TPX_457352bd-f47c-4686-84fb-7c69be15284d",
+        DriverCfg: {
+          mod: {
+            pId: "abeeway",
+            mId: "indus-tracker",
+            ver: "2",
+          },
+          app: {
+            pId: "abeeway",
+            mId: "asset-tracker",
+            ver: "2",
+          },
+          id: "abeeway:asset-tracker:3",
+        },
+        InstantPER: 0,
+        MeanPER: 0,
+        DevAddr: "05346ADA",
+        TxPower: 2,
+        NbTrans: 1,
+        Frequency: 916.6,
+        DynamicClass: "A",
+        payload: {
+          messageType: "HEARTBEAT",
+          trackingMode: "STAND_BY",
+          batteryVoltage: Math.random() * (24 - 20) + 20,
+          ackToken: 0,
+          firmwareVersion: "1.8.1",
+          resetCause: 64,
+          periodicPosition: false,
+          temperatureMeasure: Math.random() * (24 - 20) + 20,
+          sosFlag: 0,
+          appState: 0,
+          dynamicMotionState: "STATIC",
+          onDemand: false,
+          payload: "0500997c0040010801",
+        },
+        deviceConfiguration: {
+          mode: "STAND_BY",
+        },
       },
       createdAt: new Date(startingDate + 60000 * i),
       updatedAt: new Date(startingDate + 60000 * i),
@@ -70,8 +195,8 @@ const SeedResults = (data) => {
         result[i].createdAt.getHours() < 6 ||
         result[i].createdAt.getHours() > 18
       ) {
-        result[i].payload.latitude = result[0].payload.latitude;
-        result[i].payload.longitude = result[0].payload.longitude;
+        result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
+        result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
       }
     }
   }
@@ -86,19 +211,20 @@ const SeedResults = (data) => {
         result[i].createdAt.getHours() < 6 ||
         result[i].createdAt.getHours() > 18
       ) {
-        result[i].payload.latitude = result[0].payload.latitude;
-        result[i].payload.longitude = result[0].payload.longitude;
+        result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
+        result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
       }
       if (result[i].createdAt.getHours() >= breakingHour) {
-        result[i].temperatureMeasure = result[i - 1].temperatureMeasure + 0.1;
+        result[i].DevEUI_uplink.payload.temperatureMeasure =
+          result[i - 1].DevEUI_uplink.payload.temperatureMeasure + 0.1;
       }
-      if (result[i].temperatureMeasure >= 50) {
-        result[i].payload.latitude = result[0].payload.latitude;
-        result[i].payload.longitude = result[0].payload.longitude;
-        result[i].sosFlag = 1;
+      if (result[i].DevEUI_uplink.payload.temperatureMeasure >= 50) {
+        result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
+        result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
+        result[i].DevEUI_uplink.payload.sosFlag = 1;
       }
-      if (result[i].temperatureMeasure >= 100) {
-        result[i].batteryVoltage = 0;
+      if (result[i].DevEUI_uplink.payload.temperatureMeasure >= 100) {
+        result[i].DevEUI_uplink.payload.batteryVoltage = 0;
       }
     }
   }
@@ -113,18 +239,19 @@ const SeedResults = (data) => {
         result[i].createdAt.getHours() < 6 ||
         result[i].createdAt.getHours() > 18
       ) {
-        result[i].payload.latitude = result[0].payload.latitude;
-        result[i].payload.longitude = result[0].payload.longitude;
+        result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
+        result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
       }
       if (result[i].createdAt.getHours() >= breakingHour) {
-        result[i].batteryVoltage = result[i - 1].batteryVoltage - 0.1;
+        result[i].DevEUI_uplink.payload.batteryVoltage =
+          result[i - 1].DevEUI_uplink.payload.batteryVoltage - 0.1;
       }
-      if (result[i].batteryVoltage <= 0) {
-        result[i].batteryVoltage = 0;
-        result[i].payload.latitude = result[0].payload.latitude;
-        result[i].payload.longitude = result[0].payload.longitude;
-        result[i].temperatureMeasure = 0;
-        result[i].sosFlag = 1;
+      if (result[i].DevEUI_uplink.payload.batteryVoltage <= 0) {
+        result[i].DevEUI_uplink.payload.batteryVoltage = 0;
+        result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
+        result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
+        result[i].DevEUI_uplink.payload.temperatureMeasure = 0;
+        result[i].DevEUI_uplink.payload.sosFlag = 1;
       }
     }
   }

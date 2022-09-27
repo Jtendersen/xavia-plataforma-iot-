@@ -7,13 +7,12 @@ import ProfileHeader from "../ProfileHeader";
 import Aplicaciones from "../Aplicaciones";
 import Ubicaciones from "../Ubicaciones";
 
-
 const ContentDesktop = () => {
     const views = useSelector((state) => state.views);
     return (
         <Box bgcolor="#EAE1D8" flex={8} p={2}>
-            {views === "usuariosFinales" ? <UsersHeader /> : <></>}
-            {views === "profile" ? <ProfileHeader /> : <></>}
+            {views === "usuariosFinales" && <UsersHeader />}
+            {views === "profile" && <ProfileHeader />}
 
             <Paper
                 elevation={3}
@@ -23,14 +22,9 @@ const ContentDesktop = () => {
                     borderRadius: "16px",
                 }}
             >
-                {views === "profile" || views === "usuariosFinales" ? (
-                    <Users />
-                ) : (
-                    <></>
-                )}
-
-                {views === "aplicaciones" ? <Aplicaciones /> : <></>}
-                {views === "ubicaciones" ? <Ubicaciones /> : <></>}
+                {(views === "profile" || views === "usuariosFinales") && <Users />}
+                {views === "aplicaciones" && <Aplicaciones />}
+                {views === "ubicaciones" && <Ubicaciones />}
             </Paper>
         </Box>
     );

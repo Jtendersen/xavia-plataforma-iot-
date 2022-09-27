@@ -23,7 +23,6 @@ class MeasureController {
                 req.query.entries,
                 req.query.user
             );
-
             return res.status(200).send(measure);
         } catch (error) {
             console.log(error);

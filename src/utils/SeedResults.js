@@ -10,7 +10,7 @@ const SeedResults = (data) => {
     {
       DevEUI_uplink: {
         Time: "2022-09-23T17:20:58.683+00:00",
-        DevEUI: "20635F00C800004E",
+        DevEUI: data.data.devEUI,
         FPort: 17,
         FCntUp: 54414,
         ADRbit: 1,
@@ -28,8 +28,8 @@ const SeedResults = (data) => {
         DevLrrCnt: 1,
         Lrrid: "100009AB",
         Late: 0,
-        LrrLAT: -34.6735,
-        LrrLON: -58.361454,
+        LrrLAT: data.data.startLat,
+        LrrLON: data.data.startLong,
         Lrrs: {
           Lrr: [
             {

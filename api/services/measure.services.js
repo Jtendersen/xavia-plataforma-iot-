@@ -20,7 +20,7 @@ class MeasureService {
             console.error(error);
         }
     }
-    static async getAllMeasures(entries, user) {
+    static async getAllMeasures(entries, user, devEUI) {
         try {
             // trae lista de devices
             const userA = await Users.find({ _id: user }, { devices: 1 });

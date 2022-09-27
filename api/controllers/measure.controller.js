@@ -21,7 +21,8 @@ class MeasureController {
         try { 
             const measure = await MeasureService.getAllMeasures(
                 req.query.entries,
-                req.query.user
+                req.query.user,
+                req.query.device
             );
             return res.status(200).send(measure);
         } catch (error) {

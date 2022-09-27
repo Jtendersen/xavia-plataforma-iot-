@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { distanceDataSet } from "../utils/distanceDataSet.js";
+import { distanceDataSet } from "../../utils/distanceDataSet.js";
 import { Bar } from "react-chartjs-2";
 import { Box, Stack } from "@mui/material";
 import Chart from "chart.js/auto"; // no borrar
-import ChartFilter from "./Charts/ChartFilter.jsx";
+import ChartFilter from "./ChartFilter.jsx";
 import { useSelector } from "react-redux";
-import useMatches from "../hooks/useMatches.js";
+import useMatches from "../../hooks/useMatches.js";
 
 const DistancePerTimeChart = () => {
     // media query

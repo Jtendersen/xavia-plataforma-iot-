@@ -51,17 +51,19 @@ const ChartFilter = () => {
     React.useEffect(() => {
         if (loggedUser.roles[0] === "admin") {
             dispatch(getDevices(user));
+            dispatch(getMeasures({ measures, user, device}));
         }
         if (loggedUser.roles[0] === "user") {
             dispatch(getDevices(loggedUser._id));
+            dispatch(getMeasures({ measures, user: loggedUser._id, device }));
         }
-        dispatch(getMeasures({ measures, loggedUser }));
+        
     }, [dispatch, user, measures, device, loggedUser]);
 
     React.useEffect(() => {
         // me aburrió hacer otro reducer
         axios
-            .get(`/api/measures/all?entries=${time}&user=${loggedUser}`)
+            .get(`/api/measures/all?entries=${time}&user=${loggedUser._id}`)
             .then(({ data }) => {
                 const newDataSet = measures ? distanceDataSet(data) : [];
                 setDataSet(newDataSet);

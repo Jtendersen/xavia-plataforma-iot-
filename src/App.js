@@ -53,7 +53,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/git add" element={<SeedGenerator />} />
+        <Route path="/seedgenerator" element={<SeedGenerator />} />
         {/* <Route path="/seedresults" element={<SeedResults />} /> */}
       </Routes>
     );

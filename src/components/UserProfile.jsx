@@ -9,10 +9,12 @@ import { getToMarker } from "../store/reducers/mapMarker.reducer";
 import { Link, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import useMatches from "../hooks/useMatches";
+import { getMeasures } from "../store/reducers/getAllMeasures.reducer";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
+  const measures = useSelector((state) => state.measures)
   const user = useSelector((state) => state.user);
   const toMarker = useSelector((state) => state.toMarker);
   const match = useMatches()
@@ -37,11 +39,12 @@ const UserProfile = () => {
 
   useEffect(() => {
     dispatch(getDevices(user._id));
+    dispatch(getMeasures({entries: 0, user: user._id}));
   }, []);
 
   const columns = [
-    { field: "id", headerName: "Id", minWidth: 150, flex: 1 },
-    { field: "name", headerName: "Nombre", minWidth: 140, flex: 1 },
+   /*  { field: "id", headerName: "Id", minWidth: 150, flex: 1 }, */
+    { field: "name", headerName: "DevEUI", minWidth: 140, flex: 1 },
     {
       field: "lastlat",
       headerName: "Ultima Medición (Lat)",
@@ -73,11 +76,20 @@ const UserProfile = () => {
         </Link>
       ),
     },
-    { field: "added", headerName: "Agregado el:", minWidth: 160, flex: 1 },
+    {
+      field: "mode",
+      headerName: "Modo",
+      minWidth: 160,
+      flex: 1,
+    },
+/*     { field: "added", headerName: "Agregado el:", minWidth: 160, flex: 1 }, */
   ];
   console.log("this is devices", devices);
-  const rows = Array.isArray(devices)
-    ? devices?.map((e) => ({
+  console.log("this is measures", measures);
+  
+  const rows = Array.isArray(measures)
+    ? measures?.map((e, index) => (
+/*       {
         id: e.qrCode,
         name: e.typeOfDevice,
         lastlat: e.measures.length
@@ -86,18 +98,42 @@ const UserProfile = () => {
         lastlon: e.measures.length
           ? e.measures[0][e.measures[0].length - 1].payload[0].longitude
           : "-",
+          
         lastmed: e.measures.length
           ? Date(e.measures[0][e.measures[0].length - 1].createdAt)
           : "-",
         added: Date(e.createdAt),
-      }))
-    : [];
+      }
+      */
+      {
+        id: e.length
+        ? e[index]._id:"-",
+        name: e.length
+        ? e[index].DevEUI_uplink.DevEUI:"-",
+        lastlat: e.length
+        ? e[0].DevEUI_uplink.LrrLAT
+        : "-",
+        lastlon: e.length
+        ? e[0].DevEUI_uplink.LrrLON
+        : "-",
+        lastmed: e.length
+        ? e[0].DevEUI_uplink.Time
+        : "-",
+        mode: e.length
+        ? e[0].DevEUI_uplink.payload.deviceConfiguration.mode
+        : "-"
 
+       //.DevEUI_uplink.payload.deviceConfiguration.mode,
+
+      }
+      ))
+    : [];
+    console.log("this is rows", rows)
   return (
     <Stack sx={{stackStyle}}>
-      {devices ? (
+      {measures? (
         <>
-          {<Map devices={devices} mapStyle={mapStyle} />}
+          {<Map devices={measures} mapStyle={mapStyle} />}
           <div style={{ height: 250, width: "100%" }}>
             <DataGrid
               sx={{ fontSize: "0.7rem" }}

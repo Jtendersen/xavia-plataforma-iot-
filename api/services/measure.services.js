@@ -30,7 +30,7 @@ class MeasureService {
                     console.log("device: ", device)
                     return await Measure.find({ "DevEUI_uplink.DevEUI":  device  })
                         .sort({ $natural: -1 })
-                        .limit(entries || 0);
+                        .limit(entries)
                 })
             );
             return results.reverse();
@@ -38,5 +38,5 @@ class MeasureService {
             console.error(error);
         }
 }
-
+}
 module.exports = MeasureService;

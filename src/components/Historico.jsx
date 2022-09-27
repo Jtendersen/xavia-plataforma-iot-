@@ -33,7 +33,7 @@ const Historico = () => {
       headerName: "Historico (Fecha)",
       minWidth: 160,
       flex: 1,
-    },
+    },  
     {
       field: "histocoord",
       headerName: "Historico (Posición)",
@@ -80,6 +80,11 @@ const Historico = () => {
       )
     : [];
 
+    rows = rows.filter(function( element ) {
+      return element !== undefined;
+   });
+    console.log("this is rowwwws", rows)
+
   return (
     <>
       {devices ? (
@@ -121,7 +126,7 @@ const Historico = () => {
           )}
         </>
       ) : (
-        <></>
+        <Typography align="center">No hay dispositivos registrados</Typography>
       )}
     </>
   );

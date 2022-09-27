@@ -22,18 +22,13 @@ class MeasureService {
             console.error(error);
         }
     }
-    static async getAllMeasures(devEUI, entries) {
-        try {
-            if (entries) {
-                const results = await Measure.find({devEUI}).sort({ $natural: -1 }).limit(entries)
-                return results.reverse()
-            } else {
-                return await Measure.find({devEUI});
+        static async getAllMeasures(entries, user) {
+            try {
+  
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
-    }
 }
 
 module.exports = MeasureService;

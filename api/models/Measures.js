@@ -47,6 +47,9 @@ const MeasuresSchema = new mongoose.Schema(
         deviceConfiguration: {
             type: Object,
         },
+        DevEUI_uplink: {
+            type: Object
+        }
     },
     { timestamps: true }
 );

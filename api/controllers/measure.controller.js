@@ -20,9 +20,10 @@ class MeasureController {
     static async getAllMeasures(req, res) {
         try { 
             const measure = await MeasureService.getAllMeasures(
-                req.query.devEUI,
-                req.query.entries
+                req.query.entries,
+                req.query.user
             );
+            
             return res.status(200).send(measure);
         } catch (error) {
             console.log(error);

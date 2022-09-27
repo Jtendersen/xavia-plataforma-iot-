@@ -1,5 +1,6 @@
 const Measure = require("../models/Measures");
 const Device = require("../models/Devices");
+const Users = require("../models/Users");
 
 class MeasureService {
     static async seedDb(body) {
@@ -19,11 +20,19 @@ class MeasureService {
             console.error(error);
         }
     }
-    static async getAllMeasures(devEUI, entries) {
+    static async getAllMeasures(entries, user) {
         try {
-            const results = await Measure.find({ devEUI })
-                .sort({ $natural: -1 })
-                .limit(entries || 10);
+            // trae lista de devices
+            const userA = await Users.find({ _id: user }, { devices: 1 });
+
+            const results = await Promise.all(
+                userA[0].devices.map(async (device) => {
+                    console.log("device: ", device)
+                    return await Measure.find({ "DevEUI_uplink.DevEUI":  device  })
+                        .sort({ $natural: -1 })
+                        .limit(entries || 0);
+                })
+            );
             return results.reverse();
         } catch (error) {
             console.error(error);

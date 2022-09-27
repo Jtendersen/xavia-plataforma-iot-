@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import { Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getDevices } from "../../store/reducers/deviceMeasures.reducer";
-import { getMeasures } from "../../store/reducers/measuresChart.reducer";
+import { getMeasures } from "../../store/reducers/getAllMeasures.reducer";
 import axios from "axios";
 import { distanceDataSet } from "../../utils/distanceDataSet";
 
@@ -55,13 +55,13 @@ const ChartFilter = () => {
         if (loggedUser.roles[0] === "user") {
             dispatch(getDevices(loggedUser._id));
         }
-        dispatch(getMeasures({ measures, device }));
+        dispatch(getMeasures({ measures, loggedUser }));
     }, [dispatch, user, measures, device, loggedUser]);
 
     React.useEffect(() => {
         // me aburrió hacer otro reducer
         axios
-            .get(`/api/measures/all?entries=${time}&devEUI=${device}`)
+            .get(`/api/measures/all?entries=${time}&user=${loggedUser}`)
             .then(({ data }) => {
                 const newDataSet = measures ? distanceDataSet(data) : [];
                 setDataSet(newDataSet);

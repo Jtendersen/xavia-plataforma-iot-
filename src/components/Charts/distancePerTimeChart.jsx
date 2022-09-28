@@ -12,7 +12,6 @@ const DistancePerTimeChart = () => {
     const match = useMatches();
 
     // redux store
-    // hagamos que chartfilter dispatchee un nuevo estado a partir del state.measures
     const loggedUser = useSelector((state) => state.user);
     const measures = useSelector((state) => {
         if (loggedUser.roles[0] === "admin") return state.measures[0];
@@ -24,7 +23,6 @@ const DistancePerTimeChart = () => {
     const [dataSet, setDataSet] = useState(false);
     Chart.defaults.font.size = 10;
     useEffect(() => {
-        console.log("measures: ", measures)
         const newDataSet = measures ? distanceDataSet(measures) : [];
         setDataSet(newDataSet);
         setUserData({

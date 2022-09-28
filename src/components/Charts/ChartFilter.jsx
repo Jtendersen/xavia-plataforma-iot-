@@ -10,7 +10,6 @@ import { getDevices } from "../../store/reducers/deviceMeasures.reducer";
 import { getMeasures } from "../../store/reducers/getAllMeasures.reducer";
 import axios from "axios";
 import { distanceDataSet } from "../../utils/distanceDataSet";
-import useDidMountEffect from "../../hooks/useDidMountEffect";
 import { setChart } from "../../store/reducers/distanceChart.reducer";
 
 const ITEM_HEIGHT = 48;
@@ -35,7 +34,7 @@ const ChartFilter = () => {
     const [user, setUser] = React.useState("");
     const [device, setDevice] = React.useState("");
     const [entries, setEntries] = React.useState("");
-    const [time, setTime] = React.useState("");
+    const [time, setTime] = React.useState(false);
     const [dataSet, setDataSet] = React.useState([]);
 
     const handleUserChange = (event) => {
@@ -85,15 +84,15 @@ const ChartFilter = () => {
 
     React.useEffect(() => {
         // me aburrió hacer otro reducer
-        // if (loggedUser.roles[0] === "user") {
-        //     return axios
-        //         .get(`/api/measures/all?entries=${time}&user=${loggedUser._id}&device=${device}`)
-        //         .then((data) => {
-        //             return console.log("data: ", data)
-        //             // const newDataSet = measures ? distanceDataSet(data) : [];
-        //             // setDataSet(newDataSet);
-        //         });
-        // }
+        (async function fetchDistance() {
+            if (!time) return;
+            const { data } = await axios.get(
+                `/api/measures/all?entries=${time}&user=${loggedUser.roles[0] === "admin" ? user : loggedUser._id}&device=${device}`
+            );
+            const newDataSet = distanceDataSet(data[0]);
+            setDataSet(newDataSet);
+        })()
+
     }, [time, device, measures, user, loggedUser.roles, loggedUser._id]);
 
     return (

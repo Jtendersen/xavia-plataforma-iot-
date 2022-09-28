@@ -71,7 +71,7 @@ const Historico = () => {
               id: m._id,
               qr: m.DevEUI_uplink.DevEUI,
               bat: m.DevEUI_uplink.payload.batteryVoltage,
-              mode: m.DevEUI_uplink.payload.deviceConfiguration.mode,
+              mode: m.DevEUI_uplink.payload.deviceConfiguration?.mode,
               histodate: m.DevEUI_uplink.Time,
               histocoord: {
                 lat: m.DevEUI_uplink.LrrLAT,

@@ -23,12 +23,11 @@ class MeasureService {
     static async getAllMeasures(entries, user, devEUI) {
         try {
             // trae lista de devices
-            const userA = await Users.find({ _id: user }, { devices: 1 });
-
+            const userA = await Users.find({ _id: user }, { devices: devEUI ? devEUI : 1});
+            console.log("que trae userA?: ", userA);
             const results = await Promise.all(
                 userA[0].devices.map(async (device) => {
-                    console.log("device: ", device)
-                    return await Measure.find({ "DevEUI_uplink.DevEUI":  device  })
+                    return await Measure.find({ "DevEUI_uplink.DevEUI": device })
                         .sort({ $natural: -1 })
                         .limit(entries || 0);
                 })

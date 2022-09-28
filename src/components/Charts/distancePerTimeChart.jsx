@@ -19,16 +19,18 @@ const DistancePerTimeChart = () => {
     const [dataSet, setDataSet] = useState(false);
     Chart.defaults.font.size = 10
     useEffect(() => {
-        const newDataSet = measures ? distanceDataSet(measures) : [];
+        console.log("measures: ", measures[0])
+        const newDataSet = measures ? distanceDataSet(measures[0]) : [];
+        console.log("newDataSet: ", newDataSet)
         setDataSet(newDataSet);
         setUserData({
-            labels: newDataSet.map((datos) =>
+            labels: newDataSet?.map((datos) =>
                 match ? datos.time : datos.time?.substring(10)
             ),
             datasets: [
                 {
                     label: "Recorridos [m/min]",
-                    data: newDataSet.map((datos) => datos.distance),
+                    data: newDataSet?.map((datos) => datos.distance),
                     backgroundColor: "#3300B8",
                     borderColor: "black",
                     borderWidth: 1,

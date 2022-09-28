@@ -2,8 +2,8 @@ import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-export const getMeasures = createAsyncThunk("GET_MEASURES", ({measures, user, device}) => {
-    return axios.get(`/api/measures/all?entries=${measures}&user=${user}`).then(({data}) => console.log("SOY LA DATA: ", data))
+export const getMeasures = createAsyncThunk("GET_MEASURES", ({entries, user, device}) => {
+    return axios.get(`/api/measures/all?entries=${entries}&user=${user}&device=${device}`).then(({data}) => data)
 })
 
 

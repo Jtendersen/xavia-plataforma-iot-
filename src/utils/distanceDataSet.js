@@ -3,6 +3,7 @@ import geoDistance from "./geoDistance";
 import moment from "moment";
 
 export const distanceDataSet = (measuresArray) => {
+    console.log("measuresArray: ", measuresArray)
     const newSet = measuresArray?.map(({ DevEUI_uplink }, i) => {
         const date1 = moment(DevEUI_uplink.Time);
         const date2 =

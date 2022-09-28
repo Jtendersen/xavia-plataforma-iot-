@@ -10,6 +10,7 @@ import drawerViews from "./reducers/views.reducer";
 import deviceMeasures from "./reducers/deviceMeasures.reducer";
 import mapMarker from "./reducers/mapMarker.reducer";
 import getAllMeasures from "./reducers/getAllMeasures.reducer";
+import distanceChart from "./reducers/distanceChart.reducer";
 
 
 const store = configureStore({
@@ -24,7 +25,8 @@ const store = configureStore({
         deviceCode: deviceQrCode,
         devices: deviceMeasures,
         toMarker: mapMarker,
-        measures: getAllMeasures
+        measures: getAllMeasures,
+        chart: distanceChart
 
     },
 });

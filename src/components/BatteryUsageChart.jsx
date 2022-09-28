@@ -16,8 +16,7 @@ const BatteryUsageChart = () => {
     dispatch(getMeasures({ entries: 0, user: user._id }));
   }, []);
 
-  console.log("this is devices", devices);
-  console.log("this is measures", measures);
+
 
   return <div>BatteryUsageChart</div>;
 };

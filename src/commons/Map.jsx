@@ -26,7 +26,6 @@ function Map({ devices, mapStyle }) {
     });
     map.fitBounds(group.getBounds());
   }
-console.log("devices param", devices)
   return (
     <Grid
       container

@@ -86,7 +86,6 @@ const Historico = () => {
     rows = rows.filter(function( element ) {
       return element !== undefined;
    });
-    console.log("this is rowwwws", rows)
 
   return (
     <>

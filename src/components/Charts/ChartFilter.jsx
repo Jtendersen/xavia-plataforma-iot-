@@ -10,6 +10,8 @@ import { getDevices } from "../../store/reducers/deviceMeasures.reducer";
 import { getMeasures } from "../../store/reducers/getAllMeasures.reducer";
 import axios from "axios";
 import { distanceDataSet } from "../../utils/distanceDataSet";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
+import { setChart } from "../../store/reducers/distanceChart.reducer";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,21 +30,23 @@ const ChartFilter = () => {
     const allUsers = useSelector((state) => state.users);
     const loggedUser = useSelector((state) => state.user);
     const userDevices = useSelector((state) => state.devices);
+    const measures = useSelector((state) => state.measures);
 
     const [user, setUser] = React.useState("");
     const [device, setDevice] = React.useState("");
-    const [measures, setMeasures] = React.useState("");
+    const [entries, setEntries] = React.useState("");
     const [time, setTime] = React.useState("");
     const [dataSet, setDataSet] = React.useState([]);
 
     const handleUserChange = (event) => {
         setUser(event.target.value);
+        if (!userDevices) setDevice("");
     };
     const handleDeviceChange = (event) => {
         setDevice(event.target.value);
     };
     const handleMeasureChange = (event) => {
-        setMeasures(event.target.value);
+        setEntries(event.target.value);
     };
     const handleTimeChange = (event) => {
         setTime(event.target.value);
@@ -51,40 +55,58 @@ const ChartFilter = () => {
     React.useEffect(() => {
         if (loggedUser.roles[0] === "admin" && user) {
             dispatch(getDevices(user));
-            dispatch(getMeasures({ entries: measures, user, device}));
+            dispatch(getMeasures({ entries, user, device }));
         }
+    }, [device, dispatch, entries, loggedUser.roles, user]);
+
+    React.useEffect(() => {
         if (loggedUser.roles[0] === "user") {
-            dispatch(getDevices(loggedUser._id));
-            dispatch(getMeasures({ entries: measures, user: loggedUser._id, device }));
+            function filteredDevice() {
+                return measures.filter((deviceArray, i) => {
+                    return device === deviceArray[i].DevEUI_uplink.DevEUI;
+                });
+            }
+            function filteredData() {
+                const data = filteredDevice();
+                let filtered = [];
+                if (entries) {
+                    for (let i = 0; i < entries; i++) {
+                        if (data[0][i] === undefined) break;
+                        filtered.push(data[0][i]);
+                    }
+                } else {
+                    filtered = data[0];
+                }
+                dispatch(setChart(filtered || false));
+            }
+            filteredData();
         }
-        
-    }, [dispatch, user, measures, device, loggedUser]);
+    }, [dispatch, user, entries, device, loggedUser, measures]);
 
     React.useEffect(() => {
         // me aburrió hacer otro reducer
-        if(user) {
-        // return axios
-        //     .get(`/api/measures/all?entries=${time}&user=${user}`)
-        //     .then(({ data }) => {
-        //         const newDataSet = measures ? distanceDataSet(data) : [];
-        //         setDataSet(newDataSet);
-        //     });
-        }
-    }, [time, device, measures, user]);
+        // if (loggedUser.roles[0] === "user") {
+        //     return axios
+        //         .get(`/api/measures/all?entries=${time}&user=${loggedUser._id}&device=${device}`)
+        //         .then((data) => {
+        //             return console.log("data: ", data)
+        //             // const newDataSet = measures ? distanceDataSet(data) : [];
+        //             // setDataSet(newDataSet);
+        //         });
+        // }
+    }, [time, device, measures, user, loggedUser.roles, loggedUser._id]);
 
     return (
         <Stack
-            direction={{xs:'row', sm:'column'}}
+            direction={{ xs: "row", sm: "column" }}
             justifyContent="center"
             alignItems="center"
-            spacing={{xs:1, sm:2}}
-            sx={{ width: '100%', display: {xs: 'flex', sm: 'block'} }}
+            spacing={{ xs: 1, sm: 2 }}
+            sx={{ width: "100%", display: { xs: "flex", sm: "block" } }}
         >
             {loggedUser.roles[0] === "admin" ? (
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                        Usuario final
-                    </InputLabel>
+                    <InputLabel id="demo-simple-select-label">Usuario final</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-multiple-name"
@@ -95,11 +117,7 @@ const ChartFilter = () => {
                     >
                         {allUsers[0].email ? (
                             allUsers.map((eachUser, i) => (
-                                <MenuItem
-                                key={i}
-                                    id={i}
-                                    value={eachUser._id}
-                                >
+                                <MenuItem key={i} id={i} value={eachUser._id}>
                                     {eachUser.fullname}
                                 </MenuItem>
                             ))
@@ -113,9 +131,7 @@ const ChartFilter = () => {
             )}
 
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                    Dispositivos
-                </InputLabel>
+                <InputLabel id="demo-simple-select-label">Dispositivos</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -126,11 +142,7 @@ const ChartFilter = () => {
                 >
                     {userDevices ? (
                         userDevices.map((eachDevice, i) => (
-                            <MenuItem
-                                id={'dev'+i}
-                                key={'dev'+i}
-                                value={eachDevice.qrCode}
-                            >
+                            <MenuItem id={"dev" + i} key={"dev" + i} value={eachDevice.qrCode}>
                                 {eachDevice.qrCode}
                             </MenuItem>
                         ))
@@ -145,14 +157,20 @@ const ChartFilter = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={measures}
+                    value={entries}
                     label="Medidas"
                     onChange={handleMeasureChange}
                     MenuProps={MenuProps}
                 >
-                    <MenuItem id="measure1" value={10}>Últimas 10</MenuItem>
-                    <MenuItem id="measure2" value={50}>Últimas 50</MenuItem>
-                    <MenuItem id="measure3" value={100}>Últimas 100</MenuItem>
+                    <MenuItem id="measure1" value={10}>
+                        Últimas 10
+                    </MenuItem>
+                    <MenuItem id="measure2" value={50}>
+                        Últimas 50
+                    </MenuItem>
+                    <MenuItem id="measure3" value={100}>
+                        Últimas 100
+                    </MenuItem>
                 </Select>
             </FormControl>
 
@@ -166,24 +184,28 @@ const ChartFilter = () => {
                     onChange={handleTimeChange}
                     MenuProps={MenuProps}
                 >
-                    <MenuItem id="time1" value={24 * 60}>24h</MenuItem>
-                    <MenuItem id="time2" value={72 * 60}>3 días</MenuItem>
-                    <MenuItem id="time3" value={168 * 60}>1 semana</MenuItem>
-                    <MenuItem id="time4" value={720 * 60}>1 mes</MenuItem>
-                    <MenuItem id="time5" value={8760 * 60}>1 año</MenuItem>
-                    <MenuItem id="time6" value={0}>Todo</MenuItem>
+                    <MenuItem id="time1" value={24 * 60}>
+                        24h
+                    </MenuItem>
+                    <MenuItem id="time2" value={72 * 60}>
+                        3 días
+                    </MenuItem>
+                    <MenuItem id="time3" value={168 * 60}>
+                        1 semana
+                    </MenuItem>
+                    <MenuItem id="time4" value={720 * 60}>
+                        1 mes
+                    </MenuItem>
+                    <MenuItem id="time5" value={8760 * 60}>
+                        1 año
+                    </MenuItem>
+                    <MenuItem id="time6" value={0}>
+                        Todo
+                    </MenuItem>
                 </Select>
             </FormControl>
 
-            <Box>
-                Ha recorrido:{" "}
-                {Number(
-                    dataSet
-                        .reduce((sum, { distance }) => sum + distance, 0)
-                        .toFixed(2)
-                )}{" "}
-                metros
-            </Box>
+            <Box>Ha recorrido: {Number(dataSet.reduce((sum, { distance }) => sum + distance, 0).toFixed(2))} metros</Box>
         </Stack>
     );
 };

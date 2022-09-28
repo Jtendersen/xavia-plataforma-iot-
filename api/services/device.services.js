@@ -30,7 +30,6 @@ class DeviceService {
                 measures,
             });
             await device.save();
-            console.log("deviceeeeeeeeee", device._id, ",", device.users);
 
             const userPush = await Users.findOneAndUpdate(
                 { _id: users },

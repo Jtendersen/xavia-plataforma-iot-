@@ -34,7 +34,7 @@ const ChartFilter = () => {
     const [user, setUser] = React.useState("");
     const [device, setDevice] = React.useState("");
     const [entries, setEntries] = React.useState("");
-    const [time, setTime] = React.useState(false);
+    const [time, setTime] = React.useState("");
     const [dataSet, setDataSet] = React.useState([]);
 
     const handleUserChange = (event) => {

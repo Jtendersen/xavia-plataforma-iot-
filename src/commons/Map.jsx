@@ -66,7 +66,7 @@ console.log("devices param", devices)
         {devices?.map((data) => (
           <Marker
             icon= {CstMarkers('b')}
-            key={data[0]._id}
+            key={data[0]?._id}
             position={
               data.length
                 ? [

@@ -29,6 +29,17 @@ class MeasureController {
             console.log(error);
         }
     }
+    static async deleteMeasures(req, res) {
+        try { 
+            console.log("llego al controller")
+            const measure = await MeasureService.deleteMeasures(req.params.id);
+            return res.status(204).send(measure);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 
 module.exports = MeasureController;

@@ -86,6 +86,7 @@ const UserProfile = () => {
   ];
   console.log("this is devices", devices);
   console.log("this is measures", measures);
+  console.log("this is user", user._id);
   
   const rows = Array.isArray(measures)
     ? measures?.map((e, index) => (
@@ -120,7 +121,7 @@ const UserProfile = () => {
         ? e[0].DevEUI_uplink.Time
         : "-",
         mode: e.length
-        ? e[0].DevEUI_uplink.payload.deviceConfiguration.mode
+        ? e[0].DevEUI_uplink.payload.deviceConfiguration?.mode
         : "-"
 
        //.DevEUI_uplink.payload.deviceConfiguration.mode,

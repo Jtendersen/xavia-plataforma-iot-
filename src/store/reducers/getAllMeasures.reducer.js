@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export const getMeasures = createAsyncThunk("GET_MEASURES", ({entries, user, device}) => {
-    return axios.get(`/api/measures/all?entries=${entries}&user=${user}`).then(({data}) => data)
+    return axios.get(`/api/measures/all?entries=${entries}&user=${user}&device=${device}`).then(({data}) => data)
 })
 
 

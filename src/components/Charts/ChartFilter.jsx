@@ -49,26 +49,28 @@ const ChartFilter = () => {
     };
 
     React.useEffect(() => {
-        if (loggedUser.roles[0] === "admin") {
+        if (loggedUser.roles[0] === "admin" && user) {
             dispatch(getDevices(user));
-            dispatch(getMeasures({ measures, user, device}));
+            dispatch(getMeasures({ entries: measures, user, device}));
         }
         if (loggedUser.roles[0] === "user") {
             dispatch(getDevices(loggedUser._id));
-            dispatch(getMeasures({ measures, user: loggedUser._id, device }));
+            dispatch(getMeasures({ entries: measures, user: loggedUser._id, device }));
         }
         
     }, [dispatch, user, measures, device, loggedUser]);
 
     React.useEffect(() => {
         // me aburrió hacer otro reducer
-        axios
-            .get(`/api/measures/all?entries=${time}&user=${loggedUser._id}`)
-            .then(({ data }) => {
-                const newDataSet = measures ? distanceDataSet(data) : [];
-                setDataSet(newDataSet);
-            });
-    }, [time, device, measures]);
+        if(user) {
+        // return axios
+        //     .get(`/api/measures/all?entries=${time}&user=${user}`)
+        //     .then(({ data }) => {
+        //         const newDataSet = measures ? distanceDataSet(data) : [];
+        //         setDataSet(newDataSet);
+        //     });
+        }
+    }, [time, device, measures, user]);
 
     return (
         <Stack
@@ -92,16 +94,17 @@ const ChartFilter = () => {
                         MenuProps={MenuProps}
                     >
                         {allUsers[0].email ? (
-                            allUsers.map((eachUser) => (
+                            allUsers.map((eachUser, i) => (
                                 <MenuItem
-                                    id={eachUser._id}
+                                key={i}
+                                    id={i}
                                     value={eachUser._id}
                                 >
                                     {eachUser.fullname}
                                 </MenuItem>
                             ))
                         ) : (
-                            <MenuItem>nothing</MenuItem>
+                            <MenuItem id="noUser">nothing</MenuItem>
                         )}
                     </Select>
                 </FormControl>
@@ -122,16 +125,17 @@ const ChartFilter = () => {
                     MenuProps={MenuProps}
                 >
                     {userDevices ? (
-                        userDevices.map((eachDevice) => (
+                        userDevices.map((eachDevice, i) => (
                             <MenuItem
-                                id={eachDevice._id}
+                                id={'dev'+i}
+                                key={'dev'+i}
                                 value={eachDevice.qrCode}
                             >
                                 {eachDevice.qrCode}
                             </MenuItem>
                         ))
                     ) : (
-                        <MenuItem>Sin dispositivos asociados</MenuItem>
+                        <MenuItem id="noDevice">Sin dispositivos asociados</MenuItem>
                     )}
                 </Select>
             </FormControl>
@@ -146,9 +150,9 @@ const ChartFilter = () => {
                     onChange={handleMeasureChange}
                     MenuProps={MenuProps}
                 >
-                    <MenuItem value={10}>Últimas 10</MenuItem>
-                    <MenuItem value={50}>Últimas 50</MenuItem>
-                    <MenuItem value={100}>Últimas 100</MenuItem>
+                    <MenuItem id="measure1" value={10}>Últimas 10</MenuItem>
+                    <MenuItem id="measure2" value={50}>Últimas 50</MenuItem>
+                    <MenuItem id="measure3" value={100}>Últimas 100</MenuItem>
                 </Select>
             </FormControl>
 
@@ -162,12 +166,12 @@ const ChartFilter = () => {
                     onChange={handleTimeChange}
                     MenuProps={MenuProps}
                 >
-                    <MenuItem value={24 * 60}>24h</MenuItem>
-                    <MenuItem value={72 * 60}>3 días</MenuItem>
-                    <MenuItem value={168 * 60}>1 semana</MenuItem>
-                    <MenuItem value={720 * 60}>1 mes</MenuItem>
-                    <MenuItem value={8760 * 60}>1 año</MenuItem>
-                    <MenuItem value={0}>Todo</MenuItem>
+                    <MenuItem id="time1" value={24 * 60}>24h</MenuItem>
+                    <MenuItem id="time2" value={72 * 60}>3 días</MenuItem>
+                    <MenuItem id="time3" value={168 * 60}>1 semana</MenuItem>
+                    <MenuItem id="time4" value={720 * 60}>1 mes</MenuItem>
+                    <MenuItem id="time5" value={8760 * 60}>1 año</MenuItem>
+                    <MenuItem id="time6" value={0}>Todo</MenuItem>
                 </Select>
             </FormControl>
 

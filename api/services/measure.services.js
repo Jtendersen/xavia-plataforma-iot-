@@ -27,8 +27,7 @@ class MeasureService {
 
             const results = await Promise.all(
                 userA[0].devices.map(async (device) => {
-                    console.log("device: ", device)
-                    return await Measure.find({ "DevEUI_uplink.DevEUI":  device  })
+                    return await Measure.find({ "DevEUI_uplink.DevEUI": device })
                         .sort({ $natural: -1 })
                         .limit(entries)
                 })

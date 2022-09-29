@@ -17,7 +17,7 @@ const initialState = [{
   imgUrl: '-',
   empresa: '-',
   fullname: '-',
-  email: '-',
+  email: false,
   createdAt: '-',
   _id: '1'
 }]

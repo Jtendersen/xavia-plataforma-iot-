@@ -39,7 +39,7 @@ const Navbar = () => {
             style: { backgroundColor: "#3D3D3D", color: "white" },
           }}
         >
-          {user.roles?.some((a) => a == "admin") ? (
+          {user.roles?.some((a) => a === "admin") ? (
             <SideList />
           ) : (
             <UserSideList />

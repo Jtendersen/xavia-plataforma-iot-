@@ -10,6 +10,7 @@ const CustomTypography = styled(Typography)`
 const ProfileHeader = () => {
     const user = useSelector((state) => state.user);
     if (user.email) {
+   
         return (
             <Stack
                 direction="row"

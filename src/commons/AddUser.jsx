@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CssBaseline, Stack } from "@mui/material";
+import { CssBaseline, IconButton, Stack } from "@mui/material";
 import { trackerAction } from "../store/reducers/usersTracker.reducer";
 import { getAllUsers } from "../store/reducers/usersAll.reducer";
 import { useState } from "react";
@@ -16,45 +16,41 @@ import Box from "@mui/material/Box";
 import * as React from "react";
 import axios from "axios";
 import DialogError from "./DialogError";
+import useMatches from "../hooks/useMatches";
 
 // Componente que se activa al obtener el código de validación
 // Se renderiza en AddUser
 function ActivationCodeDialog(props) {
-  const { open, code, close } = props;
+    const { open, code, close } = props;
 
-  return (
-    <React.Fragment>
-      <Dialog open={open} onClose={close}>
-        <DialogContent>
-          <Stack
-            direction="column"
-            justifyContent="space-around"
-            alignItems="center"
-            spacing={2}
-          >
-            <CheckCircleIcon color="success" size="large" />
-            <h4>Código generado con éxito</h4>
-            <h1>{code}</h1>
-          </Stack>
-        </DialogContent>
-      </Dialog>
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <Dialog open={open} onClose={close}>
+                <DialogContent>
+                    <Stack direction="column" justifyContent="space-around" alignItems="center" spacing={2}>
+                        <CheckCircleIcon color="success" size="large" />
+                        <h4>Código generado con éxito</h4>
+                        <h1>{code}</h1>
+                    </Stack>
+                </DialogContent>
+            </Dialog>
+        </React.Fragment>
+    );
 }
 
 // Componente principal
 export default function AddUser() {
-  // hooks
-  const dispatch = useDispatch();
+    // hooks
+    const dispatch = useDispatch();
 
-  // variables formulario
-  const imgUrl = useInput("imgUrl");
-  const empresa = useInput("empresa");
-  const cuit = useInput("cuit");
-  const fullname = useInput("fullname");
-  const email = useInput("email");
-  const phone = useInput("phone");
-
+    // variables formulario
+    const imgUrl = useInput("imgUrl");
+    const empresa = useInput("empresa");
+    const cuit = useInput("cuit");
+    const fullname = useInput("fullname");
+    const email = useInput("email");
+    const phone = useInput("phone");
+    const match = useMatches();
 
     // estados
     const [openCreate, setOpenCreate] = useState(false);
@@ -88,38 +84,49 @@ export default function AddUser() {
         }
         if (data.code === 11000) {
             setOpen(true);
-            setErrorMsg("Este email está en uso")
+            setErrorMsg("Este email está en uso");
         }
     };
 
+    // props
+    const props = {
+        open: openActivation,
+        code: activationCode,
+        close: activationDialogClose,
+    };
 
-  // props
-  const props = {
-    open: openActivation,
-    code: activationCode,
-    close: activationDialogClose,
-  };
-
-  React.useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch, track]);
-
+    React.useEffect(() => {
+        dispatch(getAllUsers());
+    }, [dispatch, track]);
 
     return (
         <>
             <Box>
-                <Button
-                    onClick={handleClickOpen}
-                    variant="contained"
-                    color="mobile"
-                    sx={{
-                        color: "white",
-                    }}
-                    size="medium"
-                    startIcon={<AddCircleIcon />}
-                >
-                    Alta Usuario Final
-                </Button>
+                {match ? (
+                    <Button
+                        onClick={handleClickOpen}
+                        variant="contained"
+                        color="mobile"
+                        sx={{
+                            color: "white",
+                        }}
+                        size="medium"
+                        startIcon={<AddCircleIcon />}
+                    >
+                        "Alta Usuario Final"
+                    </Button>
+                ) : (
+                    <IconButton
+                        onClick={handleClickOpen}
+                        variant="contained"
+                        color="mobile"
+                        sx={{
+                            color: "white",
+                        }}
+                    >
+                        <AddCircleIcon fontSize="medium"/>
+                    </IconButton>
+                )}
                 <Dialog open={openCreate} onClose={createDialogClose}>
                     <Box component="form" onSubmit={handleSubmit}>
                         <DialogTitle>Añadir nuevo usuario</DialogTitle>
@@ -146,17 +153,7 @@ export default function AddUser() {
                                 variant="standard"
                                 {...empresa}
                             />
-                            <TextField
-                                autoFocus
-                                required
-                                margin="dense"
-                                label="CUIT"
-                                type="text"
-                                id="cuit"
-                                fullWidth
-                                variant="standard"
-                                {...cuit}
-                            />
+                            <TextField autoFocus required margin="dense" label="CUIT" type="text" id="cuit" fullWidth variant="standard" {...cuit} />
                             <TextField
                                 autoFocus
                                 required
@@ -200,12 +197,7 @@ export default function AddUser() {
                 </Dialog>
                 <ActivationCodeDialog {...props} />
             </Box>
-            {open ? (
-                <DialogError {...{ open, handleClose, errorMsg }} />
-            ) : (
-                <></>
-            )}
+            {open && <DialogError {...{ open, handleClose, errorMsg }} />}
         </>
     );
-
 }

@@ -1,14 +1,22 @@
-import React from 'react'
-import DashboardContent from './Desktop/Dashboard'
-import AplicationsHeader from './AplicationsHeader'
+import { Box } from "@mui/material";
+import React from "react";
+import BatteryUsageChart from "./BatteryUsageChart";
+import DistancePerTimeChart from "./Charts/distancePerTimeChart";
 
 const Aplicaciones = () => {
-return (
-  <>
-    <AplicationsHeader />
-    <DashboardContent/>
-    </>
-  )
-}
 
-export default Aplicaciones
+  return (
+    <>
+      <Box>
+        <DistancePerTimeChart />
+      </Box>
+      <Box>
+        <BatteryUsageChart />
+      </Box>
+    </>
+  );
+
+};
+
+
+export default Aplicaciones;

@@ -9,6 +9,6 @@ const measure = require('./measure')
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/device', device)
-router.use('/measures', measure)
+router.use('/measures', measure) 
 
 module.exports = router

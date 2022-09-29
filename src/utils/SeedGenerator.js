@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { InputLabel, MenuItem, Select } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SeedResults from "./SeedResults";
 
@@ -37,7 +36,6 @@ const theme = createTheme();
 
 export default function SeedGenerator() {
   const getKey = "01f903be6bc34d2dad0c7f47582de5d6";
-  const navigate = useNavigate();
   const [mode, setMode] = React.useState("");
   const [data, setData] = React.useState({});
 
@@ -69,7 +67,7 @@ export default function SeedGenerator() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
           sx={{
@@ -147,7 +145,7 @@ export default function SeedGenerator() {
                   <MenuItem value={"normal"}>Normal</MenuItem>
                   <MenuItem value={"dangerTemp"}>Temp Danger</MenuItem>
                   <MenuItem value={"batteryLow"}>Battery Low</MenuItem>
-                  <MenuItem value={"noMovement"}>No movement</MenuItem>
+                  {/* <MenuItem value={"noMovement"}>No movement</MenuItem> */}
                 </Select>
               </Grid>
             </Grid>
@@ -163,7 +161,7 @@ export default function SeedGenerator() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      <Container maxWidth="xs">
+      <Container maxWidth="md">
         <Box
           sx={{
             marginTop: 8,

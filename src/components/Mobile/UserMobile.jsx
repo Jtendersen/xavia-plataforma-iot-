@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Stack } from "@mui/material";
 import Navbar from "./Navbar";
 import React from "react";
 import HeaderMobile from "./HeaderMobile";
@@ -12,34 +12,26 @@ import Historico from "../Historico";
 const UserMobile = () => {
     const views = useSelector((state) => state.views);
     return (
-        <Box bgcolor="#3D3D3D" flex={8} p={2}>
+        <Stack bgcolor="#3D3D3D" flex={1} paddingBottom={0} marginBottom={0} height="100vh">
             <Navbar />
-            {views === "profile" ? <HeaderMobile /> : <></>}
-            <Paper
-                elevation={3}
-                sx={{
-                    p: 1.5,
-                    height: "65%",
-                    width: "95",
-                    flexDirection: "column",
-                    borderTopLeftRadius: "16px",
-                    borderTopRightRadius: "16px",
-                    position: "fixed",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                }}
-            >
-                {views === "profile" ? (
-                   <UserProfile />
-                ) : (
-                    <></>
-                )}
-                {views === "aplicaciones" ? <Aplicaciones /> : <></>}
-                {views === "ubicaciones" ? <Ubicaciones /> : <></>}
-                {views === "historico" ? <Historico /> : <></>}
-            </Paper>
-        </Box>
+            <Stack id="soyStack" direction="column" spacing={1} paddingBottom={0} marginBottom={0} height="100%" justifyContent="space-between">
+                {views === "profile" ? <HeaderMobile /> : <div></div>}
+                <Paper
+                    elevation={3}
+                    sx={{
+                        flexDirection: "column",
+                        borderTopLeftRadius: "16px",
+                        borderTopRightRadius: "16px",
+                        height: "100%"
+                    }}
+                >
+                    {views === "profile" && <UserProfile />}
+                    {views === "aplicaciones" && <Aplicaciones />}
+                    {views === "ubicaciones" && <Ubicaciones />}
+                    {views === "historico" && <Historico />}
+                </Paper>
+            </Stack>
+        </Stack>
     );
 };
 

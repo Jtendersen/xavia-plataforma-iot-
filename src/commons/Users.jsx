@@ -13,6 +13,7 @@ import {
 } from "@mui/x-data-grid";
 import UserActions from "./UserActions.jsx";
 import moment from "moment";
+import useMatches from "../hooks/useMatches.js";
 
 // opciones de filtro en la vista Desktop
 function CustomToolbar() {
@@ -45,29 +46,31 @@ function CustomToolbar() {
 
 const Users = () => {
     // hooks redux
-    const { hide, tableSize, marginHeader } = useSelector(
-        (state) => state.hide
-    );
+    const { hide, tableSize, marginHeader } = useSelector((state) => state.hide);
     const users = useSelector((state) => state.users);
     const views = useSelector((state) => state.views);
     const dispatch = useDispatch();
+    const match = useMatches();
 
     // hooks state
     const [deleteAction, setDeleteAction] = useState(true);
     const [size, setSize] = useState(4);
     const [tableHeight, setTableHeight] = useState({ xs: "30vh", sm: "70vh" });
 
-    // función para obtener ancho de pantalla
-    function getWindowSize() {
-        const { innerWidth } = window;
-        return innerWidth;
-    }
 
     // setea el comportamiento responsive de la tabla
     useEffect(() => {
         function handleWindowResize() {
-            if (getWindowSize() < 600) {
-                if (views === "usuariosFinales") setSize(7)
+            if (match) {
+                dispatch(
+                    setHide({
+                        hide: false,
+                        tableSize: 9,
+                        marginHeader: { marginTop: "" },
+                    })
+                );
+            } else {
+                if (views === "usuariosFinales") setSize(9);
                 if (views === "profile") setSize(4);
                 dispatch(
                     setHide({
@@ -76,22 +79,11 @@ const Users = () => {
                         marginHeader: { marginTop: "0!important" },
                     })
                 );
-            } else {
-                dispatch(
-                    setHide({
-                        hide: false,
-                        tableSize: 9,
-                        marginHeader: { marginTop: "" },
-                    })
-                );
             }
         }
-        handleWindowResize()
-        window.addEventListener("resize", handleWindowResize);
-        return () => {
-            window.removeEventListener("resize", handleWindowResize);
-        };
-    }, [dispatch, views, size]);
+        handleWindowResize();
+
+    }, [dispatch, views, size, match]);
 
     // actualiza la lista de usuarios
     useEffect(() => {
@@ -103,7 +95,7 @@ const Users = () => {
         if (views === "profile") {
             setTableHeight({ xs: "30vh", sm: "70vh" });
         } else {
-            setTableHeight({ xs: "80vh", sm: "80vh" });
+            setTableHeight({ xs: "90vh", sm: "80vh" });
         }
     }, [views]);
 
@@ -128,8 +120,7 @@ const Users = () => {
             {
                 field: "createdAt",
                 headerName: "Fecha de alta",
-                renderCell: (params) =>
-                    moment(params.row.createdAt).format("DD-MM-YYYY"),
+                renderCell: (params) => moment(params.row.createdAt).format("DD-MM-YYYY"),
                 minWidth: 100,
                 flex: 0.1,
                 hide,
@@ -153,11 +144,7 @@ const Users = () => {
                 headerName: "Acciones",
                 type: "actions",
                 flex: 0.2,
-                renderCell: (params) => (
-                    <UserActions
-                        {...{ params, deleteAction, setDeleteAction }}
-                    />
-                ),
+                renderCell: (params) => <UserActions {...{ params, deleteAction, setDeleteAction }} />,
             },
         ],
         [hide, deleteAction]

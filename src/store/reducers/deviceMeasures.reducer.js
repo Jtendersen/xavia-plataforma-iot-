@@ -9,6 +9,7 @@ const deviceMeasures = createReducer(
         false,
     {
       [getDevices.fulfilled]: (state, action) => action.payload,
+      [getDevices.rejected]: (state, action) => state = false
     }
   );
 

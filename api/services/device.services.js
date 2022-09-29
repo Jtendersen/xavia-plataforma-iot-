@@ -1,89 +1,98 @@
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require("mongodb").ObjectId;
 const Device = require("../models/Devices");
 const Users = require("../models/Users");
 
 class DeviceService {
-  static async registerDevice({
-    qrCode,
-    typeOfDevice,
-    gatewayLora,
-    measuresAmount,
-    typeOfTracking,
-    users,
-    userId,
-    measures,
-  }) {
-    try {
-        const isRegistered = await Device.findOne({ qrCode: qrCode });
+    static async registerDevice({
+        qrCode,
+        typeOfDevice,
+        gatewayLora,
+        measuresAmount,
+        typeOfTracking,
+        users,
+        userId,
+        measures,
+    }) {
+        try {
+            const noScores= qrCode.replace(/-/g, '');
+            const isRegistered = await Device.findOne({ qrCode: noScores});
 
-      // Verifica que exista un dispositivo en la db con el mismo qr.
-      if (isRegistered) return "Este dispositivo ya esta registrado"
+            // Verifica que exista un dispositivo en la db con el mismo qr.
+            if (isRegistered) return "Este dispositivo ya esta registrado";
+            
+            const device = new Device({
+                qrCode: noScores,
+                typeOfDevice,
+                gatewayLora,
+                measuresAmount,
+                typeOfTracking,
+                users,
+                measures,
+            });
+            await device.save();
 
-      const device = new Device(
-        {
-          qrCode,
-          typeOfDevice,
-          gatewayLora,
-          measuresAmount,
-          typeOfTracking,
-          users,
-          measures,
+            const userPush = await Users.findOneAndUpdate(
+                { _id: users },
+                {
+                    $push: {
+                        devices: device._id,
+                    },
+                },
+                { new: true }
+            );
+            return;
+        } catch (error) {
+            console.error(error);
         }
-      );
-      await device.save();
-      
 
-      const userPush = await Users.findOneAndUpdate(
-        { _id: users },
-        {
-            $push: {
-                devices: device._id,
-            },
-        },
-        { new: true }
-    )
-    return
-    } catch (error) {
-      console.error(error);
     }
-  }
 
-  static async getByUserId(id) {
-
-    try {
-      return await Device.find({users: id});
-    } catch (error) {
-      console.log(error);
+    static async getByUserId(id) {
+        try {
+            return await Device.find({ users: id });
+        } catch (error) {
+            console.log(error);
+        }
     }
-  }
 
 
-/*     try {
+    /*     try {
+
         return await Device.find({users:users}).sort({ qrCode: 1 })
 
         } catch (error) {
       console.log(error);
     } */
 
-static async getDevice(id) {
-    try {
-      return await Device.findOne({ _id: id });
-    } catch (error) {
+    static async getDevice(id) {
+        try {
+            return await Device.findOne({ _id: id });
+        } catch (error) {}
+    }
+
+    static async getAllDevices() {
+        try {
+          //    return await Device.find({}, {qrCode: 1, users: 1});
+          return await Device.find();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    static async pushMeasures(body) {
+        const date = new Date(body.createdAt);
+        body.createdAt = date;
+
+        try {
+            return await Device.updateOne(
+                { _id: body._id },
+                { $push: { measures: body } }
+            );
+        } catch (error) {
+            console.log(error);
+        }
 
     }
-  }
-  static async pushMeasures(body) {
-    const date = new Date (body.createdAt)
-    body.createdAt = date
-
-    try {
-      return await Device.updateOne(
-        {_id:body._id},
-       {$push:{measures:body}});
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   static async getMeasuresByDates(body) {
     
@@ -123,16 +132,15 @@ static async getDevice(id) {
        {$set:body});
     } catch (error) {
       console.log(error);
-    }
-  }
-  static async deleteDevice(id) {
-    try {
-      return await Device.deleteOne({ _id: id });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
+    }
+    static async deleteDevice(id) {
+        try {
+            return await Device.deleteOne({ _id: id });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = DeviceService;

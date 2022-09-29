@@ -9,45 +9,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserRequest } from "../store/reducers/user.reducer";
 import UserMobile from "../components/Mobile/UserMobile";
 import LoadingScreen from "../commons/LoadingScreen";
+import useMatches from "../hooks/useMatches";
 
 function Profile() {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const match = useMatches();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUserRequest(user._id));
-}, [dispatch, user._id]);
+    useEffect(() => {
+        dispatch(getUserRequest(user._id));
+    }, [dispatch, user._id]);
 
-if (user.state === "loading") {
-  <LoadingScreen />;
-} else {
-
-  return (
-    <Stack direction="row" sx={{ height: "100vh" }}>
-      <Box sx={{ display: { xs: "none", sm: "flex" }, width: "100%" }}>
-        {user.roles?.some((a) => a === "admin") ? (
-          <>
-            <Sidebar />
-            <ContentDesktop />
-          </>
-        ) : (
-          <>
-            <UserSidebar />
-            <UserDesktop />
-          </>
-        )}
-      </Box>
-
-      <Box sx={{ display: { xs: "flex", sm: "none" }, width: "100%" }}>
-        {user.roles?.some((a) => a === "admin") ? (
-          <ContentMobile />
-        ) : (
-          <UserMobile />
-        )}
-      </Box>
-    </Stack>
-  );
-}
+    if (user.state === "loading") {
+        return <LoadingScreen />;
+    } else {
+        return (
+            <>
+                {match ? (
+                    <Stack direction="row" sx={{ height: "100vh" }}>
+                        <Box sx={{ display: { xs: "none", sm: "flex" }, width: "100vw" }}>
+                            {user.roles?.some((a) => a === "admin") && (
+                                <>
+                                    <Sidebar />
+                                    <ContentDesktop />
+                                </>
+                            )}
+                            {user.roles?.some((a) => a === "user") && (
+                                <>
+                                    <UserSidebar />
+                                    <UserDesktop />
+                                </>
+                            )}
+                        </Box>
+                    </Stack>
+                ) : (
+                    <Box sx={{ display: { xs: "flex", sm: "none" }, width: "100vw", height: "100vh" }}>
+                        {user.roles?.some((a) => a === "admin") && <ContentMobile />}
+                        {user.roles?.some((a) => a === "user") && <UserMobile />}
+                    </Box>
+                )}
+            </>
+        );
+    }
 }
 
 export default Profile;

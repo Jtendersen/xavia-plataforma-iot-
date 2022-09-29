@@ -23,7 +23,7 @@ function App() {
       .get("/api/auth/me")
       .then((resp) => {
         dispatch(setUser(resp.data));
-        // navigate("/profile");
+        navigate("/profile");
         setLoading(false);
       })
       .catch((error) => {

@@ -61,14 +61,14 @@ const ChartFilter = () => {
     React.useEffect(() => {
         if (loggedUser.roles[0] === "user") {
             function filteredDevice() {
-                return measures.filter((deviceArray, i) => {
-                    return device === deviceArray[i].DevEUI_uplink.DevEUI;
+                return measures?.filter((deviceArray, i) => {
+                    return device === deviceArray[i]?.DevEUI_uplink.DevEUI;
                 });
             }
             function filteredData() {
                 const data = filteredDevice();
                 let filtered = [];
-                if (entries) {
+                if (entries && data.length) {
                     for (let i = 0; i < entries; i++) {
                         if (data[0][i] === undefined) break;
                         filtered.push(data[0][i]);

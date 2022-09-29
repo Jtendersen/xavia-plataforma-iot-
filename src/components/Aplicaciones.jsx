@@ -5,19 +5,16 @@ import DistancePerTimeChart from "./Charts/distancePerTimeChart";
 import DashboardContent from "./Desktop/Dashboard";
 
 const Aplicaciones = () => {
-
   return (
     <>
-  <DashboardContent/>
-      {/* <Box>
-        <DistancePerTimeChart />
-      </Box>
+      <DashboardContent/>
+      <Box><DistancePerTimeChart /></Box>
+
       <Box>
         <BatteryUsageChart />
       </Box> */}
     </>
   );
-
 };
 
 

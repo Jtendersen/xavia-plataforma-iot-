@@ -3,13 +3,25 @@ import React from "react";
 import axios from "axios";
 import { Box } from "@mui/system";
 
+let startingDate = 1664472611138;
+
 const SeedResults = (data) => {
-  let startingDate = Date.now() - 7776000000;
+  if (data.data.hours) {
+    console.log("la data que llega", data.data);
+    startingDate = Date.now() - data.data.hours * 3600000;
+    console.log("Este es el starting date", startingDate);
+    const startingDateFormated = new Date(startingDate);
+
+    console.log("EL CONVERVERTIDO", startingDateFormated);
+  }
+
+  // - 7776000000;
 
   let result = [
     {
       DevEUI_uplink: {
-        Time: "2022-09-23T17:20:58.683+00:00",
+        Time: new Date(startingDate).toISOString(),
+        // Time: "2022-09-23T17:20:58.683+00:00",
         DevEUI: data.data.devEUI,
         FPort: 17,
         FCntUp: 54414,
@@ -88,20 +100,21 @@ const SeedResults = (data) => {
           mode: "STAND_BY",
         },
       },
-      createdAt: new Date(startingDate),
-      updatedAt: new Date(startingDate),
+      // createdAt: new Date(startingDate),
+      // updatedAt: new Date(startingDate),
     },
   ];
 
   console.log(
     "ESTA ES LA FECHA ACTUAL DATE",
-    new Date(startingDate).getHours()
+    new Date(startingDate).getUTCHours()
   );
 
-  for (let i = 1; i < 60 * data.data.hours; i++) {
+  for (let i = 1; i < 12 * data.data.hours; i++) {
+    // for (let i = 12 * data.data.hours; i > 0; i--) {
     result.push({
       DevEUI_uplink: {
-        Time: "2022-09-23T17:20:58.683+00:00",
+        Time: new Date(startingDate + 300000 * i),
         DevEUI: data.data.devEUI,
         FPort: 17,
         FCntUp: 54414,
@@ -168,7 +181,7 @@ const SeedResults = (data) => {
         payload: {
           messageType: "HEARTBEAT",
           trackingMode: "STAND_BY",
-          batteryVoltage: Math.random() * (24 - 20) + 20,
+          batteryVoltage: Math.random() * (3.66 - 3.5) + 3.5,
           ackToken: 0,
           firmwareVersion: "1.8.1",
           resetCause: 64,
@@ -184,16 +197,25 @@ const SeedResults = (data) => {
           },
         },
       },
-      createdAt: new Date(startingDate + 60000 * i),
-      updatedAt: new Date(startingDate + 60000 * i),
+      // createdAt: new Date(startingDate + 60000 * i),
+      // updatedAt: new Date(startingDate + 60000 * i),
     });
   }
 
+  function randomDate(start, end) {
+    return new Date(
+      start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    );
+  }
+
+  const d = randomDate(new Date(startingDate), new Date());
+  console.log("SUPER RANDOMMMMM", d.getTime());
+
   if (data.data.mode === "normal") {
-    for (let i = 1; i < 60 * data.data.hours; i++) {
+    for (let i = 1; i < 12 * data.data.hours; i++) {
       if (
-        result[i].createdAt.getHours() < 6 ||
-        result[i].createdAt.getHours() > 18
+        result[i].DevEUI_uplink.Time.getUTCHours() < 6 ||
+        result[i].DevEUI_uplink.Time.getUTCHours() > 18
       ) {
         result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
         result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
@@ -204,19 +226,20 @@ const SeedResults = (data) => {
   if (data.data.mode === "dangerTemp") {
     //A una hora random dentro del periodo generado empieza a aumentar
     //0.1 grados. Si llega a 50 se para la maquina. Si llega a 100 se prende fuego todo y la bateria se va a cero.
-    const breakingHour = Math.floor(Math.random() * (23 - 1) + 1);
-    console.log("Breaking Hour (dentro del periodo simulado)-->", breakingHour);
-    for (let i = 1; i < 60 * data.data.hours; i++) {
+    const breakingDate = randomDate(new Date(2022, 8, 29), new Date());
+    // Math.floor(Math.random() * (23 - 1) + 1);
+    console.log("Breaking Date-->", breakingDate);
+    for (let i = 1; i < 12 * data.data.hours; i++) {
       if (
-        result[i].createdAt.getHours() < 6 ||
-        result[i].createdAt.getHours() > 18
+        result[i].DevEUI_uplink.Time.getUTCHours() < 6 ||
+        result[i].DevEUI_uplink.Time.getUTCHours() > 18
       ) {
         result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
         result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
       }
-      if (result[i].createdAt.getHours() >= breakingHour) {
+      if (result[i].DevEUI_uplink.Time.getTime() >= breakingDate.getTime()) {
         result[i].DevEUI_uplink.payload.temperatureMeasure =
-          result[i - 1].DevEUI_uplink.payload.temperatureMeasure + 0.1;
+          result[i - 1].DevEUI_uplink.payload.temperatureMeasure + 0.5;
       }
       if (result[i].DevEUI_uplink.payload.temperatureMeasure >= 50) {
         result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
@@ -232,17 +255,19 @@ const SeedResults = (data) => {
   if (data.data.mode === "batteryLow") {
     //A una hora random dentro del periodo generado empieza a disminuir
     //la bateria.
-    const breakingHour = Math.floor(Math.random() * (23 - 1) + 1);
-    console.log("Breaking Hour (dentro del periodo simulado)-->", breakingHour);
-    for (let i = 1; i < 60 * data.data.hours; i++) {
+    const breakingDate = randomDate(new Date(2022, 8, 29), new Date());
+
+    // const breakingDate = Math.floor(Math.random() * (23 - 1) + 1);
+    console.log("Breaking Hour (dentro del periodo simulado)-->", breakingDate);
+    for (let i = 1; i < 12 * data.data.hours; i++) {
       if (
-        result[i].createdAt.getHours() < 6 ||
-        result[i].createdAt.getHours() > 18
+        result[i].DevEUI_uplink.Time.getUTCHours() < 6 ||
+        result[i].DevEUI_uplink.Time.getUTCHours() > 18
       ) {
         result[i].DevEUI_uplink.LrrLAT = result[0].DevEUI_uplink.LrrLAT;
         result[i].DevEUI_uplink.LrrLON = result[0].DevEUI_uplink.LrrLON;
       }
-      if (result[i].createdAt.getHours() >= breakingHour) {
+      if (result[i].DevEUI_uplink.Time.getTime() >= breakingDate.getTime()) {
         result[i].DevEUI_uplink.payload.batteryVoltage =
           result[i - 1].DevEUI_uplink.payload.batteryVoltage - 0.1;
       }

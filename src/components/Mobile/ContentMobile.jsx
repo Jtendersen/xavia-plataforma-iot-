@@ -14,6 +14,7 @@ const ContentMobile = () => {
             <Navbar />
             <Stack id="soyStack" direction="column" spacing={1} paddingBottom={0} marginBottom={0} height="95%" justifyContent="space-between">
                 {views === "profile" ? <HeaderMobile /> : <div></div>}
+                {views === "aplicaciones" && <Aplicaciones />}
 
                 <Paper
                     elevation={3}
@@ -30,7 +31,7 @@ const ContentMobile = () => {
                         </Box>
                     )}
                     {(views === "profile" || views === "usuariosFinales") && <Users />}
-                    {views === "aplicaciones" && <Aplicaciones />}
+                    
                 </Paper>
             </Stack>
         </Stack>

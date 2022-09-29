@@ -1,26 +1,27 @@
 const pointInPolygon = require('point-in-polygon');
 
 const getBreakingPoints = (measures) => {
+
   let changeBreakpoint = true;
 
   const breakpoints = measures.map((time, i) => {
     if (
       i === 0 &&
-      (time.payload[0].latitude !== measures[i + 1].payload[0].latitude ||
-        time.payload[0].longitude !== measures[i + 1].payload[0].longitude)
+      (time.DevEUI_uplink.LrrLAT !== measures[i + 1].DevEUI_uplink.LrrLAT ||
+        time.DevEUI_uplink.LrrLON !== measures[i + 1].DevEUI_uplink.LrrLON)
     ) {
       return time;
     } else if (i === measures.length - 1) return time;
     else if (
-      time.payload[0].latitude === measures[i + 1].payload[0].latitude &&
-      time.payload[0].longitude === measures[i + 1].payload[0].longitude &&
+      time.DevEUI_uplink.LrrLAT === measures[i + 1].DevEUI_uplink.LrrLAT &&
+      time.DevEUI_uplink.LrrLON === measures[i + 1].DevEUI_uplink.LrrLON &&
       changeBreakpoint
     ) {
       changeBreakpoint = !changeBreakpoint;
       return time;
     } else if (
-      (time.payload[0].latitude !== measures[i + 1].payload[0].latitude ||
-        time.payload[0].longitude !== measures[i + 1].payload[0].longitude) &&
+      (time.DevEUI_uplink.LrrLAT !== measures[i + 1].DevEUI_uplink.LrrLAT ||
+        time.DevEUI_uplink.LrrLON !== measures[i + 1].DevEUI_uplink.LrrLON) &&
       !changeBreakpoint
     ) {
       changeBreakpoint = !changeBreakpoint;
@@ -44,12 +45,14 @@ const geoDistance = (lat1, lon1, lat2, lon2) => {  // generally used geo measure
 }
 
 const getArea = (coordinates) => {
-  const area1 = [ [-34.56688672912117, -58.45086306175136],[-34.56836654737671, -58.451925216475686],[-34.56933835399464, -58.45019787394422],[-34.567871805099315,-58.449060617370726]];
-  const area2 = [ [-34.56933835399464, -58.45019787394422],[-34.5698419220473, -58.4492376431581],[-34.56842397262896, -58.44797700497522],[-34.567871805099315, -58.449060617370726]];
-  const area3 = [ [-34.56842397262896, -58.44797700497522],[-34.56597884536577, -58.445481723518846],[-34.565197938511155, -58.447787998975905],[-34.567871805099315, -58.449060617370726]];
+  const area1 = [ [-34.67347260514825, -58.361439538405854],[-34.64736765604387, -58.32736941165345],[-34.50015965336804, -58.40905834328793],[-34.493333025811424, -58.60943570934088]];
+  const area2 = [ [-34.493333025811424, -58.60943570934088],[-34.65454311821215, -58.84091546211309],[-34.84261258999526, -58.60303025685572],[-34.67347260514825, -58.361439538405854]];
+  const area3 = [ [-34.67347260514825, -58.361439538405854],[-34.84261258999526, -58.60303025685572],[-34.97003716240066, -58.33862065069739],[-34.84676776741471, -58.2497141615426]];
+  const area4 = [ [-34.67347260514825, -58.361439538405854],[-34.84676776741471, -58.2497141615426],[-34.76221053068039, -58.091287506904784],[-34.64736765604387, -58.32736941165345]];
    if(pointInPolygon(coordinates, area1)) {return "area1"}
    if(pointInPolygon(coordinates, area2)) {return "area2"}
    if(pointInPolygon(coordinates, area3)) {return "area3"}
+   if(pointInPolygon(coordinates, area4)) {return "area4"}
  }
 
 const getCycles = (measures) => {
@@ -60,13 +63,13 @@ const getCycles = (measures) => {
     const data = {}
     data.cycle = i+1
     data.payload = [breakpoints[i], breakpoints[i+1]]
-    data.distanceMeters = geoDistance(breakpoints[i].payload[0].latitude,breakpoints[i].payload[0].longitude,breakpoints[i+1].payload[0].latitude, breakpoints[i+1].payload[0].longitude)
-    data.timeMinutes= (new Date(breakpoints[i + 1].createdAt) - new Date(breakpoints[i].createdAt)) /
+    data.distanceMeters = geoDistance(breakpoints[i].DevEUI_uplink.LrrLAT,breakpoints[i].DevEUI_uplink.LrrLON,breakpoints[i+1].DevEUI_uplink.LrrLAT, breakpoints[i+1].DevEUI_uplink.LrrLON)
+    data.timeMinutes=  (new Date(breakpoints[i].DevEUI_uplink.Time)-(new Date(breakpoints[i + 1].DevEUI_uplink.Time))) /
     1000 /
     60
     data.AvgSpeedMeterPerMinute= data.distanceMeters/data.timeMinutes
     data.batteryStatus = breakpoints[i+1].batteryVoltage
-    data.area = [getArea([breakpoints[i].payload[0].latitude,breakpoints[i].payload[0].longitude]),getArea([breakpoints[i+1].payload[0].latitude, breakpoints[i+1].payload[0].longitude])]
+    data.area = [getArea([breakpoints[i].DevEUI_uplink.LrrLAT,breakpoints[i].DevEUI_uplink.LrrLON]),getArea([breakpoints[i+1].DevEUI_uplink.LrrLAT, breakpoints[i+1].DevEUI_uplink.LrrLON])]
     payload.push(data)
   };
   

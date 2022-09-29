@@ -3,6 +3,7 @@ const Device = require("../models/Devices");
 const Users = require("../models/Users");
 
 class MeasureService {
+
     static async seedDb(body) {
         try {
             const measure = await Measure.insertMany(body);
@@ -11,6 +12,7 @@ class MeasureService {
         } catch (error) {
             console.error(error);
         }
+
     }
     static async create(body) {
         try {
@@ -23,12 +25,10 @@ class MeasureService {
     static async getAllMeasures(entries, user, devEUI) {
         try {
             // trae lista de devices
-            const userA = await Users.find({ _id: user }, { devices: devEUI ? devEUI: 1 });
-
+            const userA = await Users.find({ _id: user }, { devices: devEUI==='undefined' ? 1 : devEUI });
             const results = await Promise.all(
                 userA[0].devices.map(async (device) => {
-                    console.log("device: ", device)
-                    return await Measure.find({ "DevEUI_uplink.DevEUI":  device  })
+                    return await Measure.find({ "DevEUI_uplink.DevEUI": device })
                         .sort({ $natural: -1 })
                         .limit(entries)
                 })
@@ -40,7 +40,6 @@ class MeasureService {
 }
 static async deleteMeasures(id) {
     try {
-        console.log("llegamos al service, o sea la ruta esta bien", id)
         return await Measure.deleteMany({ "DevEUI_uplink.DevEUI":  id  });
         
     } catch (error) {

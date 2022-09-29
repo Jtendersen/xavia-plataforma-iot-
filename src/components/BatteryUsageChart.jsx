@@ -175,6 +175,7 @@ const BatteryUsageChart = () => {
     return `${value} Hs`;
   }
 
+
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
       <Grid container spacing={2}>

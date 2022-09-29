@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import { Link } from "@mui/material";
 import { getToMarker } from "../store/reducers/mapMarker.reducer";
+import DistancePerTimeChart from "./Charts/distancePerTimeChart";
 
 
 const Historico = () => {
@@ -61,11 +62,14 @@ const Historico = () => {
     { field: "bat", headerName: "Batería", minWidth: 140, flex: 1 },
     { field: "mode", headerName: "Modo", minWidth: 140, flex: 1 },
   ];
+  const measuresFiltered = measures.filter(el => {
+    return el.length !=0;
+   });
 
-  var rows = Array.isArray(measures)
+  var rows = Array.isArray(measuresFiltered)
     ? [].concat.apply(
         [],
-        measures?.map((e) => {
+        measuresFiltered?.map((e) => {
           return e?.map((m) => {
             return {
               id: m._id,
@@ -86,18 +90,18 @@ const Historico = () => {
     rows = rows.filter(function( element ) {
       return element !== undefined;
    });
-    console.log("this is rowwwws", rows)
 
+  console.log("measures filtere", measuresFiltered)
   return (
     <>
-      {measures.length > 0 ? (
+      {measuresFiltered.length > 0 ? (
         <>
           <Typography align="center" variant="h6">
             Historico
           </Typography> 
-          {measures[0][0] ? (
+          {measuresFiltered[0][0] ? (
             <div>
-               <Map devices={measures} mapStyle={mapStyle} /> 
+               <Map devices={measuresFiltered} mapStyle={mapStyle} histoTrue={true}/> 
 
               <div style={{ height: 300, width: "100%" }}>
                 <DataGrid
@@ -131,7 +135,9 @@ const Historico = () => {
       ) : (
         <Typography align="center">No hay dispositivos registrados</Typography>
       )}
+        
     </>
+    
   );
 };
 

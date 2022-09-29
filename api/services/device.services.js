@@ -3,23 +3,14 @@ const Device = require("../models/Devices");
 const Users = require("../models/Users");
 
 class DeviceService {
-    static async registerDevice({
-        qrCode,
-        typeOfDevice,
-        gatewayLora,
-        measuresAmount,
-        typeOfTracking,
-        users,
-        userId,
-        measures,
-    }) {
+    static async registerDevice({ qrCode, typeOfDevice, gatewayLora, measuresAmount, typeOfTracking, users, userId, measures }) {
         try {
-            const noScores= qrCode.replace(/-/g, '');
-            const isRegistered = await Device.findOne({ qrCode: noScores});
+            const noScores = qrCode.replace(/(\r\n|\n|\r|-)/gm, "");
+            const isRegistered = await Device.findOne({ qrCode: noScores });
 
             // Verifica que exista un dispositivo en la db con el mismo qr.
             if (isRegistered) return "Este dispositivo ya esta registrado";
-            
+
             const device = new Device({
                 qrCode: noScores,
                 typeOfDevice,
@@ -30,13 +21,12 @@ class DeviceService {
                 measures,
             });
             await device.save();
-            console.log("deviceeeeeeeeee", device._id, ",", device.users);
 
             const userPush = await Users.findOneAndUpdate(
                 { _id: users },
                 {
                     $push: {
-                        devices: device._id,
+                        devices: device.qrCode,
                     },
                 },
                 { new: true }
@@ -56,6 +46,7 @@ class DeviceService {
     }
 
     /*     try {
+
         return await Device.find({users:users}).sort({ qrCode: 1 })
 
         } catch (error) {
@@ -70,8 +61,8 @@ class DeviceService {
 
     static async getAllDevices() {
         try {
-          //    return await Device.find({}, {qrCode: 1, users: 1});
-          return await Device.find();
+            //    return await Device.find({}, {qrCode: 1, users: 1});
+            return await Device.find();
         } catch (error) {
             console.error(error);
         }
@@ -82,10 +73,7 @@ class DeviceService {
         body.createdAt = date;
 
         try {
-            return await Device.updateOne(
-                { _id: body._id },
-                { $push: { measures: body } }
-            );
+            return await Device.updateOne({ _id: body._id }, { $push: { measures: body } });
         } catch (error) {
             console.log(error);
         }
@@ -100,19 +88,16 @@ class DeviceService {
                 { $match: { _id: ObjectId(body._id) } },
                 { $unwind: "$measures" },
                 {
-                    $match: {
-                        "measures.createdAt": { $gte: new Date(body.from) },
-                    },
-                },
-                {
-                    $match: {
-                        "measures.createdAt": { $lt: new Date(body.to) },
-                    },
-                },
-                {
-                    $group: {
+                    $project: {
                         _id: "$_id",
-                        measures: { $push: "$measures.createdAt" },
+                        measures: {
+                            $filter: {
+                                input: "$measures",
+                                cond: {
+                                    $and: [{ $gte: ["$$this.createdAt", new Date(body.from)] }, { $lte: ["$$this.createdAt", new Date(body.to)] }],
+                                },
+                            },
+                        },
                     },
                 },
             ]);
@@ -130,6 +115,7 @@ class DeviceService {
             console.log(error);
         }
     }
+
     static async deleteDevice(id) {
         try {
             return await Device.deleteOne({ _id: id });

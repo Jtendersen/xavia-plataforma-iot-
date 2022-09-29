@@ -15,7 +15,7 @@ const Ubicaciones = () => {
     maxHeight: 600,
     width: "100%"
   };
-
+console.log("this is ubicaciones measures", measures)
   return (
     <>
        <Typography align="center" variant="h6">
@@ -24,11 +24,17 @@ const Ubicaciones = () => {
       <Typography align="center" variant="subtitle2">
       ({user.devices?.length} dispositivos)
       </Typography>
-      {devices ? (
-        <>{<Map measures={measures} mapStyle={mapStyle} />}</>
+
+      {measures? (
+        <>
+          {<Map devices={measures} mapStyle={mapStyle} />}
+
+        </>
       ) : (
         <Typography align="center">No hay dispositivos registrados</Typography>
-      )}
+      )}  
+
+
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button, Dialog, IconButton } from "@mui/material";
+import { Button, Dialog, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect, useState } from "react";
@@ -28,16 +28,18 @@ const DeviceActions = ({ params, confirmEmpty, setConfirmEmpty, confirmDelete, s
 
     useEffect(() => {
         if (confirmEmpty) {
-            // axios.delete(`http://localhost:3001/api/device/delete/${params.row.name}`).then(() => {})
-            setShowEmpty(false);
-            setConfirmEmpty(false);
-        }
+            axios.delete(`http://localhost:3001/api/device/delete/${params.row.name}`).then(() => {
+                setShowEmpty(false);
+                setConfirmEmpty(false);
+            });
+        } 
         if (confirmDelete) {
-            // axios.delete(`http://localhost:3001/api/measures/delete/${params.id}`).then(() => {})
-            setShowDelete(false);
-            setConfirmDelete(false);
+            axios.delete(`http://localhost:3001/api/measures/delete/${params.id}`).then(() => {
+                setShowDelete(false);
+                setConfirmDelete(false);
+            });
         }
-    }, [confirmDelete, confirmEmpty, setConfirmDelete, setConfirmEmpty]);
+    }, [confirmDelete, confirmEmpty, params.id, params.row.name, setConfirmDelete, setConfirmEmpty]);
 
     return (
         <>
@@ -54,16 +56,20 @@ const DeviceActions = ({ params, confirmEmpty, setConfirmEmpty, confirmDelete, s
             {/* render condicional que se activa al clickear el ícono añadir */}
             {showEmpty && (
                 <Dialog open={showEmpty} onClose={handleClose}>
-                    Confirmar o cancelar acción:
-                    <Button onClick={() => setConfirmEmpty(true)}>Confirmar</Button>
-                    <Button onClick={() => handleClose()}>Cancelar</Button>
+                    <Box sx={{ padding: 2 }}>
+                        <Typography> Confirmar o cancelar acción:</Typography>
+                        <Button onClick={() => setConfirmEmpty(true)}>Confirmar</Button>
+                        <Button onClick={() => handleClose()}>Cancelar</Button>
+                    </Box>
                 </Dialog>
             )}
             {showDelete && (
                 <Dialog open={showDelete} onClose={handleClose}>
-                    Confirmar o cancelar acción:
-                    <Button onClick={() => setConfirmDelete(true)}>Confirmar</Button>
-                    <Button onClick={() => handleClose()}>Cancelar</Button>
+                    <Box sx={{ padding: 2 }}>
+                        <Typography> Confirmar o cancelar acción:</Typography>
+                        <Button onClick={() => setConfirmDelete(true)}>Confirmar</Button>
+                        <Button onClick={() => handleClose()}>Cancelar</Button>
+                    </Box>
                 </Dialog>
             )}
         </>

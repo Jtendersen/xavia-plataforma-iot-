@@ -85,9 +85,42 @@ const UserProfile = () => {
     },
 /*     { field: "added", headerName: "Agregado el:", minWidth: 160, flex: 1 }, */
   ];
+  let measuresFiltered = 
+  [{
+    _id:"-",
+    DevEUI_uplink:{
+      DevEUI: "-",
+      LrrLAT: "-",
+      LrrLON: "-",
+      Time: "-",
+      payload:{
+        deviceConfiguration: {mode:"-"}
+      }
+      
+
+   }}]
+   console.log("this is measures", measures)
+   measuresFiltered = measures.length>0?measures.filter(el => {
+    return el.length !=0;
+   }):[{
+    _id:"-",
+    DevEUI_uplink:{
+      DevEUI: "-",
+      LrrLAT: "-",
+      LrrLON: "-",
+      Time: "-",
+      payload:{
+        deviceConfiguration: {mode:"-"}
+      }
+      
+
+   }}]  
+
+  const rows = Array.isArray(measuresFiltered)
+    ? measuresFiltered?.map((e, index) => {
   
-  const rows = Array.isArray(measures)
-    ? measures?.map((e, index) => (
+    return (
+      
 /*       {
         id: e.qrCode,
         name: e.typeOfDevice,
@@ -104,9 +137,9 @@ const UserProfile = () => {
         added: Date(e.createdAt),
       }
       */
+     
       {
-        id: e.length
-        ? e[index]._id:"-",
+        id:index,
         name: e.length
         ? e[index].DevEUI_uplink.DevEUI:"-",
         lastlat: e.length
@@ -122,8 +155,12 @@ const UserProfile = () => {
         ? e[0].DevEUI_uplink.payload.deviceConfiguration?.mode
         : "-"
       }
-      ))
+      )})
     : [];
+    console.log("this is measures", measures)
+
+
+    console.log("measures filtered", measuresFiltered)
   return (
     <Stack sx={{stackStyle}}>
       {measures? (

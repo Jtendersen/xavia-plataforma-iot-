@@ -13,6 +13,8 @@ import L, { LatLng, latLngBounds, FeatureGroup } from "leaflet";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CstMarkers } from "./MarkerIcon";
+import PolylinesFilter from "../commons/PolylinesFilter";
+import useMatches from "../hooks/useMatches";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 function ChangeView({ centerM, zoomM }) {
   const map = useMap();
@@ -20,7 +22,7 @@ function ChangeView({ centerM, zoomM }) {
   return null;
 }
 
-function Map({ devices, mapStyle }) {
+function Map({ devices, mapStyle, histoTrue }) {
   const toMarker = useSelector((state) => state.toMarker);
 
   // function GetBounds() {
@@ -33,13 +35,20 @@ function Map({ devices, mapStyle }) {
   //   map.fitBounds(group.getBounds());
   // }
 
-  const polylin = [
-    [-34.603, -58.591],
-    [-34.703, -58.981],
-    [-34.773, -58.781],
-    [-34.603, -58.591],
-  ]
+  //filtering polylines
+  const match = useMatches();
+  const loggedUser = useSelector((state) => state.user);
+  const measuresChart = useSelector((state) => state.chart);
+  // local states
+  const [userData, setUserData] = useState(false);
+  const [dataSet, setDataSet] = useState(false);  
 
+  console.log("Chart", measuresChart)
+  const polylines = 
+  Array.isArray(measuresChart)
+    ? measuresChart?.map((e, index) => ([e.DevEUI_uplink.LrrLAT,e.DevEUI_uplink.LrrLON]))
+    : [];
+  console.log("polylines", polylines)
   
   return (
     <Grid
@@ -68,7 +77,7 @@ function Map({ devices, mapStyle }) {
             alignItems: "flex-start",
             justifyContent: "right",
             zIndex: 1000,
-            height: "2rem"
+            height: "2rem",
           }}
         >
           <LocationOnIcon color="primary" />
@@ -95,14 +104,16 @@ function Map({ devices, mapStyle }) {
             <Popup sx={{ zIndex: 2000 }}>
               Última Posición: <br /> {data[0]?.DevEUI_uplink.DevEUI}
             </Popup>
-
+            {data[0]?
             <ChangeView
               centerM={[
-                data[0]?.DevEUI_uplink.LrrLAT,
-                data[0]?.DevEUI_uplink.LrrLON,
+                data[0]?.DevEUI_uplink?.LrrLAT,
+                data[0]?.DevEUI_uplink?.LrrLON,
               ]}
               zoomM="25"
-            />
+            />:<></>}
+
+
           </Marker>
         ))}
         {toMarker ? (
@@ -116,9 +127,17 @@ function Map({ devices, mapStyle }) {
         ) : (
           <></>
         )}
-      {polylin? 
-         <Polyline pathOptions={ {color: 'purple' }} positions={polylin} />:<></>} 
+         {polylines ? (
+          <Polyline pathOptions={{ color: "purple" }} positions={polylines} />
+        ) : (
+          <></>
+        )} 
       </MapContainer>
+      
+        {histoTrue?
+      <Grid container justify="flex-start">
+          <PolylinesFilter {...dataSet} />  
+      </Grid>:<></>}
     </Grid>
   );
 }

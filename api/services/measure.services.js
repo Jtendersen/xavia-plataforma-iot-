@@ -3,6 +3,7 @@ const Device = require("../models/Devices");
 const Users = require("../models/Users");
 
 class MeasureService {
+
     static async seedDb(body) {
         try {
             const measure = await Measure.insertMany(body);
@@ -11,6 +12,7 @@ class MeasureService {
         } catch (error) {
             console.error(error);
         }
+
     }
     static async create(body) {
         try {

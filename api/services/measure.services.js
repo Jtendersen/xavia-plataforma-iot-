@@ -3,6 +3,8 @@ const Device = require("../models/Devices");
 
 class MeasureService {
   static async seedDb(body) {
+    body = body.map((e)=> {e.createdAt = new Date (e.createdAt)
+    return e})
     try {
       const measure = await Measure.insertMany(body);
       const device =  await Device.updateOne(

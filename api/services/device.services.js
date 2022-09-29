@@ -18,7 +18,7 @@ class DeviceService {
 
       // Verifica que exista un dispositivo en la db con el mismo qr.
       if (isRegistered) return "Este dispositivo ya esta registrado"
-           
+
       const device = new Device(
         {
           qrCode,
@@ -31,8 +31,8 @@ class DeviceService {
         }
       );
       await device.save();
-      console.log("deviceeeeeeeeee", device._id, ",", device.users)
-     
+      
+
       const userPush = await Users.findOneAndUpdate(
         { _id: users },
         {
@@ -57,25 +57,25 @@ class DeviceService {
     }
   }
 
-    
+
 /*     try {
         return await Device.find({users:users}).sort({ qrCode: 1 })
 
         } catch (error) {
       console.log(error);
     } */
-  
+
 static async getDevice(id) {
     try {
       return await Device.findOne({ _id: id });
     } catch (error) {
-      
+
     }
   }
   static async pushMeasures(body) {
     const date = new Date (body.createdAt)
     body.createdAt = date
-    
+
     try {
       return await Device.updateOne(
         {_id:body._id},
@@ -86,28 +86,37 @@ static async getDevice(id) {
   }
 
   static async getMeasuresByDates(body) {
-  
+    
+
     try {
         const device = await Device.find(
           {_id:body._id})
         if (!device) return []
+        
 
      const measures = await Device.aggregate([
       {$match:{_id:ObjectId(body._id)}},
       {$unwind:'$measures'},
-      {$match:{'measures.createdAt': {$gte:new Date(body.from)}}},
-      {$match:{'measures.createdAt': {$lt:new Date(body.to)}}},
-      {$group:{_id:'$_id', measures: {$push:'$measures.createdAt'}}}
+      {$project:{
+        _id:'$_id',
+        "measures":{$filter:{input: "$measures", cond:{$and:[
+          {$gte: ["$$this.createdAt",new Date(body.from)]},
+          {$lte: ["$$this.createdAt",new Date(body.to)]}
+     ]}
+    }}
+        
+      }}
     ])
-      
+  
+
       if(measures) return measures
     } catch (error) {
         console.log(error)
     }
-}  
+}
 
   static async editDevice(body) {
-    
+
     try {
       return await Device.updateOne(
         {_id:body._id},

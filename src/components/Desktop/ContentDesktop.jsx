@@ -14,6 +14,7 @@ const ContentDesktop = () => {
         <Box bgcolor="#EAE1D8" flex={8} p={2}>
             {views === "usuariosFinales" ? <UsersHeader /> : <></>}
             {views === "profile" ? <ProfileHeader /> : <></>}
+            {views === "aplicaciones" ? <Aplicaciones /> : <></>}
 
             <Paper
                 elevation={3}
@@ -29,7 +30,7 @@ const ContentDesktop = () => {
                     <></>
                 )}
 
-                {views === "aplicaciones" ? <Aplicaciones /> : <></>}
+               
                 {views === "ubicaciones" ? <Ubicaciones /> : <></>}
             </Paper>
         </Box>

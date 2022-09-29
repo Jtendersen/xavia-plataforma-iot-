@@ -1,8 +1,13 @@
 import React from 'react'
+import DashboardContent from './Desktop/Dashboard'
+import AplicationsHeader from './AplicationsHeader'
 
 const Aplicaciones = () => {
-  return (
-    <div>Soy una lista de aplicaciones :o</div>
+return (
+  <>
+    <AplicationsHeader />
+    <DashboardContent/>
+    </>
   )
 }
 

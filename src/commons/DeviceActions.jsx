@@ -27,17 +27,18 @@ const DeviceActions = ({ params, confirmEmpty, setConfirmEmpty, confirmDelete, s
     };
 
     useEffect(() => {
-        if (confirmEmpty) {
-            axios.delete(`http://localhost:3001/api/device/delete/${params.row.name}`).then(() => {
-                setShowEmpty(false);
-                setConfirmEmpty(false);
-            });
-        } 
         if (confirmDelete) {
-            axios.delete(`http://localhost:3001/api/measures/delete/${params.id}`).then(() => {
-                setShowDelete(false);
-                setConfirmDelete(false);
-            });
+            // axios.delete(`http://localhost:3001/api/device/delete/${params.id}`).then(() => {
+            //     setShowDelete(false);
+            //     setConfirmDelete(false);
+            // });
+        } 
+        if (confirmEmpty) {
+            // axios.delete(`http://localhost:3001/api/measures/delete/${params.row.name}`).then(() => {
+                
+            //     setShowEmpty(false);
+            //     setConfirmEmpty(false);
+            // });
         }
     }, [confirmDelete, confirmEmpty, params.id, params.row.name, setConfirmDelete, setConfirmEmpty]);
 

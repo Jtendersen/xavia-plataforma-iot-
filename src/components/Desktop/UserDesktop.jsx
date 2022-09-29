@@ -15,6 +15,7 @@ const UserDesktop = () => {
         <Box id="hola" bgcolor="#EAE1D8" flex={8} p={2} >
             {/* {views === "aplicaciones" ? <UsersHeader /> : <></>} */}
             {views === "profile" && <ProfileHeader />}
+            {views === "aplicaciones" && <Aplicaciones />}
             <Paper
                 elevation={3}
                 sx={{
@@ -24,7 +25,6 @@ const UserDesktop = () => {
                 }}
             >
                 {(views === "profile" || views === "aplicaciones ") && <UserProfile />}
-                {views === "aplicaciones" && <Aplicaciones />}
                 {views === "ubicaciones" && <Ubicaciones />}
                 {views === "historico" && <Historico />}
             </Paper>

@@ -14,7 +14,7 @@ class DeviceService {
         measures,
     }) {
         try {
-            const noScores= qrCode.replace(/-/g, '');
+            const noScores= qrCode.replace(/(\r\n|\n|\r|-)/gm, '');
             const isRegistered = await Device.findOne({ qrCode: noScores});
 
             // Verifica que exista un dispositivo en la db con el mismo qr.
@@ -35,7 +35,7 @@ class DeviceService {
                 { _id: users },
                 {
                     $push: {
-                        devices: device._id,
+                        devices: device.qrCode,
                     },
                 },
                 { new: true }

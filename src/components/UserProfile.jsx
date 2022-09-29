@@ -1,7 +1,6 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Map from "../commons/Map";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDevices } from "../store/reducers/deviceMeasures.reducer";
@@ -10,6 +9,7 @@ import { Link, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import useMatches from "../hooks/useMatches";
 import { getMeasures } from "../store/reducers/getAllMeasures.reducer";
+import { useState } from "react";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ const UserProfile = () => {
   useEffect(() => {
     dispatch(getDevices(user._id));
     dispatch(getMeasures({entries: 0, user: user._id}));
+
   }, []);
 
   const columns = [
@@ -123,9 +124,6 @@ const UserProfile = () => {
         mode: e.length
         ? e[0].DevEUI_uplink.payload.deviceConfiguration?.mode
         : "-"
-
-       //.DevEUI_uplink.payload.deviceConfiguration.mode,
-
       }
       ))
     : [];

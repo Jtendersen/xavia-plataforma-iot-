@@ -115,7 +115,7 @@ class DeviceService {
             console.log(error);
         }
     }
-}
+
     static async deleteDevice(id) {
         try {
             return await Device.deleteOne({ _id: id });

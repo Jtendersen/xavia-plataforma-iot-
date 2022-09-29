@@ -179,9 +179,9 @@ const SeedResults = (data) => {
           dynamicMotionState: "STATIC",
           onDemand: false,
           payload: "0500997c0040010801",
-        },
-        deviceConfiguration: {
-          mode: "STAND_BY",
+          deviceConfiguration: {
+            mode: "STAND_BY",
+          },
         },
       },
       createdAt: new Date(startingDate + 60000 * i),

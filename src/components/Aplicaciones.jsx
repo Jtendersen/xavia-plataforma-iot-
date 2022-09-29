@@ -18,4 +18,5 @@ const Aplicaciones = () => {
 
 };
 
+
 export default Aplicaciones;

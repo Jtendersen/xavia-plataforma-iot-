@@ -1,6 +1,6 @@
 [
     {
-       "devEUI": "20635F0108000E09",
+       "devEUI": "45659576",
        "messageType": "HEARTBEAT",
        "trackingMode": "STAND_BY",
        "batteryVoltage": 3.63,
@@ -19,7 +19,7 @@
        
     },
     {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -38,7 +38,83 @@
         
      },
      {
-        "devEUI": "20635F0108000E09",
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56847278231519, "longitude": -58.451652342416025 },
+      "createdAt":"2022-09-13T13:12:37.727+00:00",
+      "updatedAt":"2022-09-13T13:12:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56847278231519, "longitude": -58.451652342416025 },
+      "createdAt":"2022-09-13T13:13:37.727+00:00",
+      "updatedAt":"2022-09-13T13:13:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56847278231519, "longitude": -58.451652342416025 },
+      "createdAt":"2022-09-13T13:14:37.727+00:00",
+      "updatedAt":"2022-09-13T13:14:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56847278231519, "longitude": -58.451652342416025 },
+      "createdAt":"2022-09-13T13:15:37.727+00:00",
+      "updatedAt":"2022-09-13T13:15:37.727+00:00"
+      
+   },
+     {
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -52,12 +128,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.568524994616624, "longitude": -58.45068010352836 },
-        "createdAt":"2022-09-13T13:12:37.727+00:00",
-        "updatedAt":"2022-09-13T13:12:37.727+00:00"
+        "createdAt":"2022-09-13T13:16:37.727+00:00",
+        "updatedAt":"2022-09-13T13:16:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -71,12 +147,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56771570026029, "longitude": -58.449776555431676 },
-        "createdAt":"2022-09-13T13:13:37.727+00:00",
-        "updatedAt":"2022-09-13T13:13:37.727+00:00"
+        "createdAt":"2022-09-13T13:17:37.727+00:00",
+        "updatedAt":"2022-09-13T13:17:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -90,12 +166,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56940389678569, "longitude": -58.450098873738376 },
-        "createdAt":"2022-09-13T13:14:37.727+00:00",
-        "updatedAt":"2022-09-13T13:14:37.727+00:00"
+        "createdAt":"2022-09-13T13:18:37.727+00:00",
+        "updatedAt":"2022-09-13T13:18:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -109,12 +185,126 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
-        "createdAt":"2022-09-13T13:15:37.727+00:00",
-        "updatedAt":"2022-09-13T13:15:37.727+00:00"
+        "createdAt":"2022-09-13T13:19:37.727+00:00",
+        "updatedAt":"2022-09-13T13:19:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:20:37.727+00:00",
+      "updatedAt":"2022-09-13T13:20:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:21:37.727+00:00",
+      "updatedAt":"2022-09-13T13:21:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:22:37.727+00:00",
+      "updatedAt":"2022-09-13T13:22:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:23:37.727+00:00",
+      "updatedAt":"2022-09-13T13:23:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:24:37.727+00:00",
+      "updatedAt":"2022-09-13T13:24:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.56957358475497, "longitude": -58.44965502552189 },
+      "createdAt":"2022-09-13T13:25:37.727+00:00",
+      "updatedAt":"2022-09-13T13:25:37.727+00:00"
+      
+   },
+     {
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -128,12 +318,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56909932779641, "longitude": -58.44879374864746 },
-        "createdAt":"2022-09-13T13:16:37.727+00:00",
-        "updatedAt":"2022-09-13T13:16:37.727+00:00"
+        "createdAt":"2022-09-13T13:26:37.727+00:00",
+        "updatedAt":"2022-09-13T13:26:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -147,12 +337,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56845102720774, "longitude": -58.44843444297158 },
-        "createdAt":"2022-09-13T13:17:37.727+00:00",
-        "updatedAt":"2022-09-13T13:17:37.727+00:00"
+        "createdAt":"2022-09-13T13:27:37.727+00:00",
+        "updatedAt":"2022-09-13T13:27:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -166,12 +356,12 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56806378483617, "longitude": -58.448032866002926 },
-        "createdAt":"2022-09-13T13:18:37.727+00:00",
-        "updatedAt":"2022-09-13T13:18:37.727+00:00"
+        "createdAt":"2022-09-13T13:28:37.727+00:00",
+        "updatedAt":"2022-09-13T13:28:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -185,12 +375,88 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.567376316412684, "longitude": -58.44736709366034 },
-        "createdAt":"2022-09-13T13:19:37.727+00:00",
-        "updatedAt":"2022-09-13T13:19:37.727+00:00"
+        "createdAt":"2022-09-13T13:29:37.727+00:00",
+        "updatedAt":"2022-09-13T13:29:37.727+00:00"
         
      },
      {
-        "devEUI": "20635F0108000E09",
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.567376316412684, "longitude": -58.44736709366034 },
+      "createdAt":"2022-09-13T13:30:37.727+00:00",
+      "updatedAt":"2022-09-13T13:30:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.567376316412684, "longitude": -58.44736709366034 },
+      "createdAt":"2022-09-13T13:31:37.727+00:00",
+      "updatedAt":"2022-09-13T13:31:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.567376316412684, "longitude": -58.44736709366034 },
+      "createdAt":"2022-09-13T13:32:37.727+00:00",
+      "updatedAt":"2022-09-13T13:32:37.727+00:00"
+      
+   },
+   {
+      "devEUI": "45659576",
+      "messageType": "HEARTBEAT",
+      "trackingMode": "STAND_BY",
+      "batteryVoltage": 3.63,
+      "ackToken": 0,
+      "firmwareVersion": "1.8.1", 
+      "resetCause": 64,
+      "periodicPosition": true,
+      "temperatureMeasure": 24.3,
+      "sosFlag": 0,
+      "appState": 0,
+      "dynamicMotionState": "STATIC",
+      "onDemand": false,
+      "payload": { "latitude": -34.567376316412684, "longitude": -58.44736709366034 },
+      "createdAt":"2022-09-13T13:33:37.727+00:00",
+      "updatedAt":"2022-09-13T13:33:37.727+00:00"
+      
+   },
+     {
+        "devEUI": "45659576",
         "messageType": "HEARTBEAT",
         "trackingMode": "STAND_BY",
         "batteryVoltage": 3.63,
@@ -204,8 +470,8 @@
         "dynamicMotionState": "STATIC",
         "onDemand": false,
         "payload": { "latitude": -34.56636250768236, "longitude": -58.44684927073362 },
-        "createdAt":"2022-09-13T13:20:37.727+00:00",
-        "updatedAt":"2022-09-13T13:20:37.727+00:00"
+        "createdAt":"2022-09-13T13:34:37.727+00:00",
+        "updatedAt":"2022-09-13T13:34:37.727+00:00"
         
      }
     

@@ -30,7 +30,6 @@ class DeviceService {
                 measures,
             });
             await device.save();
-            console.log("deviceeeeeeeeee", device._id, ",", device.users);
 
             const userPush = await Users.findOneAndUpdate(
                 { _id: users },
@@ -45,6 +44,7 @@ class DeviceService {
         } catch (error) {
             console.error(error);
         }
+
     }
 
     static async getByUserId(id) {
@@ -55,7 +55,9 @@ class DeviceService {
         }
     }
 
+
     /*     try {
+
         return await Device.find({users:users}).sort({ qrCode: 1 })
 
         } catch (error) {
@@ -89,46 +91,48 @@ class DeviceService {
         } catch (error) {
             console.log(error);
         }
+
     }
 
-    static async getMeasuresByDates(body) {
-        try {
-            const device = await Device.find({ _id: body._id });
-            if (!device) return [];
+  static async getMeasuresByDates(body) {
+    
 
-            const measures = await Device.aggregate([
-                { $match: { _id: ObjectId(body._id) } },
-                { $unwind: "$measures" },
-                {
-                    $match: {
-                        "measures.createdAt": { $gte: new Date(body.from) },
-                    },
-                },
-                {
-                    $match: {
-                        "measures.createdAt": { $lt: new Date(body.to) },
-                    },
-                },
-                {
-                    $group: {
-                        _id: "$_id",
-                        measures: { $push: "$measures.createdAt" },
-                    },
-                },
-            ]);
+    try {
+        const device = await Device.find(
+          {_id:body._id})
+        if (!device) return []
+        
 
-            if (measures) return measures;
-        } catch (error) {
-            console.log(error);
-        }
+     const measures = await Device.aggregate([
+      {$match:{_id:ObjectId(body._id)}},
+      {$unwind:'$measures'},
+      {$project:{
+        _id:'$_id',
+        "measures":{$filter:{input: "$measures", cond:{$and:[
+          {$gte: ["$$this.createdAt",new Date(body.from)]},
+          {$lte: ["$$this.createdAt",new Date(body.to)]}
+     ]}
+    }}
+        
+      }}
+    ])
+  
+
+      if(measures) return measures
+    } catch (error) {
+        console.log(error)
     }
+}
 
-    static async editDevice(body) {
-        try {
-            return await Device.updateOne({ _id: body._id }, { $set: body });
-        } catch (error) {
-            console.log(error);
-        }
+  static async editDevice(body) {
+
+    try {
+      return await Device.updateOne(
+        {_id:body._id},
+       {$set:body});
+    } catch (error) {
+      console.log(error);
+
     }
     static async deleteDevice(id) {
         try {

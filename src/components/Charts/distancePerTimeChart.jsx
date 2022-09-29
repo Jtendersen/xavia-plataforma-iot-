@@ -12,23 +12,25 @@ const DistancePerTimeChart = () => {
     const match = useMatches();
 
     // redux store
-    const measures = useSelector((state) => state.measures);
+    const loggedUser = useSelector((state) => state.user);
+    const measures = useSelector((state) => {
+        if (loggedUser.roles[0] === "admin") return state.measures[0];
+        if (loggedUser.roles[0] === "user") return state.chart;
+    });
 
     // local states
     const [userData, setUserData] = useState(false);
     const [dataSet, setDataSet] = useState(false);
-    Chart.defaults.font.size = 10
+    Chart.defaults.font.size = 10;
     useEffect(() => {
         const newDataSet = measures ? distanceDataSet(measures) : [];
         setDataSet(newDataSet);
         setUserData({
-            labels: newDataSet.map((datos) =>
-                match ? datos.time : datos.time?.substring(10)
-            ),
+            labels: newDataSet?.map((datos) => (match ? datos.time : datos.time?.substring(10))),
             datasets: [
                 {
                     label: "Recorridos [m/min]",
-                    data: newDataSet.map((datos) => datos.distance),
+                    data: newDataSet?.map((datos) => datos.distance),
                     backgroundColor: "#3300B8",
                     borderColor: "black",
                     borderWidth: 1,
@@ -38,20 +40,15 @@ const DistancePerTimeChart = () => {
     }, [measures, match]);
     if (userData) {
         return (
-            <Stack
-                direction={{ xs: "column", sm: "row" }}
-                justifyContent="space-around"
-                alignItems="center"
-                spacing={{ xs: 1, sm: 2 }}
-            >
+            <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-around" alignItems="center" spacing={{ xs: 1, sm: 2 }}>
                 <Box
                     sx={{
-                        width: "90%"
+                        width: "90%",
                     }}
                 >
                     <Bar data={userData} />
                 </Box>
-                <Box maxWidth={{xs:300, sm:150}}>
+                <Box maxWidth={{ xs: 300, sm: 150 }}>
                     <ChartFilter {...dataSet} />
                 </Box>
             </Stack>

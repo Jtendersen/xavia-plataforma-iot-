@@ -22,6 +22,7 @@ function ChangeView({ centerM, zoomM }) {
 
 function Map({ devices, mapStyle }) {
   const toMarker = useSelector((state) => state.toMarker);
+
   // function GetBounds() {
   //   const map = useMap(); //get native Map instance
   //   let markerBounds = latLngBounds([]);

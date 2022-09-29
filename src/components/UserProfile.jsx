@@ -85,9 +85,6 @@ const UserProfile = () => {
     },
 /*     { field: "added", headerName: "Agregado el:", minWidth: 160, flex: 1 }, */
   ];
-  console.log("this is devices", devices);
-  console.log("this is measures", measures);
-  console.log("this is user", user._id);
   
   const rows = Array.isArray(measures)
     ? measures?.map((e, index) => (
@@ -127,7 +124,6 @@ const UserProfile = () => {
       }
       ))
     : [];
-    console.log("this is rows", rows)
   return (
     <Stack sx={{stackStyle}}>
       {measures? (

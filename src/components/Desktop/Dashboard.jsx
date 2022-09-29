@@ -67,15 +67,15 @@ function DashboardContent() {
       return new Date(e.DevEUI_uplink.Time) >= lastDayDates(date).from.getTime() &&
         new Date(e.DevEUI_uplink.Time)  <= lastDayDates(date).to.getTime();
     });
-    console.log(measures)
-    console.log(filteredMeasures)
+    // console.log(measures)
+    // console.log(filteredMeasures)
     console.log(measuresByDay)
    //console.log("FROM", lastDayDates(date).from, "TO",lastDayDates(date).to)
     //console.log("inicio", measuresByDay[0].DevEUI_uplink.Time,"final",measuresByDay[measuresByDay.length-1].DevEUI_uplink.Time)
    
     const bateria = measures[0] && Math.ceil(measuresByDay[measuresByDay.length-1].DevEUI_uplink.payload.batteryVoltage/0.038) + "%"
     
-    const temperatura = measures[0]&& measuresByDay[measuresByDay.length-1].DevEUI_uplink.payload.temperatureMeasure + "C"
+    const temperatura = measures[0]&& Math.ceil(measuresByDay[measuresByDay.length-1].DevEUI_uplink.payload.temperatureMeasure) + "C"
     
 
 

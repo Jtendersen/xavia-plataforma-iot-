@@ -12,7 +12,7 @@ const Aplicaciones = () => {
 
       <Box>
         <BatteryUsageChart />
-      </Box> */}
+      </Box> 
     </>
   );
 };

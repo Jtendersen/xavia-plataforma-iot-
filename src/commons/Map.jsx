@@ -127,8 +127,13 @@ function Map({ devices, mapStyle, histoTrue }) {
         ) : (
           <></>
         )}
-         {polylines ? (
+         {polylines.length >0 ? (
+          <>
           <Polyline pathOptions={{ color: "purple" }} positions={polylines} />
+{/*           {polylines[0].lat?
+          <ChangeView centerM={polylines[0]} zoomM="25" />:<></>
+          } */}
+          </>
         ) : (
           <></>
         )} 

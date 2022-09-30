@@ -11,7 +11,10 @@ const Aplicaciones = () => {
         <DistancePerTimeChart />
       </Box>
       <Box>
-        <BatteryUsageChart />
+      <DistancePerTimeChart />
+      </Box>
+      <Box>
+      <DistancePerTimeChart />
       </Box>
     </>
   );

@@ -70,9 +70,9 @@ const BatteryUsageChart = () => {
   for (let i = 0; i < measures.length; i++) {
     let arrayToMap = [];
     if (measures[i + 1]) {
-      if (measures[i].length < measures[i + 1].length) {
-        maxIndex = i + 1;
-      } else maxIndex = i;
+      if (measures[i].length > measures[maxIndex].length) {
+        maxIndex = i;
+      }
     }
 
     const measuresCopy = measures[i].slice();
@@ -174,7 +174,6 @@ const BatteryUsageChart = () => {
   function valuetext(value) {
     return `${value} Hs`;
   }
-
 
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>

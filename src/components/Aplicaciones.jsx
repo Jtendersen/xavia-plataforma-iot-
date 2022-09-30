@@ -1,21 +1,22 @@
-import { Box } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import React from "react";
 import BatteryUsageChart from "./BatteryUsageChart";
 import DistancePerTimeChart from "./Charts/distancePerTimeChart";
 import DashboardContent from "./Desktop/Dashboard";
 
 const Aplicaciones = () => {
-  return (
-    <>
-      <DashboardContent/>
-      <Box><DistancePerTimeChart /></Box>
+    return (
+        <>
+            <DashboardContent />
+            <Box>
+                <DistancePerTimeChart />
+            </Box>
 
-      <Box>
-        <BatteryUsageChart />
-      </Box> 
-    </>
-  );
+            <Box>
+                <BatteryUsageChart />
+            </Box>
+        </>
+    );
 };
-
 
 export default Aplicaciones;

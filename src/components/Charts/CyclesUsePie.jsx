@@ -54,12 +54,12 @@ results.push(counts[property])
   
   return (
             <Grid container spacing={2}>
-                        <Grid item xs={6} md={6} lg={6}>
+                        <Grid item xs={7} md={7} lg={7}>
                           <Box sx= {{p:1}}>
                             <Doughnut data={data}/>
                           </Box>
                         </Grid>
-                        <Grid item xs={6} md={6} lg={6}>
+                        <Grid item xs={5} md={5} lg={5}>
                           <Stack  divider={<Divider orientation="horizontal" flexItem />}
                             spacing={1}>
                             {labels.map((e,i)=>

@@ -63,13 +63,13 @@ const getCycles = (measures) => {
     const data = {}
     data.cycle = i+1
     data.payload = [breakpoints[i], breakpoints[i+1]]
-    data.distanceMeters = geoDistance(breakpoints[i].DevEUI_uplink.LrrLAT,breakpoints[i].DevEUI_uplink.LrrLON,breakpoints[i+1].DevEUI_uplink.LrrLAT, breakpoints[i+1].DevEUI_uplink.LrrLON)
-    data.timeMinutes=  (new Date(breakpoints[i].DevEUI_uplink.Time)-(new Date(breakpoints[i + 1].DevEUI_uplink.Time))) /
+    data.distanceMeters = geoDistance(breakpoints[i]?.DevEUI_uplink.LrrLAT,breakpoints[i]?.DevEUI_uplink.LrrLON,breakpoints[i+1]?.DevEUI_uplink.LrrLAT, breakpoints[i+1]?.DevEUI_uplink.LrrLON)
+    data.timeMinutes=  (new Date(breakpoints[i]?.DevEUI_uplink.Time)-(new Date(breakpoints[i + 1]?.DevEUI_uplink.Time))) /
     1000 /
     60
     data.AvgSpeedMeterPerMinute= data.distanceMeters/data.timeMinutes
-    data.batteryStatus = breakpoints[i+1].batteryVoltage
-    data.area = [getArea([breakpoints[i].DevEUI_uplink.LrrLAT,breakpoints[i].DevEUI_uplink.LrrLON]),getArea([breakpoints[i+1].DevEUI_uplink.LrrLAT, breakpoints[i+1].DevEUI_uplink.LrrLON])]
+    data.batteryStatus = breakpoints[i+1]?.batteryVoltage
+    data.area = [getArea([breakpoints[i]?.DevEUI_uplink.LrrLAT,breakpoints[i]?.DevEUI_uplink.LrrLON]),getArea([breakpoints[i+1]?.DevEUI_uplink.LrrLAT, breakpoints[i+1]?.DevEUI_uplink.LrrLON])]
     payload.push(data)
   };
   

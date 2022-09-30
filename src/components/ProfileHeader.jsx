@@ -44,19 +44,7 @@ const ProfileHeader = () => {
                     alignItems="center"
                     spacing={2}
                 >
-                    <Stack
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={1}
-                    >
-                        <CustomTypography sx={{ fontSize: "0.9rem" }}>
-                            xx
-                        </CustomTypography>
-                        <CustomTypography sx={{ fontSize: "0.9rem" }}>
-                            Apps
-                        </CustomTypography>
-                    </Stack>
+                   
                     <Divider
                         orientation="vertical"
                         flexItem
@@ -80,19 +68,7 @@ const ProfileHeader = () => {
                         flexItem
                         sx={{ bgcolor: "black" }}
                     />
-                    <Stack
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={1}
-                    >
-                        <CustomTypography sx={{ fontSize: "0.9rem" }}>
-                            {user.devices?.length}
-                        </CustomTypography>
-                        <CustomTypography sx={{ fontSize: "0.9rem" }}>
-                            Otra cosa
-                        </CustomTypography>
-                    </Stack>
+                    
                 </Stack>
             </Stack>
         );

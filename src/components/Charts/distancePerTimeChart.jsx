@@ -43,7 +43,7 @@ const DistancePerTimeChart = () => {
             <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-around" alignItems="center" spacing={{ xs: 1, sm: 2 }}>
                 <Box
                     sx={{
-                        width: "90%",
+                        width: "70%",
                     }}
                 >
                     <Bar data={userData} />

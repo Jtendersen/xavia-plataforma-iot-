@@ -39,24 +39,6 @@ const HeaderMobile = () => {
                     spacing={1}
                 >
                     <CustomTypography sx={{ fontSize: "0.7rem" }}>
-                        xx
-                    </CustomTypography>
-                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
-                        Apps
-                    </CustomTypography>
-                </Stack>
-                <Divider
-                    orientation="vertical"
-                    flexItem
-                    sx={{ bgcolor: "#ffffff" }}
-                />
-                <Stack
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={1}
-                >
-                    <CustomTypography sx={{ fontSize: "0.7rem" }}>
                         {user.devices?.length}
                     </CustomTypography>
                     <CustomTypography sx={{ fontSize: "0.7rem" }}>

@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import BatteryUsageChart from "./BatteryUsageChart";
 import DistancePerTimeChart from "./Charts/distancePerTimeChart";
@@ -11,7 +11,6 @@ const Aplicaciones = () => {
             <Box>
                 <DistancePerTimeChart />
             </Box>
-
             <Box>
                 <BatteryUsageChart />
             </Box>

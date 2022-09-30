@@ -24,7 +24,19 @@ const UserDesktop = () => {
                     borderRadius: "16px",
                     maxHeight: "95%",
                     overflow: "auto",
-                    padding: 2
+                    padding: 2,
+                    "&::-webkit-scrollbar": {
+                        width: "0.4em",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,.1)",
+                        outline: "1px solid slategrey",
+                        borderRadius: "16px",
+                    },
                 }}
             >
                 {views === "aplicaciones" && <Aplicaciones />}

@@ -8,6 +8,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState, useEffect } from "react";
 import { getCycles } from "../../utils/dataProcess";
+import DistancePerTimeChart from "../Charts/distancePerTimeChart";
+import BatteryUsageChart from "../BatteryUsageChart";
 
 const CustomTypography = styled(Typography)`
     color: "black";
@@ -80,7 +82,7 @@ function DashboardContent() {
 
     return (
         <>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" maxHeight={120} marginRight={12} marginTop={2}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" maxHeight={120} marginRight={9} marginLeft={5} marginTop={2}>
                 <Stack direction="row" alignItems="center" spacing={3}>
                     <Avatar alt="Usuario" src={user.imgUrl} sx={{ width: 100, height: 100, border: "solid 1px" }} />
                     <Stack direction="column">
@@ -116,9 +118,9 @@ function DashboardContent() {
                     <Container maxWidth="false" sx={{ mt: 2, mb: 2 }}>
                         <Grid container spacing={2}>
                             {/* Uso diario */}
-                            <Grid item xs={12} md={8} lg={9} sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }} spacing={1}>
+                            
                                     {/* ciclos de trabajo */}
-                                    <Grid item xs={12} md={5.5} lg={5.5}>
+                                    <Grid item xs={12} md={4} lg={4}>
                                         <Paper elevation={3} sx={{ p: 2, display: "flex", flexDirection: "column", height: 360 }}>
                                             <Box sx={{ p: 1, fontWeight: "bold" }}>Ciclos de trabajo</Box>
                                             <Divider orientation="horizontal" flexItem />
@@ -127,17 +129,17 @@ function DashboardContent() {
                                     </Grid>
 
                                     {/* tiempos de uso */}
-                                    <Grid item xs={12} md={5.5} lg={5.5}>
+                                    <Grid item xs={12} md={4} lg={4}>
                                         <Paper elevation={3} sx={{ p: 2, display: "flex", flexDirection: "column", height: 360 }}>
                                             <Box sx={{ p: 1, fontWeight: "bold" }}>Tiempo de uso</Box>
                                             <Divider orientation="horizontal" flexItem />
                                             <TimeOfUsePie measures={measures[0] && getCycles(measuresByDay)} />
                                         </Paper>
                                     </Grid>
-                            </Grid>
+                            
 
                             {/* Bateria */}
-                            <Grid item xs={12} md={4} lg={3}>
+                            <Grid item xs={12} md={4} lg={4}>
                                 <Stack spacing={2}>
                                     <Paper
                                         elevation={3}
@@ -191,6 +193,22 @@ function DashboardContent() {
                                     </Paper>
                                 </Stack>
                             </Grid>
+                            <Grid item xs={12} md={12} lg={12}>
+                                        <Paper elevation={3} sx={{ p: 2, display: "flex", flexDirection: "column"}}>
+                                            <Box sx={{ p: 1, fontWeight: "bold" }}>Tiempo sobre distancia</Box>
+                                            <Divider orientation="horizontal" flexItem />
+                                            <DistancePerTimeChart />
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={12} md={12} lg={12}>
+                                        <Paper elevation={3} sx={{ p: 2, display: "flex", flexDirection: "column"}}>
+                                            <Box sx={{ p: 1, fontWeight: "bold" }}>Battery usage</Box>
+                                            <Divider orientation="horizontal" flexItem />
+                                            <BatteryUsageChart />
+                                        </Paper>
+                                    </Grid>
+
+                                    
                         </Grid>
                     </Container>
                 </Box>

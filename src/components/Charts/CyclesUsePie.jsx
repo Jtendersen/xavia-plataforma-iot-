@@ -2,7 +2,7 @@ import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS } from "chart.js/auto";
 import { Box,Stack} from '@mui/system';
-import { Grid,Typography, Divider  } from '@mui/material';
+import { Grid,Typography, Divider,Paper  } from '@mui/material';
 
 
 const style = {
@@ -60,15 +60,26 @@ results.push(counts[property])
                           </Box>
                         </Grid>
                         <Grid item xs={5} md={5} lg={5}>
-                          <Stack  divider={<Divider orientation="horizontal" flexItem />}
-                            spacing={1}>
-                            {labels.map((e,i)=>
-                            { return  <Box key={i} sx={{fontWeight: 'bold','&:hover': {opacity: [0.9, 0.8, 0.7]}}}>
-                            <Box sx={{py:1,fontWeight: 'bold'}}>{e}</Box>
-                            <Typography>{results[i]}</Typography>
-                            </Box>
-                            })}
-                            </Stack>
+                        <Paper
+                            sx={{
+                                p: 1,
+                                flexDirection: "column",
+                                height:280,
+                                overflow: "auto",
+                                marginTop:2,
+                            }}
+                            
+                        >
+                            <Stack  divider={<Divider orientation="horizontal" flexItem />}
+                              spacing={1}>
+                              {labels.map((e,i)=>
+                              { return  <Box key={i} sx={{fontWeight: 'bold','&:hover': {opacity: [0.9, 0.8, 0.7]}}}>
+                              <Box sx={{py:1,fontWeight: 'bold'}}>{e}</Box>
+                              <Typography>{results[i]}</Typography>
+                              </Box>
+                              })}
+                              </Stack>
+                            </Paper>
                         </Grid>
                     </Grid>
    

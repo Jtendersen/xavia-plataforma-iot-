@@ -8,12 +8,7 @@ const Aplicaciones = () => {
     return (
         <>
             <DashboardContent />
-            <Box>
-                <DistancePerTimeChart />
-            </Box>
-            <Box>
-                <BatteryUsageChart />
-            </Box>
+        
         </>
     );
 };

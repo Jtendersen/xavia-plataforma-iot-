@@ -12,19 +12,23 @@ import UserProfile from "../UserProfile";
 const UserDesktop = () => {
     const views = useSelector((state) => state.views);
     return (
-        <Box id="hola" bgcolor="#EAE1D8" flex={8} p={2} >
+        <Box id="hola" bgcolor="#EAE1D8" flex={8} p={2}>
             {/* {views === "aplicaciones" ? <UsersHeader /> : <></>} */}
             {views === "profile" && <ProfileHeader />}
+
             <Paper
                 elevation={3}
                 sx={{
                     p: 2,
                     flexDirection: "column",
                     borderRadius: "16px",
+                    maxHeight: "95%",
+                    overflow: "auto",
+                    padding: 2
                 }}
             >
-                {(views === "profile" || views === "aplicaciones ") && <UserProfile />}
                 {views === "aplicaciones" && <Aplicaciones />}
+                {(views === "profile" || views === "aplicaciones ") && <UserProfile />}
                 {views === "ubicaciones" && <Ubicaciones />}
                 {views === "historico" && <Historico />}
             </Paper>

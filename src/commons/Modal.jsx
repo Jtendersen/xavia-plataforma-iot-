@@ -30,7 +30,7 @@ const style = {
   p: 4,
 };
 
-export default function KeepMountedModal({ userParams, show, setShow }) {
+export default function KeepMountedModal({ userParams, showAdd, setShowAdd }) {
   const [geolocalizador, setGeolocalizador] = React.useState("Micro Tracker");
   const [gateway, setGateway] = React.useState("Advantech");
   const [mediciones, setMediciones] = React.useState(10);
@@ -63,7 +63,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false);
-    setShow(false);
+    setShowAdd(false);
   };
 
   /* MODAL 2 */
@@ -74,7 +74,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
   };
   const handleCloseDos = () => {
     setOpenDos(false);
-    setShow(false);
+    setShowAdd(false);
   };
 
   /* MODAL 3 */
@@ -86,7 +86,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
   };
   const handleCloseTres = () => {
     setOpentres(false);
-    setShow(false);
+    setShowAdd(false);
   };
 
   /* Digitar Codigo */
@@ -97,7 +97,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
   };
   const closeCodeManual = () => {
     setCodeManueal(false);
-    setShow(false);
+    setShowAdd(false);
   };
   const setCode = (event) => {
     event.preventDefault();
@@ -139,7 +139,7 @@ export default function KeepMountedModal({ userParams, show, setShow }) {
       .then((res) => console.log(res));
 
     clearData();
-    setShow(false);
+    setShowAdd(false);
   };
 
   const addNewDevices = () => {

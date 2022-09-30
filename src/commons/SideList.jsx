@@ -83,22 +83,22 @@ const SideList = () => {
                         <ListItemText primary="Usuarios finales" />
                     </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
+                {/* <ListItem disablePadding>
                     <ListItemButton component="a" onClick={() => toggleView("aplicaciones")}>
                         <ListItemIcon>
                             <RssFeedIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
                         <ListItemText primary="Aplicaciones" />
                     </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
+                </ListItem> */}
+                {/* <ListItem disablePadding>
                     <ListItemButton component="a" onClick={() => toggleView("ubicaciones")}>
                         <ListItemIcon>
                             <LocationOnIcon sx={{ color: "#FFFFFF" }} />
                         </ListItemIcon>
                         <ListItemText primary="Ubicaciones" />
                     </ListItemButton>
-                </ListItem>
+                </ListItem> */}
             </List>
 
             <List>

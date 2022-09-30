@@ -14,6 +14,7 @@ const ContentDesktop = () => {
 
             {views === "usuariosFinales" && <UsersHeader />}
             {views === "profile" && <ProfileHeader />}
+            {views === "aplicaciones" && <Aplicaciones />}
 
 
             <Paper
@@ -26,7 +27,6 @@ const ContentDesktop = () => {
             >
 
                 {(views === "profile" || views === "usuariosFinales") && <Users />}
-                {views === "aplicaciones" && <Aplicaciones />}
                 {views === "ubicaciones" && <Ubicaciones />}
 
             </Paper>

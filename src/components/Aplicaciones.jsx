@@ -11,7 +11,6 @@ const Aplicaciones = () => {
             <Box>
                 <DistancePerTimeChart />
             </Box>
-
             <Box>
                 <BatteryUsageChart />
             </Box>

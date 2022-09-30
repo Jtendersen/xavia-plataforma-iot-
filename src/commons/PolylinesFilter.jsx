@@ -53,7 +53,7 @@ const PolylinesFilter = () => {
                 } else {
                     filtered = data[0];
                 }
-                dispatch(setChart(filtered || false));
+               entries && dispatch(setChart(filtered || false));
             }
             filteredData();
         }
